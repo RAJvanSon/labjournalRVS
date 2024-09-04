@@ -1,6 +1,6 @@
 ---
-title: "Lab journal"
-author: "by: Your Name"
+title: "Lab Journal Social Networks"
+author: "by: René van Son"
 bibliography: references.bib
 
  
@@ -10,7 +10,7 @@ bibliography: references.bib
 
 
 ```{r, install remotely, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
-# install.packages("remotes")
+#install.packages("remotes")
 #remotes::install_github("rlesur/klippy")
 ``` 
 
@@ -39,6 +39,8 @@ klippy::klippy(position = c('top', 'right'))
 
 ----
 
+tsfghjhgf
+
 <!--- This is the best way to write a comment. 
 It also demonstrate, you can add html directly in your rmarkdown file. See: https://www.w3schools.com/html/html_comments.asp ---> 
 
@@ -64,6 +66,12 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
 Everyone can fork this repository. Use this example to journal your lab work and assignments. 
 
 We, Jochem Tolsma and Bas Hofstra, use this repository for our Social Network Analysis For Social Scientists course [@SNASS]. <!--- this is a reference, stored in references.bib. It will be automatically added at the bottom of the page --->
+
+
+```{r}
+2+2
+```
+
 
 
 :::
