@@ -39,7 +39,6 @@ klippy::klippy(position = c('top', 'right'))
 
 ----
 
-tsfghjhgf
 
 <!--- This is the best way to write a comment. 
 It also demonstrate, you can add html directly in your rmarkdown file. See: https://www.w3schools.com/html/html_comments.asp ---> 
@@ -55,7 +54,7 @@ But please note, we are not here to make a beautiful website, our intention is j
 # My Lab Journal
 Last compiled on `r format(Sys.time(), '%B, %Y')`  
 
-*Describe lab journal here.*
+*This is my lab journal for the Social Networks course*
 
 <br>
 
@@ -68,10 +67,6 @@ Everyone can fork this repository. Use this example to journal your lab work and
 We, Jochem Tolsma and Bas Hofstra, use this repository for our Social Network Analysis For Social Scientists course [@SNASS]. <!--- this is a reference, stored in references.bib. It will be automatically added at the bottom of the page --->
 
 
-```{r}
-2+2
-```
-
 
 
 :::
@@ -81,7 +76,8 @@ We, Jochem Tolsma and Bas Hofstra, use this repository for our Social Network An
 
 
 
-![](images/cover.jpg)
+![](images/image-asset.jpeg){width=70%, height=70%}
+
 
 
 :::

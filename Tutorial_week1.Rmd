@@ -1,0 +1,253 @@
+---
+title: " week tutorial"
+author: "by: René van Son"
+bibliography: references.bib
+---
+# Preliminary Research Question and Literature
+
+## Research question
+For my research on collaboration networks, I am (for now) interested in the following question: 
+"*Does the development of an early-carreer interdisciplinary network (i.e. a co-authorship focused more on collaboration across faculties/departments) lead to the publication of high-impact work?*"
+
+I found the following relevant articles 
+
+- Haythornthwaite, C. (2006). Learning and knowledge networks in interdisciplinary collaborations. Journal of the American Society for Information Science and Technology, 57(8), 1079–1092. (https://doi.org/10.1002/asi.20371) 
+
+- van Rijnsoever, F. J., & Hessels, L. K. (2011). Factors associated with disciplinary and interdisciplinary research collaboration. Research Policy, 40(3), 463–472. https://doi.org/10.1016/j.respol.2010.11.001
+
+These articles deal with the different aspects of social networks in research collaboration. Haythornthwaite (2006) argues that knowledge exchange is particularly high in interdisciplinary research teams. Van Rijnsoever and Hessels' (2011) work centers around the different characteristics of researchers that could lead to them engaging in either interdisciplinary or non-interdisciplinary collaborations.   
+
+## R-Tutorial
+```{r, echo=FALSE}
+########################### Title: René van Son - 04-09-2024#################
+
+# start with clean workspace
+rm(list = ls())
+```
+
+
+```{r, echo=FALSE, eval=FALSE}
+# install.packages I will need later here
+#install.packages("installr")  # you  first install packages
+require(installr)  # then you will need to load them. This package is used to simply update R
+#install.packages("foreign")
+#install.packages("tidyverse")
+
+```
+
+
+```{r}
+require(foreign)  # used to read in spss data files
+require(tidyverse)
+# update if necessarry. Best to run this command in RGui, not in RStudio.
+#updateR()
+```
+
+
+```{r, echo=FALSE}
+# define workdirectory, note the double backslashes
+setwd("/Users/jannevanheesch/Documents/GitHub/labjournalRVS")  # change to your own workdirectory
+getwd()#check
+
+testvariable <- 4
+ls()
+list <- ls()
+
+# ignore the warnings ?read.spss note that I have saved the data files in a folder called
+# 'addfiles'.
+
+cv08 <- foreign::read.spss("tutorial_data/Cultural_Changes_2008.sav", use.value.labels = T, to.data.frame = T)
+cv10 <- foreign::read.spss("tutorial_data/Cultural_Changes_2010.sav", use.value.labels = T, to.data.frame = T)
+
+# normally I think setting use.value.labels=F is more convenient. Thus lets load the data again but
+# now without labels
+cv08_nolab <- foreign::read.spss("tutorial_data/Cultural_Changes_2008.sav", use.value.labels = F, to.data.frame = T)
+cv10_nolab <- foreign::read.spss("tutorial_data/Cultural_Changes_2010.sav", use.value.labels = F, to.data.frame = T)
+
+# finally, import the data using haven
+cv08_haven <- haven::read_spss("tutorial_data/Cultural_Changes_2008.sav")
+cv10_haven <- haven::read_spss("tutorial_data/Cultural_Changes_2010.sav")
+
+str(cv08) 
+str(cv08_haven)
+str(cv08_nolab)
+
+str(cv08$lftop) 
+str(cv08_haven$lftop)
+str(cv08_nolab$lftop)
+
+attributes(cv08$lftop)
+attributes(cv08_nolab$lftop)
+attributes(cv08_haven$lftop)
+
+table(cv08_haven$lftop, useNA = "always")
+
+names(cv08_haven)
+summary(cv08_haven)
+head(cv08_haven)
+# fix(cv08_haven) #will produce an error
+#fix(cv08)
+#View(cv08_haven)
+
+#create new variable from variable lftop
+cv08$lftop_new <- cv08$lftop
+
+#now, assign 'onbekend' as missing
+cv08$lftop_new[cv08$lftop == "Onbekend"] <- NA
+
+#so, still not NA? but 
+table(cv08$lftop_new, useNA = "always")
+levels(cv08$lftop_new)
+
+#so check
+str(cv08$lftop_new)
+
+cv08$agen <- as.numeric(as.character(cv08$lftop_new))  # how clumsy. we first convert the factor to a string and then to a numeric variable.
+
+#check
+table(cv08$agen, useNA = "always")
+
+#you can also use mutate to create a new age variable, with 99 as missing value. This is faster, but needs tidyverse.
+cv08_haven <- mutate(cv08_haven, lftop_new = na_if(lftop, 99))
+
+levels(cv08$var006n)
+table(cv08$var006n, useNA = "always")
+
+# lets make it a numeric var first
+cv08$educn <- as.numeric(cv08$var006n)
+# check
+table(cv08$educn, useNA = "always")
+
+#start with empty variable (everything missing)
+cv08$educ3 <- NA
+
+cv08$educ3[cv08$educn == 2 | cv08$educn == 3] <- 1
+cv08$educ3[cv08$educn > 3 & cv08$educn < 8] <- 2
+cv08$educ3[cv08$educn > 7 & cv08$educn < 11] <- 3
+
+table(cv08$educ3, useNA = "always")
+prop.table(table(cv08$educ3, useNA = "always"))
+
+cv08$educ3 <- as.factor(cv08$educ3)
+table(cv08$educ3, useNA = "always")
+
+levels(cv08$educ3) <- c("primary", "secondary", "tertiary")
+table(cv08$educ3, useNA = "always")
+
+#install.packages("labelled")
+require(labelled)  # to be able to use the recode function on haven labelled variables
+
+# inspect variable
+str(cv08_haven$var006n)
+
+attr(cv08_haven$var006n, "labels")
+table(cv08_haven$var006n)
+
+cv08_haven <- cv08_haven %>%
+    mutate(educ3 = recode(var006n, `-3` = -9, `-1` = 1, `1` = 1, `2` = 2, `3` = 2, `4` = 2, `5` = 2,
+        `6` = 3, `7` = 3, `8` = 3, `10` = -9, .keep_value_labels = FALSE), educ3 = na_if(educ3, -9),
+        educ3 = factor(educ3, levels = c(1, 2, 3), labels = c("primary", "secondary", "tertiary")))
+table(cv08_haven$educ3)
+
+summary(cv08$int055)
+summary(cv08$int056)
+summary(cv08$int057)
+
+#make numeric instead of factors
+cv08$int055n <- as.numeric(cv08$int055)
+table(cv08$int055n, useNA = "always")
+cv08$int056n <- as.numeric(cv08$int056)
+table(cv08$int056n, useNA = "always")
+cv08$int057n <- as.numeric(cv08$int057)
+table(cv08$int057n, useNA = "always")
+
+#Assign missing values (everything under 5 = missing, because 3='don't know')
+cv08$int055n[cv08$int055n < 5] <- NA
+#now it makes more sene to reassign values, where 5=1, 6=2, etc.
+cv08$int055n <- cv08$int055n - 4
+
+#repeat
+cv08$int056n[cv08$int056n < 5] <- NA
+cv08$int056n <- cv08$int056n - 4
+cv08$int057n[cv08$int057n < 5] <- NA
+cv08$int057n <- cv08$int057n - 4
+
+# How does the function mean work in R?
+mean(cv08$int055n)  # whoops
+mean(cv08$int055n, na.rm = TRUE)  # works.  but not what we want.
+mean(c(cv08$int055n, cv08$int056n, cv08$int057n), na.rm = T)  # works but not what we want.
+
+
+testmeans <- rowMeans(cbind(cv08$int055n, cv08$int056n, cv08$int057n), na.rm = T)
+head(testmeans)  # yes!
+
+# lets first count how many missings we have for each respondent
+nmis <- rowSums(is.na(cbind(cv08$int055n, cv08$int056n, cv08$int057n)))
+
+#if the number of missings is two or higher, we do not want a mean
+testmeans <- ifelse(nmis < 2, testmeans, NA)
+
+# add the calculated means to our dataset
+cv08$int_mean <- testmeans
+
+
+
+
+
+
+
+```
+
+
+
+
+```{r}
+#How to merge datasets. You want to select some variables (in this case: sex, education, health, region, age, and id). For both 08 and 10.
+cv08_sel <- cv08[, c("we_id", "lftop", "geslacht", "var006n", "v401", "landd")]
+cv10_sel <- cv08[, c("we_id", "lftop", "geslacht", "var006n", "v401", "landd")]
+
+#make same variable names 
+names(cv08_sel) <- names(cv10_sel) <- c("id", "age", "sex", "educ", "health", "region")
+
+#check if id is factor
+levels(cv08_sel$id)
+#
+attributes(cv08_sel$id) #yes it is
+
+#change to numeric, again with the weird method of first transforming it to string
+cv08_sel$id <- as.numeric(as.character(cv08_sel$id))
+cv10_sel$id <- as.numeric(as.character(cv10_sel$id))
+
+#check
+table(cv08_sel$id, useNA = "always") #yes
+
+# do the same for age
+attributes(cv08_sel$age)
+
+cv08_sel$age <- as.numeric(as.character(cv08_sel$age))
+cv10_sel$age <- as.numeric(as.character(cv10_sel$age))
+
+attributes(cv08_sel$age)
+
+#now for gender (so make dummy)
+levels(cv08_sel$sex)
+levels(cv10_sel$sex)
+table(cv08_sel$sex, useNA = "always")
+table(cv10_sel$sex, useNA = "always")
+attributes(cv08_sel$sex) #class=factor, so make numeric
+
+cv08_sel$sexn <- as.numeric(cv08_sel$sex)
+table(cv08_sel$sexn)
+
+# recode into dummy. So: R checks if value for sex =2, then the new value=1. All other old values get 0. 
+cv08_sel$men <- ifelse(cv08_sel$sexn == 2, 1, 0)
+cv08_sel$men <- ifelse(cv08_sel$sexn == 1, NA, cv08_sel$men)
+
+# check
+table(cv08_sel$men, useNA = "always")
+
+
+```
+
+
+
