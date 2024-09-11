@@ -9,6 +9,8 @@ bibliography: references.bib
 For my research on collaboration networks, I am (for now) interested in the following question: 
 "*Does the development of an early-carreer interdisciplinary network (i.e. a co-authorship focused more on collaboration across faculties/departments) lead to the publication of high-impact work?*"
 
+On the macro level, this research would *describe* clustering in collaboration networks; on the micro-level, this research will *explain* how this clustering is due to differences in early-stage interdisciplinary collaborations.
+
 I found the following relevant articles 
 
 - Haythornthwaite, C. (2006). Learning and knowledge networks in interdisciplinary collaborations. Journal of the American Society for Information Science and Technology, 57(8), 1079–1092. (https://doi.org/10.1002/asi.20371) 
@@ -16,6 +18,8 @@ I found the following relevant articles
 - van Rijnsoever, F. J., & Hessels, L. K. (2011). Factors associated with disciplinary and interdisciplinary research collaboration. Research Policy, 40(3), 463–472. https://doi.org/10.1016/j.respol.2010.11.001
 
 These articles deal with the different aspects of social networks in research collaboration. Haythornthwaite (2006) argues that knowledge exchange is particularly high in interdisciplinary research teams. Van Rijnsoever and Hessels' (2011) work centers around the different characteristics of researchers that could lead to them engaging in either interdisciplinary or non-interdisciplinary collaborations.   
+
+
 
 ## R-Tutorial
 ```{r, echo=FALSE}
