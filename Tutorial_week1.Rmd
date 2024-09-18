@@ -1,5 +1,5 @@
 ---
-title: " week tutorial"
+title: " week 1 tutorial"
 author: "by: René van Son"
 bibliography: references.bib
 ---
@@ -7,7 +7,7 @@ bibliography: references.bib
 
 ## Research question
 For my research on collaboration networks, I am (for now) interested in the following question: 
-"*Does the development of an early-carreer interdisciplinary network (i.e. a co-authorship focused more on collaboration across faculties/departments) lead to the publication of high-impact work?*"
+"*Does the development of an early-career interdisciplinary network (i.e. a co-authorship focused more on collaboration across faculties/departments) lead to the publication of high-impact work?*"
 
 On the macro level, this research would *describe* clustering in collaboration networks; on the micro-level, this research will *explain* how this clustering is due to differences in early-stage interdisciplinary collaborations.
 
@@ -252,6 +252,6 @@ table(cv08_sel$men, useNA = "always")
 
 
 ```
-
+@van2014ethnic 
 
 

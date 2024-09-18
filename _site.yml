@@ -14,7 +14,10 @@ navbar:
       menu:
       - text: "Week 1: R Tutorial"
         href: Tutorial_week1.html
+      - text: "Week 2: Introduction"
+        href: week_2.html
     - text: "Final Report"
+      href: Final_Report.html
     
   right:
   - icon: fab fa-github
