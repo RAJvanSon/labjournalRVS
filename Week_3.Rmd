@@ -1,0 +1,57 @@
+######################################### Title: Webscraping in R Author: Bas Hofstra Version:
+######################################### 29-07-2021
+```{r}
+# start with clean workspace
+rm(list = ls())
+install.packages('data.table')
+library(data.table)  # mainly for faster data handling
+#library(tidyverse)  # I assume you already installed this one!
+install.packages('httr') 
+# we don't need this for now require(httr)
+install.packages("xml2")
+require(xml2)
+install.packages("rvest")
+require(rvest)
+install.packages("devtools")
+require(devtools)
+# Note we're doing something different here. We're installing a *latest* version directly from
+# GitHub This is because the released version of this packages contains some errors!
+devtools::install_github("jkeirstead/scholar")
+
+require(scholar)
+
+# define workdirectory, note the double *backslashes* if you're on windows setwd('/yourpathhere)'
+
+```
+Now the packages for webscraping are installed.
+
+```{r}
+soc_staff <- read_html("https://web.archive.org/web/20230528153336/https://www.ru.nl/sociology/research/staff/")
+```
+But what is this?
+
+```{r}
+class(soc_staff)
+```
+
+
+The whole website is not neccessary, so we need to 'filter' 
+```{r}
+soc_staff <- soc_staff %>%
+    rvest::html_element("body") %>%
+   rvest::html_elements("t") %>%
+    rvest::html_text()
+
+soc_staff
+```
+But can we scrape load the table at once?
+```{r}
+soc_staff <- soc_staff %>%
+    rvest::html_element("body") %>%
+  rvest::html_table()
+```
+
+
+Now we 
+
+
