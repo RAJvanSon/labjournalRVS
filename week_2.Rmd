@@ -2,42 +2,75 @@
 title: " week 2"
 author: "by: René van Son"
 bibliography: references.bib
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 # Revised Research Question & Introduction
 
-Collaboration in the sciences is generally regarded as beneficial, both for the quality of the research and for the development of scientific theories and methodologies (@haines2011). Interdisciplinary research, as a kind of collaboration, has become a focus in many universities, where curricula are adapted to better connect different disciplines in order for empirical phenomena to be approached from different perspectives and to create knowledge integration across disciplines.
-In fact, some scholars have argued that research-standards in some disciplines have already become increasingly interdisciplinary 'below the surface', pointing at the need for interdisciplinary proposals when trying to apply for research grants (@locatelli2021collective). Others, however, have argued that while *mentions* of interdisciplinarity (which have indeed increased!) is reflected by neither a notable increase in interdisciplinary *work*, nor in the *success* of interdisciplinary studies (in terms of citations, higher ranking journals, impact, etc.) (@barthel2017interdisciplinary)
+Collaboration in the sciences is generally regarded as beneficial, both
+for the quality of the research and for the development of scientific
+theories and methodologies (@haines2011). Interdisciplinary research, as
+a kind of collaboration, has become a focus in many universities, where
+curricula are adapted to better connect different disciplines in order
+for empirical phenomena to be approached from different perspectives and
+to create knowledge integration across disciplines. In fact, some
+scholars have argued that research-standards in some disciplines have
+already become increasingly interdisciplinary 'below the surface',
+pointing at the need for interdisciplinary proposals when trying to
+apply for research grants @locatelli2021collective. Others, however,
+have argued that while *mentions* of interdisciplinarity (which have
+indeed increased!) is reflected by neither a notable increase in
+interdisciplinary *work*, nor in the *success* of interdisciplinary
+studies (in terms of citations, higher ranking journals, impact, etc.)
+@barthel2017interdisciplinary.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;One way to better understand interdisciplinarity - its causes, attributes and consequences - is by taking a social network perspective. One of the main reasons for taking a social network perspective is because it treats interdependencies (of observations, persons, etc.) as theoretically interesting, rather than as violations of assumptions. Treating researcher ties (in terms of collaborations) as informative may yield different results than focusing solely on the properties of the researcher him/herself (e.g. is the researcher him/herself educated across multiple disciplines). In other words, not only the attributes of the researcher may have causal properties for the degree of interdisciplinarity, but the "interdisciplinary-ness" is also dependent on the *network* of a researcher. 
+One way to better understand interdisciplinarity - its causes,
+attributes and consequences - is by taking a social network perspective.
+One of the main reasons for taking a social network perspective is
+because it treats interdependencies (of observations, persons, etc.) as
+theoretically interesting, rather than as violations of assumptions.
+Treating researcher ties (in terms of collaborations) as informative may
+yield different results than focusing solely on the properties of the
+researcher him/herself (e.g. is the researcher him/herself educated
+across multiple disciplines). In other words, not only the attributes of
+the researcher may have causal properties for the degree of
+interdisciplinarity, but the "interdisciplinary-ness" is also dependent
+on the *network* of a researcher.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;With regards to interdisciplinary collaborations, a social network analysis will shed light on, firstly, the way in which interdisciplinary research changed the structure of collaboration networks over time and, secondly, what the changing structure of these networks means for researchers who engaged in interdisciplinary research. Following this line of thinking, we can develop the following research questions:
-  
-RQ1: did collaboration networks become more interdisciplinary over time, i.e. did the structure of the collaboration network change over time with regards to the frequency/proportion of interdisciplinary collaborations? 
-RQ2: to what extent does increasing interdisciplinarity at the macro-level(=network) lead to selective/partial clustering at the micro level?
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To answer these research questions, one needs a particular kind of data, i.e. data that is relational. For the purpose here, collaboration data from multiple research departments of Radboud University will be used.  
+With regards to interdisciplinary collaborations, a social network
+analysis will shed light on, firstly, the way in which interdisciplinary
+research changed the structure of collaboration networks over time and,
+secondly, what the changing structure of these networks means for
+researchers who engaged in interdisciplinary research. Following this
+line of thinking, we can develop the following research questions:
 
-
-
-
-
-
-
-
-
+RQ1: did collaboration networks become more interdisciplinary over time,
+i.e. did the structure of the collaboration network change over time
+with regards to the frequency/proportion of interdisciplinary
+collaborations? RQ2: to what extent does increasing interdisciplinarity
+at the macro-level(=network) lead to selective/partial clustering at the
+micro level?       To answer these research questions, one needs a
+particular kind of data, i.e. data that is relational. For the purpose
+here, collaboration data from multiple research departments of Radboud
+University will be used.
 
 # Practice
-We can describe a network by referring to the diads and the triads. If they have theoretical meaning, we could ask questions about them. E.g. we expect 210-configurations than 201-configuration. E.g.: Friendships are stable relations (usually). These configurations have theoretical meaning. 
 
+We can describe a network by referring to the diads and the triads. If
+they have theoretical meaning, we could ask questions about them. E.g.
+we expect 210-configurations than 201-configuration. E.g.: Friendships
+are stable relations (usually). These configurations have theoretical
+meaning.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #install.packages("igraph") if nec.
 require(igraph)
 ```
 
+Let's try an adjacency matrix to practice: <br>
 
-Let's try an adjacency matrix to practice:
-<br>
 ```{r, echo=FALSE}
 matrix1 <- matrix(c(0,0,0,0, #here there are only 0's, there are no (directed) relations 
                    0,0,0,0,
@@ -45,9 +78,9 @@ matrix1 <- matrix(c(0,0,0,0, #here there are only 0's, there are no (directed) r
                    0,0,0,0),nrow = 4, ncol = 4,byrow = TRUE)
 matrix1
 ```
-Above, there are no relations...
-<br>
-<br>
+
+Above, there are no relations... <br> <br>
+
 ```{r, echo=FALSE}
 matrix2 <- matrix(c(0,1,0,0, #here there is 1 directed relations, from 1 to 2 (but not from 2 to 1)
                    0,0,0,0,
@@ -56,9 +89,10 @@ matrix2 <- matrix(c(0,1,0,0, #here there is 1 directed relations, from 1 to 2 (b
 
 matrix2
 ```
-Now, there is one (directed) relation: from '1' to '2' (but not from '2' to '1'!)
-<br>
-<br>
+
+Now, there is one (directed) relation: from '1' to '2' (but not from '2'
+to '1'!) <br> <br>
+
 ```{r, echo=FALSE}
 graph1 <- graph_from_adjacency_matrix(
   matrix1)
@@ -71,19 +105,27 @@ graph_matrix2 <- triad_census(graph2)
 graph_matrix1
 graph_matrix2
 ```
-Above, we see the triad counts for matrix1 and matrix2, respectively. Note that in the first matrix there are four '003' relationships, whereas in the second matrix  there are two '003' relationships and two '012' relationships. This means:
-Matrix1: four triads with 0 ties (3 isolates).
-Matrix2: two triads with 0 ties (3 isolates), two triads with one directed tie and one isolate. 
-<br>
-<br>
-How do these triads come about? E.g. transitive triads (friends of friends become friends). Different pathways have different theoretical mechanisms.
 
-Another network characteristic is density (number of ties divided by possibile ties). Degree centrality is another descriptive charateristic. How many degrees you have? But in large networks, of course you will have many relations (out-degrees). So, we normalize it, e.g. max-min normalization.
+Above, we see the triad counts for matrix1 and matrix2, respectively.
+Note that in the first matrix there are four '003' relationships,
+whereas in the second matrix there are two '003' relationships and two
+'012' relationships. This means: Matrix1: four triads with 0 ties (3
+isolates). Matrix2: two triads with 0 ties (3 isolates), two triads with
+one directed tie and one isolate. <br> <br> How do these triads come
+about? E.g. transitive triads (friends of friends become friends).
+Different pathways have different theoretical mechanisms.
 
-Closeness centrality is another one, how central is a node ? Betweenness centrality is another one.
-These are all descriptives at the ego-level
+Another network characteristic is density (number of ties divided by
+possibile ties). Degree centrality is another descriptive charateristic.
+How many degrees you have? But in large networks, of course you will
+have many relations (out-degrees). So, we normalize it, e.g. max-min
+normalization.
+
+Closeness centrality is another one, how central is a node ? Betweenness
+centrality is another one. These are all descriptives at the ego-level
 
 Try:
+
 ```{r}
 #install.packages("RSiena")
 require(RSiena)
@@ -97,7 +139,10 @@ graph_small <- graph_from_adjacency_matrix(smaller_matrix)
 plot(graph_small)
 
 ```
-Okay, so now we have to get centrality measures etc. First degree centrality
+
+Okay, so now we have to get centrality measures etc. First degree
+centrality
+
 ```{r}
 smaller_matrix
 graph_out <- degree(graph_small, mode = "out")
@@ -107,26 +152,15 @@ graph_out
 ```
 
 Closeness
+
 ```{r}
 closeness(graph_small)
 ```
+
 ```{r}
 Betweenness <- betweenness(graph_small)
 Betweenness
 ?betweenness
 ```
 
-
-Note that, for example, for V3 
-
-
-
-
-
-
-
-
-
-
-
-
+Note that, for example, for V3

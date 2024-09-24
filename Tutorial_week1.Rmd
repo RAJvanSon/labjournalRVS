@@ -3,32 +3,31 @@ title: " week 1 tutorial"
 author: "by: René van Son"
 bibliography: references.bib
 ---
-# Preliminary Research Question and Literature
 
-## Research question
-For my research on collaboration networks, I am (for now) interested in the following question: 
-"*Does the development of an early-career interdisciplinary network (i.e. a co-authorship focused more on collaboration across faculties/departments) lead to the publication of high-impact work?*"
+# Preliminary Research Question, Literature and R-Tutorial
+
+## Research question and Literature
+
+For my research on collaboration networks, I am (for now) interested in the following question: "*Does the development of an early-career interdisciplinary network (i.e. a co-authorship focused more on collaboration across faculties/departments) lead to the publication of high-impact work?*"
 
 On the macro level, this research would *describe* clustering in collaboration networks; on the micro-level, this research will *explain* how this clustering is due to differences in early-stage interdisciplinary collaborations.
 
-I found the following relevant articles 
+I found the following relevant articles
 
-- Haythornthwaite, C. (2006). Learning and knowledge networks in interdisciplinary collaborations. Journal of the American Society for Information Science and Technology, 57(8), 1079–1092. (https://doi.org/10.1002/asi.20371) 
+-   Haythornthwaite, C. (2006). Learning and knowledge networks in interdisciplinary collaborations. Journal of the American Society for Information Science and Technology, 57(8), 1079–1092. (<https://doi.org/10.1002/asi.20371>)
 
-- van Rijnsoever, F. J., & Hessels, L. K. (2011). Factors associated with disciplinary and interdisciplinary research collaboration. Research Policy, 40(3), 463–472. https://doi.org/10.1016/j.respol.2010.11.001
+-   van Rijnsoever, F. J., & Hessels, L. K. (2011). Factors associated with disciplinary and interdisciplinary research collaboration. Research Policy, 40(3), 463–472. <https://doi.org/10.1016/j.respol.2010.11.001>
 
-These articles deal with the different aspects of social networks in research collaboration. Haythornthwaite (2006) argues that knowledge exchange is particularly high in interdisciplinary research teams. Van Rijnsoever and Hessels' (2011) work centers around the different characteristics of researchers that could lead to them engaging in either interdisciplinary or non-interdisciplinary collaborations.   
-
-
+These articles deal with the different aspects of social networks in research collaboration. Haythornthwaite (2006) argues that knowledge exchange is particularly high in interdisciplinary research teams. Van Rijnsoever and Hessels' (2011) work centers around the different characteristics of researchers that could lead to them engaging in either interdisciplinary or non-interdisciplinary collaborations.
 
 ## R-Tutorial
+### Working with R-Script
 ```{r, echo=FALSE}
 ########################### Title: René van Son - 04-09-2024#################
 
 # start with clean workspace
 rm(list = ls())
 ```
-
 
 ```{r, echo=FALSE, eval=FALSE}
 # install.packages I will need later here
@@ -39,43 +38,69 @@ require(installr)  # then you will need to load them. This package is used to si
 
 ```
 
-
-```{r}
+```{r, echo=FALSE}
 require(foreign)  # used to read in spss data files
 require(tidyverse)
 # update if necessarry. Best to run this command in RGui, not in RStudio.
 #updateR()
 ```
 
-
 ```{r, echo=FALSE}
 # define workdirectory, note the double backslashes
 setwd("/Users/jannevanheesch/Documents/GitHub/labjournalRVS")  # change to your own workdirectory
 getwd()#check
+```
 
+### Test
+```{r}
 testvariable <- 4
 ls()
 list <- ls()
+list
+ls()
+rm(list)
+ls()
+rm(list = ls()) #long story short, this command removes everything from enviroment.
 
-# ignore the warnings ?read.spss note that I have saved the data files in a folder called
-# 'addfiles'.
-
+```
+<br>
+### Load in data
+```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+# load the same data, but with different packages. First with 'foreign'.
 cv08 <- foreign::read.spss("tutorial_data/Cultural_Changes_2008.sav", use.value.labels = T, to.data.frame = T)
 cv10 <- foreign::read.spss("tutorial_data/Cultural_Changes_2010.sav", use.value.labels = T, to.data.frame = T)
 
-# normally I think setting use.value.labels=F is more convenient. Thus lets load the data again but
-# now without labels
+# foreign but without variable labels
 cv08_nolab <- foreign::read.spss("tutorial_data/Cultural_Changes_2008.sav", use.value.labels = F, to.data.frame = T)
 cv10_nolab <- foreign::read.spss("tutorial_data/Cultural_Changes_2010.sav", use.value.labels = F, to.data.frame = T)
 
 # finally, import the data using haven
 cv08_haven <- haven::read_spss("tutorial_data/Cultural_Changes_2008.sav")
 cv10_haven <- haven::read_spss("tutorial_data/Cultural_Changes_2010.sav")
+```
 
+
+```{r,echo=TRUE, results='hide', warning=FALSE, message=FALSE}
 str(cv08) 
 str(cv08_haven)
 str(cv08_nolab)
+```
 
+```{r}
+# But the str() command gives a lot of output. Let's only show first 5 lines
+output1 <- capture.output(str(cv08))
+cat(head(output1, 5), sep = "\n")
+
+output2 <- capture.output(str(cv08_haven))
+cat(head(output2, 5), sep = "\n")
+
+output3 <- capture.output(str(cv08_nolab))
+cat(head(output3, 5), sep = "\n")
+
+```
+
+now, let's see if the loaded data are structured differently, looking at age
+```{r}
 str(cv08$lftop) 
 str(cv08_haven$lftop)
 str(cv08_nolab$lftop)
@@ -85,15 +110,23 @@ attributes(cv08_nolab$lftop)
 attributes(cv08_haven$lftop)
 
 table(cv08_haven$lftop, useNA = "always")
+```
 
+Let's take a loot at what the following commands do.
+```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
 names(cv08_haven)
 summary(cv08_haven)
 head(cv08_haven)
-# fix(cv08_haven) #will produce an error
-#fix(cv08)
-#View(cv08_haven)
+fix(cv08)
+View(cv08_haven)
+```
+Again, these commands would create a lot of output. So they are not shown here.
 
-#create new variable from variable lftop
+
+
+### Define missings
+```{r}
+#create new variable from variable lftop. First 'copy' the variable. 
 cv08$lftop_new <- cv08$lftop
 
 #now, assign 'onbekend' as missing
@@ -113,7 +146,9 @@ table(cv08$agen, useNA = "always")
 
 #you can also use mutate to create a new age variable, with 99 as missing value. This is faster, but needs tidyverse.
 cv08_haven <- mutate(cv08_haven, lftop_new = na_if(lftop, 99))
+```
 
+```{r}
 levels(cv08$var006n)
 table(cv08$var006n, useNA = "always")
 
@@ -202,20 +237,16 @@ cv08$int_mean <- testmeans
 
 ```
 
-
-
-
 ```{r}
 #How to merge datasets. You want to select some variables (in this case: sex, education, health, region, age, and id). For both 08 and 10.
 cv08_sel <- cv08[, c("we_id", "lftop", "geslacht", "var006n", "v401", "landd")]
-cv10_sel <- cv08[, c("we_id", "lftop", "geslacht", "var006n", "v401", "landd")]
+cv10_sel <- cv10[, c("Sleutel", "var002", "var001", "Vltoplop", "V401", "Landd")]
 
 #make same variable names 
 names(cv08_sel) <- names(cv10_sel) <- c("id", "age", "sex", "educ", "health", "region")
 
 #check if id is factor
-levels(cv08_sel$id)
-#
+class(cv08_sel$id)
 attributes(cv08_sel$id) #yes it is
 
 #change to numeric, again with the weird method of first transforming it to string
@@ -252,6 +283,3 @@ table(cv08_sel$men, useNA = "always")
 
 
 ```
-@van2014ethnic 
-
-

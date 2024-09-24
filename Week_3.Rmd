@@ -1,22 +1,21 @@
-######################################### Title: Webscraping in R Author: Bas Hofstra Version:
-######################################### 29-07-2021
+# Webscraping in R
 ```{r}
 # start with clean workspace
 rm(list = ls())
-install.packages('data.table')
+#install.packages('data.table')
 library(data.table)  # mainly for faster data handling
 #library(tidyverse)  # I assume you already installed this one!
-install.packages('httr') 
+#install.packages('httr') 
 # we don't need this for now require(httr)
-install.packages("xml2")
+#install.packages("xml2")
 require(xml2)
-install.packages("rvest")
+#install.packages("rvest")
 require(rvest)
-install.packages("devtools")
+#install.packages("devtools")
 require(devtools)
 # Note we're doing something different here. We're installing a *latest* version directly from
 # GitHub This is because the released version of this packages contains some errors!
-devtools::install_github("jkeirstead/scholar")
+#devtools::install_github("jkeirstead/scholar")
 
 require(scholar)
 
@@ -36,10 +35,10 @@ class(soc_staff)
 
 
 The whole website is not neccessary, so we need to 'filter' 
-```{r}
+```{r, eval=FALSE}
 soc_staff <- soc_staff %>%
     rvest::html_element("body") %>%
-   rvest::html_elements("t") %>%
+   rvest::html_elements("td") %>%
     rvest::html_text()
 
 soc_staff
@@ -50,8 +49,128 @@ soc_staff <- soc_staff %>%
     rvest::html_element("body") %>%
   rvest::html_table()
 ```
+Try the same for Leiden
+```{r}
+pol_staff <- read_html("https://www.universiteitleiden.nl/en/social-behavioural-sciences/political-science/staff#tab-1")
+```
+
+Now, 'filter' again
+```{r}
+pol_staff2 <- pol_staff %>%
+    rvest::html_element("body") %>%
+   rvest::html_elements("ul.table-list") %>%
+   rvest::html_elements("li") %>%
+    rvest::html_elements("a") %>%
+    html_elements("div") %>%
+    html_elements("strong") %>%
+    html_text()
+   
+pol_staff2
+```
+
+```{r}
+#install.packages("RSelenium")
+require(RSelenium)
+```
+
+You can also look for authors in Open Alex. For example:
+```{r}
+Jochem_URL <- read_html("https://api.openalex.org/authors?q=jochem+tolsma") %>% html_text2()
+Jochem_URL
+substr(Jochem_URL, 1, 100)
+```
+But this is a bit of an annoying file. JSON.
+```{r}
+#install.packages("openalexR")
+require(openalexR)
+require(dplyr)
+```
+
+```{r}
+#install.packages("jsonlite")
+require(jsonlite)
+jt_json <- fromJSON("https://api.openalex.org/authors?search=Jochem+Tolsma", simplifyVector = FALSE)
+glimpse(jt_json, max.level = 1) 
+jt_json[["results"]][[1]][["display_name"]]
+
+Fetch_Jochem <- oa_fetch(entity = "author", search = "Jochem Tolsma")
+Fetch_Jochem
+
+```
+We have the object Fetch_Jochem, which contains the information about Jochem Tolsma. Now let's try to look for institutions.
+```{r}
+RU_id <- oa_fetch(entity = "institutions", search = "Radboud University")$id[1] 
+UvA_id <- oa_fetch(entity = "institutions", search = "University of Amsterdam")$id[1] 
+
+```
+We get 2 ids, one for UMC, one for RU. 
+
+Let's create a network (adjacency matrix) from these 4 authors:
+
+Jochem Tolsma
+Tom van der Meer
+Maurice Gesthuizen
+Michael Savelkoul
+
+```{r}
+TvdM <- oa_fetch(entity = "author", search = "Tom van der Meer", affiliations.institution.id = UvA_id)
+MG <- oa_fetch(entity = "author", search = "Maurice Gesthuizen")
+MS <- oa_fetch(entity = "author", search = "Michael Savelkoul")
+
+TvdM
+MG
+MS
 
 
-Now we 
+TvdM_works <- oa_fetch(entity = "works", author.id = TvdM$id[1])
+MG_works <- oa_fetch(entity = "works", author.id = MG$id)
+MS_works <- oa_fetch(entity = "works", author.id = MS$id)
+JT_works <- oa_fetch(entity = "works", author.id = Fetch_Jochem$id)
+
+TvdM_works
+MG_works
+MS_works
+JT_works
 
 
+```
+Let's do two waves of publications and make an adjacency matrix from there. 2014-2018 and 2019-2023.
+
+
+
+```{r}
+Wave1 <- matrix(c(0,0,0,0, 
+                   0,0,0,0,
+                   0,0,0,0,
+                   0,0,0,0),nrow = 4, ncol = 4,byrow = TRUE)
+Wave1
+
+rownames(Wave1) <- c(TvdM$id[1], MG$id, MS$id, Fetch_Jochem$id)
+colnames(Wave1) <- c(TvdM$id[1], MG$id, MS$id, Fetch_Jochem$id)
+```
+
+```{r}
+Wave2 <- matrix(c(0,0,0,0, 
+                   0,0,0,0,
+                   0,0,0,0,
+                   0,0,0,0),nrow = 4, ncol = 4,byrow = TRUE)
+rownames(Wave2) <- c(TvdM$id[1], MG$id, MS$id, Fetch_Jochem$id)
+colnames(Wave2) <- c(TvdM$id[1], MG$id, MS$id, Fetch_Jochem$id)
+```
+
+
+Now loop
+```{r}
+works <- rbind(TvdM_works, MG_works, MS_works, JT_works)
+works$dups <- duplicated(works)
+sum(works$dups)
+works[1,]$author
+
+works <- works %>% filter(!duplicated(id))
+ego <- works[1,]$author[[1]]$au_id[1]
+alter <- works[1,]$author[[1]]$au_id[-1]
+
+Wave2[ego, alter] <- 1
+Wave2
+```
+But 

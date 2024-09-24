@@ -1,0 +1,61 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Elaboration on Introduction and Network Visualization
+
+For my research on interdisciplinarity in collaboration networks, it is
+useful to proceed stepwise. For now, I think I need the following steps:
+
+My descriptive research question is:
+
+*RQ1: did collaboration networks become more interdisciplinary over
+time, i.e. did the structure of the collaboration network change over
+time with regards to the frequency/proportion of interdisciplinary
+collaborations?*
+
+1.  I think this means that I should gather all collaboration partners
+    of all sociology staff-members of the RU at t1.
+
+<!-- -->
+
+2.  Then, I need to gather all collaboration partners of all sociology
+    staff-members of the RU at t2.
+
+<!-- -->
+
+3.  Then, I need *some* measure of interdisciplinarity as network
+    characteristic (e.g.\@luvzar2014community).
+
+My explanatory research question is:
+
+*RQ2: to what extent does increasing interdisciplinarity at the
+macro-level(=network) lead to selective/partial clustering at the micro
+level?*
+
+So, this question is about how structural factors lead to clustering
+around some individuals, or how network characteristics may lead to some
+individuals acting as collaboration-brokers. Or: are there
+selection-effects of researchers who are interdisciplinary-focused?
+
+4.  To engage with this question, I think it is necessary to gather
+    relationship characteristics. So, after determining the degree of
+    interdisciplinarity of the network, I could look at the ego-net
+    level. I expect that interdisciplinary collaborations on the
+    macro-level have a kind of mushrooming effect on relations on the
+    micro-level, as interdisciplinary research collaborations
+    automatically mean new connections (at departments, faculties,
+    etc.). Following this I could, for example, look at the consequences
+    (in terms of homophily, for example) if the network indeed turns out
+    to be clustered around interdisciplinarity. This would result in the
+    observation that researchers who engage in interdisciplinary
+    research a lot are more likely to engage in *even more*
+    interdisciplinary research, and researchers who do not regularly
+    engage in interdisciplinary research become more 'isolated'. This
+    would result in less in- and out-degrees. DOES THIS MAKE SENSE???
+
+```{r}
+
+```
