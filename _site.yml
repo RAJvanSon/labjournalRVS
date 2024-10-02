@@ -20,10 +20,11 @@ navbar:
         href: Week_3.html
       - text: "Week 4: Elaboration on Introduction and Network Visualization"
         href: week_4.html
+      - text: "Data Prep"
+        href: Data_prep.html
     - text: "Final Report"
       href: Final_Report.html
-      - text: Data Prep
-        href: Data_prep.html
+        
   right:
   - icon: fab fa-github
     href: https://github.com/JochemTolsma/labjournal

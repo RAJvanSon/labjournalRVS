@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Data_prep.knit</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+<link rel="stylesheet" href="tweaks.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    My journal
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Tutorial_week1.html">Week 1: R Tutorial</a>
+    </li>
+    <li>
+      <a href="week_2.html">Week 2: Introduction</a>
+    </li>
+    <li>
+      <a href="Week_3.html">Week 3: Webscraping</a>
+    </li>
+    <li>
+      <a href="week_4.html">Week 4: Elaboration on Introduction and Network Visualization</a>
+    </li>
+    <li>
+      <a href="Data_prep.html">Data Prep</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="Final_Report.html">Final Report</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/JochemTolsma/labjournal">
+    <span class="fab fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+
+</div>
+
+
+<pre class="r"><code>rm(list = ls())
+require(tidyverse)</code></pre>
+<pre><code>## Loading required package: tidyverse</code></pre>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.2     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>require(installr)</code></pre>
+<pre><code>## Loading required package: installr
+## 
+## Welcome to installr version 0.23.4
+## 
+## More information is available on the installr project website:
+## https://github.com/talgalili/installr/
+## 
+## Contact: &lt;tal.galili@gmail.com&gt;
+## Suggestions and bug-reports can be submitted at: https://github.com/talgalili/installr/issues
+## 
+##          To suppress this message use:
+##          suppressPackageStartupMessages(library(installr))</code></pre>
+<pre class="r"><code>require(foreign)</code></pre>
+<pre><code>## Loading required package: foreign</code></pre>
+<pre class="r"><code>require(jsonlite)</code></pre>
+<pre><code>## Loading required package: jsonlite
+## 
+## Attaching package: &#39;jsonlite&#39;
+## 
+## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     flatten</code></pre>
+<pre class="r"><code>require(openalexR)</code></pre>
+<pre><code>## Loading required package: openalexR
+## Thank you for using openalexR!
+## To acknowledge our work, please cite the package by calling `citation(&quot;openalexR&quot;)`.
+## To suppress this message, add `openalexR.message = suppressed` to your .Renviron file.</code></pre>
+<pre class="r"><code>require(scholar)</code></pre>
+<pre><code>## Loading required package: scholar</code></pre>
+<pre class="r"><code>require(rvest)</code></pre>
+<pre><code>## Loading required package: rvest
+## 
+## Attaching package: &#39;rvest&#39;
+## 
+## The following object is masked from &#39;package:readr&#39;:
+## 
+##     guess_encoding</code></pre>
+<pre class="r"><code>require(igraph)</code></pre>
+<pre><code>## Loading required package: igraph
+## 
+## Attaching package: &#39;igraph&#39;
+## 
+## The following objects are masked from &#39;package:lubridate&#39;:
+## 
+##     %--%, union
+## 
+## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     as_data_frame, groups, union
+## 
+## The following objects are masked from &#39;package:purrr&#39;:
+## 
+##     compose, simplify
+## 
+## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     crossing
+## 
+## The following object is masked from &#39;package:tibble&#39;:
+## 
+##     as_data_frame
+## 
+## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     decompose, spectrum
+## 
+## The following object is masked from &#39;package:base&#39;:
+## 
+##     union</code></pre>
+<pre class="r"><code>require(tidyr)
+load(&quot;/Users/jannevanheesch/Documents/R. SN/scholars_20240924.rda&quot;)
+scholars &lt;- x
+rm(x)</code></pre>
+<pre class="r"><code>fcolnet &lt;- function(data = scholars, university = &quot;RU&quot;, discipline = &quot;sociology&quot;, waves = list(c(2015,
+    2018), c(2019, 2023)), type = c(&quot;first&quot;)) {
+
+    # step 1
+    demographics &lt;- do.call(rbind.data.frame, data$demographics)
+    demographics &lt;- demographics %&gt;%
+        mutate(Universiteit1.22 = replace(Universiteit1.22, is.na(Universiteit1.22), &quot;&quot;), Universiteit2.22 = replace(Universiteit2.22,
+            is.na(Universiteit2.22), &quot;&quot;), Universiteit1.24 = replace(Universiteit1.24, is.na(Universiteit1.24),
+            &quot;&quot;), Universiteit2.24 = replace(Universiteit2.24, is.na(Universiteit2.24), &quot;&quot;), discipline.22 = replace(discipline.22,
+            is.na(discipline.22), &quot;&quot;), discipline.24 = replace(discipline.24, is.na(discipline.24), &quot;&quot;))
+
+    sample &lt;- which((demographics$Universiteit1.22 %in% university | demographics$Universiteit2.22 %in%
+        university | demographics$Universiteit1.24 %in% university | demographics$Universiteit2.24 %in%
+        university) &amp; (demographics$discipline.22 %in% discipline | demographics$discipline.24 %in% discipline))
+
+    demographics_soc &lt;- demographics[sample, ]
+    scholars_sel &lt;- lapply(scholars, &quot;[&quot;, sample)
+
+    # step 2
+    ids &lt;- demographics_soc$au_id
+    nwaves &lt;- length(waves)
+    nets &lt;- array(0, dim = c(nwaves, length(ids), length(ids)), dimnames = list(wave = 1:nwaves, ids,
+        ids))
+    dimnames(nets)
+
+    # step 3
+    df_works &lt;- tibble(works_id = unlist(lapply(scholars_sel$work, function(l) l$id)), works_author = unlist(lapply(scholars_sel$work,
+        function(l) l$author), recursive = FALSE), works_year = unlist(lapply(scholars_sel$work, function(l) l$publication_year),
+        recursive = FALSE))
+
+    df_works &lt;- df_works[!duplicated(df_works), ]
+
+    # step 4
+    if (type == &quot;first&quot;) {
+        for (j in 1:nwaves) {
+            df_works_w &lt;- df_works[df_works$works_year &gt;= waves[[j]][1] &amp; df_works$works_year &lt;= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego &lt;- df_works_w$works_author[i][[1]]$au_id[1]
+                alters &lt;- df_works_w$works_author[i][[1]]$au_id[-1]
+                if (sum(ids %in% ego) &gt; 0 &amp; sum(ids %in% alters) &gt; 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] &lt;- 1
+                }
+            }
+        }
+    }
+
+    if (type == &quot;last&quot;) {
+        for (j in 1:nwaves) {
+            df_works_w &lt;- df_works[df_works$works_year &gt;= waves[[j]][1] &amp; df_works$works_year &lt;= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego &lt;- rev(df_works_w$works_author[i][[1]]$au_id)[1]
+                alters &lt;- rev(df_works_w$works_author[i][[1]]$au_id)[-1]
+                if (sum(ids %in% ego) &gt; 0 &amp; sum(ids %in% alters) &gt; 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] &lt;- 1
+                }
+            }
+        }
+    }
+
+    if (type == &quot;all&quot;) {
+        for (j in 1:nwaves) {
+            df_works_w &lt;- df_works[df_works$works_year &gt;= waves[[j]][1] &amp; df_works$works_year &lt;= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                egos &lt;- df_works_w$works_author[i][[1]]$au_id
+                if (sum(ids %in% egos) &gt; 0) {
+                  nets[j, which(ids %in% egos), which(ids %in% egos)] &lt;- 1
+                }
+            }
+        }
+    }
+    output &lt;- list()
+    output$data &lt;- scholars_sel
+    output$nets &lt;- nets
+    return(output)
+}</code></pre>
+<p>Make a data-frame for all political science and sociology works in
+two waves. 2004-2009, and 2019-2024.</p>
+<pre class="r"><code>df_RU &lt;- fcolnet(data = scholars, university = &quot;RU&quot;, discipline = c(&quot;sociology&quot;, &quot;political science&quot;), waves = list(c(2004,
+    2009), c(2019, 2024)), type = c(&quot;first&quot;))</code></pre>
+<pre class="r"><code>df &lt;- df_RU$data
+df_ego &lt;- do.call(rbind.data.frame, df$demographics)
+
+df$works[[57]]</code></pre>
+<pre><code>## # A tibble: 2 × 37
+##   id    title display_name author publication_date so    so_id host_organization
+##   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;        &lt;list&gt; &lt;chr&gt;            &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt;            
+## 1 http… Euro… European ex… &lt;df&gt;   2004-01-01       NA    NA    NA               
+## 2 http… The … The State b… &lt;df&gt;   2005-01-01       NA    NA    NA               
+## # ℹ 29 more variables: issn_l &lt;lgl&gt;, url &lt;chr&gt;, pdf_url &lt;lgl&gt;, license &lt;lgl&gt;,
+## #   version &lt;lgl&gt;, first_page &lt;lgl&gt;, last_page &lt;lgl&gt;, volume &lt;lgl&gt;,
+## #   issue &lt;lgl&gt;, is_oa &lt;lgl&gt;, is_oa_anywhere &lt;lgl&gt;, oa_status &lt;chr&gt;,
+## #   oa_url &lt;lgl&gt;, any_repository_has_fulltext &lt;lgl&gt;, language &lt;chr&gt;,
+## #   grants &lt;lgl&gt;, cited_by_count &lt;int&gt;, counts_by_year &lt;lgl&gt;,
+## #   publication_year &lt;int&gt;, cited_by_api_url &lt;chr&gt;, ids &lt;list&gt;, doi &lt;lgl&gt;,
+## #   type &lt;chr&gt;, referenced_works &lt;list&gt;, related_works &lt;list&gt;, …</code></pre>
+<pre class="r"><code>df$works[[58]]</code></pre>
+<pre><code>## # A tibble: 13 × 38
+##    id               title display_name author ab    publication_date so    so_id
+##    &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;        &lt;list&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;
+##  1 https://openale… The … The German … &lt;df&gt;   This… 2019-01-01       Marx… http…
+##  2 https://openale… The … The “Forgot… &lt;df&gt;   This… 2019-01-01       Marx… http…
+##  3 https://openale… Work… Workers’ Co… &lt;df&gt;   Over… 2021-01-01       Poli… http…
+##  4 https://openale… Bram… Bram Mellin… &lt;df&gt;   &lt;NA&gt;  2023-03-23       BMGN… http…
+##  5 https://openale… Book… Book Review… &lt;df&gt;   Besp… 2016-01-01       &lt;NA&gt;  &lt;NA&gt; 
+##  6 https://openale… Chan… Changing Co… &lt;df&gt;   &lt;NA&gt;  2016-01-01       &lt;NA&gt;  &lt;NA&gt; 
+##  7 https://openale… Comm… Communist o… &lt;df&gt;   &lt;NA&gt;  2015-01-01       Den … http…
+##  8 https://openale… The … The concept… &lt;df&gt;   &lt;NA&gt;  2017-01-01       &lt;NA&gt;  &lt;NA&gt; 
+##  9 https://openale… Hist… History of … &lt;df&gt;   &lt;NA&gt;  2017-01-01       &lt;NA&gt;  &lt;NA&gt; 
+## 10 https://openale… Work… Working Cla… &lt;df&gt;   &lt;NA&gt;  2018-01-01       &lt;NA&gt;  &lt;NA&gt; 
+## 11 https://openale… Work… Working-Cla… &lt;df&gt;   This… 2019-01-01       Marx… http…
+## 12 https://openale… Rece… Recensie: R… &lt;df&gt;   Besp… 2019-01-01       De M… http…
+## 13 https://openale… Thre… Three Conce… &lt;df&gt;   &lt;NA&gt;  2021-01-01       Poli… http…
+## # ℹ 30 more variables: host_organization &lt;chr&gt;, issn_l &lt;chr&gt;, url &lt;chr&gt;,
+## #   pdf_url &lt;chr&gt;, license &lt;chr&gt;, version &lt;chr&gt;, first_page &lt;chr&gt;,
+## #   last_page &lt;chr&gt;, volume &lt;chr&gt;, issue &lt;chr&gt;, is_oa &lt;lgl&gt;,
+## #   is_oa_anywhere &lt;lgl&gt;, oa_status &lt;chr&gt;, oa_url &lt;chr&gt;,
+## #   any_repository_has_fulltext &lt;lgl&gt;, language &lt;chr&gt;, grants &lt;lgl&gt;,
+## #   cited_by_count &lt;int&gt;, counts_by_year &lt;list&gt;, publication_year &lt;int&gt;,
+## #   cited_by_api_url &lt;chr&gt;, ids &lt;list&gt;, doi &lt;chr&gt;, type &lt;chr&gt;, …</code></pre>
+<pre class="r"><code>df$works[[57]] &lt;- df$works[[57]] %&gt;% mutate(ab = NA) %&gt;% select(id,title, display_name, author, ab, everything()) 
+df$works[[52]] &lt;- df$works[[52]] %&gt;% mutate(issn_l = NA) %&gt;% select(id,title, display_name, author, publication_date, so, so_id, host_organization, issn_l, everything()) 
+
+df_works &lt;- do.call(rbind.data.frame, df$works)</code></pre>
+<pre class="r"><code>df_unnest &lt;- df_works %&gt;% unnest(topics, names_sep = &quot;topic.&quot;)
+head(df_unnest)</code></pre>
+<pre><code>## # A tibble: 6 × 42
+##   id                title display_name author ab    publication_date so    so_id
+##   &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt;        &lt;list&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;
+## 1 https://openalex… The … The dangers… &lt;df&gt;   &lt;NA&gt;  2024-01-17       Natu… http…
+## 2 https://openalex… The … The dangers… &lt;df&gt;   &lt;NA&gt;  2024-01-17       Natu… http…
+## 3 https://openalex… The … The dangers… &lt;df&gt;   &lt;NA&gt;  2024-01-17       Natu… http…
+## 4 https://openalex… The … The dangers… &lt;df&gt;   &lt;NA&gt;  2024-01-17       Natu… http…
+## 5 https://openalex… Text… Text mining… &lt;df&gt;   The … 2022-11-01       Soci… http…
+## 6 https://openalex… Text… Text mining… &lt;df&gt;   The … 2022-11-01       Soci… http…
+## # ℹ 34 more variables: host_organization &lt;chr&gt;, issn_l &lt;chr&gt;, url &lt;chr&gt;,
+## #   pdf_url &lt;chr&gt;, license &lt;chr&gt;, version &lt;chr&gt;, first_page &lt;chr&gt;,
+## #   last_page &lt;chr&gt;, volume &lt;chr&gt;, issue &lt;chr&gt;, is_oa &lt;lgl&gt;,
+## #   is_oa_anywhere &lt;lgl&gt;, oa_status &lt;chr&gt;, oa_url &lt;chr&gt;,
+## #   any_repository_has_fulltext &lt;lgl&gt;, language &lt;chr&gt;, grants &lt;list&gt;,
+## #   cited_by_count &lt;int&gt;, counts_by_year &lt;list&gt;, publication_year &lt;int&gt;,
+## #   cited_by_api_url &lt;chr&gt;, ids &lt;list&gt;, doi &lt;chr&gt;, type &lt;chr&gt;, …</code></pre>
+<pre class="r"><code>df_unnest &lt;- df_unnest %&gt;% group_by(title) %&gt;% filter(topicstopic.name == &quot;subfield&quot;)
+head(df_unnest) #so, some papers have more subfields than others</code></pre>
+<pre><code>## # A tibble: 6 × 42
+## # Groups:   title [3]
+##   id                title display_name author ab    publication_date so    so_id
+##   &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt;        &lt;list&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;
+## 1 https://openalex… The … The dangers… &lt;df&gt;   &lt;NA&gt;  2024-01-17       Natu… http…
+## 2 https://openalex… Text… Text mining… &lt;df&gt;   The … 2022-11-01       Soci… http…
+## 3 https://openalex… Text… Text mining… &lt;df&gt;   The … 2022-11-01       Soci… http…
+## 4 https://openalex… Text… Text mining… &lt;df&gt;   The … 2022-11-01       Soci… http…
+## 5 https://openalex… Sign… Signals of … &lt;df&gt;   Mech… 2024-01-22       Phil… http…
+## 6 https://openalex… Sign… Signals of … &lt;df&gt;   Mech… 2024-01-22       Phil… http…
+## # ℹ 34 more variables: host_organization &lt;chr&gt;, issn_l &lt;chr&gt;, url &lt;chr&gt;,
+## #   pdf_url &lt;chr&gt;, license &lt;chr&gt;, version &lt;chr&gt;, first_page &lt;chr&gt;,
+## #   last_page &lt;chr&gt;, volume &lt;chr&gt;, issue &lt;chr&gt;, is_oa &lt;lgl&gt;,
+## #   is_oa_anywhere &lt;lgl&gt;, oa_status &lt;chr&gt;, oa_url &lt;chr&gt;,
+## #   any_repository_has_fulltext &lt;lgl&gt;, language &lt;chr&gt;, grants &lt;list&gt;,
+## #   cited_by_count &lt;int&gt;, counts_by_year &lt;list&gt;, publication_year &lt;int&gt;,
+## #   cited_by_api_url &lt;chr&gt;, ids &lt;list&gt;, doi &lt;chr&gt;, type &lt;chr&gt;, …</code></pre>
+<pre class="r"><code>test &lt;- fcolnet(data = scholars, 
+                university = &quot;RU&quot;, 
+                discipline = c(&quot;sociology&quot;, &quot;political science&quot;), 
+                waves = list(c(2004, 2009), c(2019, 2024)), 
+                type = c(&quot;all&quot;))
+
+test_w1 &lt;- igraph::graph_from_adjacency_matrix(
+  test$nets[1,,], #now, I take the first wave
+  mode = c(&quot;directed&quot;),
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL
+)
+
+test_w2 &lt;- igraph::graph_from_adjacency_matrix(
+  test$nets[2,,], #now, I take the second wave
+  mode = c(&quot;directed&quot;),
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL
+)
+
+#DO NOT MESS UP THE ORDER! THUS IF YOU JOIN THIS DATA WITH YOUR OWN DATA CHECK THAT ORDER REMAINED THE SAME!! 
+
+plot(test_w1,
+  vertex.color = ifelse(df_ego$discipline.24 == &quot;sociology&quot;, &quot;red&quot;, &quot;blue&quot;), #now, I can use actor attributes for plotting. 
+  vertex.label = NA,
+  edge.width = 1,
+  edge.arrow.size =1)</code></pre>
+<p><img src="Data_prep_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>plot(test_w2,
+  vertex.color = ifelse(df_ego$discipline.24 == &quot;sociology&quot;, &quot;red&quot;, &quot;blue&quot;), #now, I can use actor attributes for plotting. 
+  vertex.label = NA,
+  edge.width = 1,
+  edge.arrow.size =1)</code></pre>
+<p><img src="Data_prep_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+
+<div id="rmd-source-code">YGBge3J9CnJtKGxpc3QgPSBscygpKQpyZXF1aXJlKHRpZHl2ZXJzZSkKcmVxdWlyZShpbnN0YWxscikKcmVxdWlyZShmb3JlaWduKQpyZXF1aXJlKGpzb25saXRlKQpyZXF1aXJlKG9wZW5hbGV4UikKcmVxdWlyZShzY2hvbGFyKQpyZXF1aXJlKHJ2ZXN0KQpyZXF1aXJlKGlncmFwaCkKcmVxdWlyZSh0aWR5cikKbG9hZCgiL1VzZXJzL2phbm5ldmFuaGVlc2NoL0RvY3VtZW50cy9SLiBTTi9zY2hvbGFyc18yMDI0MDkyNC5yZGEiKQpzY2hvbGFycyA8LSB4CnJtKHgpCmBgYAoKYGBge3J9CmZjb2xuZXQgPC0gZnVuY3Rpb24oZGF0YSA9IHNjaG9sYXJzLCB1bml2ZXJzaXR5ID0gIlJVIiwgZGlzY2lwbGluZSA9ICJzb2Npb2xvZ3kiLCB3YXZlcyA9IGxpc3QoYygyMDE1LAogICAgMjAxOCksIGMoMjAxOSwgMjAyMykpLCB0eXBlID0gYygiZmlyc3QiKSkgewoKICAgICMgc3RlcCAxCiAgICBkZW1vZ3JhcGhpY3MgPC0gZG8uY2FsbChyYmluZC5kYXRhLmZyYW1lLCBkYXRhJGRlbW9ncmFwaGljcykKICAgIGRlbW9ncmFwaGljcyA8LSBkZW1vZ3JhcGhpY3MgJT4lCiAgICAgICAgbXV0YXRlKFVuaXZlcnNpdGVpdDEuMjIgPSByZXBsYWNlKFVuaXZlcnNpdGVpdDEuMjIsIGlzLm5hKFVuaXZlcnNpdGVpdDEuMjIpLCAiIiksIFVuaXZlcnNpdGVpdDIuMjIgPSByZXBsYWNlKFVuaXZlcnNpdGVpdDIuMjIsCiAgICAgICAgICAgIGlzLm5hKFVuaXZlcnNpdGVpdDIuMjIpLCAiIiksIFVuaXZlcnNpdGVpdDEuMjQgPSByZXBsYWNlKFVuaXZlcnNpdGVpdDEuMjQsIGlzLm5hKFVuaXZlcnNpdGVpdDEuMjQpLAogICAgICAgICAgICAiIiksIFVuaXZlcnNpdGVpdDIuMjQgPSByZXBsYWNlKFVuaXZlcnNpdGVpdDIuMjQsIGlzLm5hKFVuaXZlcnNpdGVpdDIuMjQpLCAiIiksIGRpc2NpcGxpbmUuMjIgPSByZXBsYWNlKGRpc2NpcGxpbmUuMjIsCiAgICAgICAgICAgIGlzLm5hKGRpc2NpcGxpbmUuMjIpLCAiIiksIGRpc2NpcGxpbmUuMjQgPSByZXBsYWNlKGRpc2NpcGxpbmUuMjQsIGlzLm5hKGRpc2NpcGxpbmUuMjQpLCAiIikpCgogICAgc2FtcGxlIDwtIHdoaWNoKChkZW1vZ3JhcGhpY3MkVW5pdmVyc2l0ZWl0MS4yMiAlaW4lIHVuaXZlcnNpdHkgfCBkZW1vZ3JhcGhpY3MkVW5pdmVyc2l0ZWl0Mi4yMiAlaW4lCiAgICAgICAgdW5pdmVyc2l0eSB8IGRlbW9ncmFwaGljcyRVbml2ZXJzaXRlaXQxLjI0ICVpbiUgdW5pdmVyc2l0eSB8IGRlbW9ncmFwaGljcyRVbml2ZXJzaXRlaXQyLjI0ICVpbiUKICAgICAgICB1bml2ZXJzaXR5KSAmIChkZW1vZ3JhcGhpY3MkZGlzY2lwbGluZS4yMiAlaW4lIGRpc2NpcGxpbmUgfCBkZW1vZ3JhcGhpY3MkZGlzY2lwbGluZS4yNCAlaW4lIGRpc2NpcGxpbmUpKQoKICAgIGRlbW9ncmFwaGljc19zb2MgPC0gZGVtb2dyYXBoaWNzW3NhbXBsZSwgXQogICAgc2Nob2xhcnNfc2VsIDwtIGxhcHBseShzY2hvbGFycywgIlsiLCBzYW1wbGUpCgogICAgIyBzdGVwIDIKICAgIGlkcyA8LSBkZW1vZ3JhcGhpY3Nfc29jJGF1X2lkCiAgICBud2F2ZXMgPC0gbGVuZ3RoKHdhdmVzKQogICAgbmV0cyA8LSBhcnJheSgwLCBkaW0gPSBjKG53YXZlcywgbGVuZ3RoKGlkcyksIGxlbmd0aChpZHMpKSwgZGltbmFtZXMgPSBsaXN0KHdhdmUgPSAxOm53YXZlcywgaWRzLAogICAgICAgIGlkcykpCiAgICBkaW1uYW1lcyhuZXRzKQoKICAgICMgc3RlcCAzCiAgICBkZl93b3JrcyA8LSB0aWJibGUod29ya3NfaWQgPSB1bmxpc3QobGFwcGx5KHNjaG9sYXJzX3NlbCR3b3JrLCBmdW5jdGlvbihsKSBsJGlkKSksIHdvcmtzX2F1dGhvciA9IHVubGlzdChsYXBwbHkoc2Nob2xhcnNfc2VsJHdvcmssCiAgICAgICAgZnVuY3Rpb24obCkgbCRhdXRob3IpLCByZWN1cnNpdmUgPSBGQUxTRSksIHdvcmtzX3llYXIgPSB1bmxpc3QobGFwcGx5KHNjaG9sYXJzX3NlbCR3b3JrLCBmdW5jdGlvbihsKSBsJHB1YmxpY2F0aW9uX3llYXIpLAogICAgICAgIHJlY3Vyc2l2ZSA9IEZBTFNFKSkKCiAgICBkZl93b3JrcyA8LSBkZl93b3Jrc1shZHVwbGljYXRlZChkZl93b3JrcyksIF0KCiAgICAjIHN0ZXAgNAogICAgaWYgKHR5cGUgPT0gImZpcnN0IikgewogICAgICAgIGZvciAoaiBpbiAxOm53YXZlcykgewogICAgICAgICAgICBkZl93b3Jrc193IDwtIGRmX3dvcmtzW2RmX3dvcmtzJHdvcmtzX3llYXIgPj0gd2F2ZXNbW2pdXVsxXSAmIGRmX3dvcmtzJHdvcmtzX3llYXIgPD0gd2F2ZXNbW2pdXVsyXSwKICAgICAgICAgICAgICAgIF0KICAgICAgICAgICAgZm9yIChpIGluIDE6bnJvdyhkZl93b3Jrc193KSkgewogICAgICAgICAgICAgICAgZWdvIDwtIGRmX3dvcmtzX3ckd29ya3NfYXV0aG9yW2ldW1sxXV0kYXVfaWRbMV0KICAgICAgICAgICAgICAgIGFsdGVycyA8LSBkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGF1X2lkWy0xXQogICAgICAgICAgICAgICAgaWYgKHN1bShpZHMgJWluJSBlZ28pID4gMCAmIHN1bShpZHMgJWluJSBhbHRlcnMpID4gMCkgewogICAgICAgICAgICAgICAgICBuZXRzW2osIHdoaWNoKGlkcyAlaW4lIGVnbyksIHdoaWNoKGlkcyAlaW4lIGFsdGVycyldIDwtIDEKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgfQogICAgICAgIH0KICAgIH0KCiAgICBpZiAodHlwZSA9PSAibGFzdCIpIHsKICAgICAgICBmb3IgKGogaW4gMTpud2F2ZXMpIHsKICAgICAgICAgICAgZGZfd29ya3NfdyA8LSBkZl93b3Jrc1tkZl93b3JrcyR3b3Jrc195ZWFyID49IHdhdmVzW1tqXV1bMV0gJiBkZl93b3JrcyR3b3Jrc195ZWFyIDw9IHdhdmVzW1tqXV1bMl0sCiAgICAgICAgICAgICAgICBdCiAgICAgICAgICAgIGZvciAoaSBpbiAxOm5yb3coZGZfd29ya3NfdykpIHsKICAgICAgICAgICAgICAgIGVnbyA8LSByZXYoZGZfd29ya3NfdyR3b3Jrc19hdXRob3JbaV1bWzFdXSRhdV9pZClbMV0KICAgICAgICAgICAgICAgIGFsdGVycyA8LSByZXYoZGZfd29ya3NfdyR3b3Jrc19hdXRob3JbaV1bWzFdXSRhdV9pZClbLTFdCiAgICAgICAgICAgICAgICBpZiAoc3VtKGlkcyAlaW4lIGVnbykgPiAwICYgc3VtKGlkcyAlaW4lIGFsdGVycykgPiAwKSB7CiAgICAgICAgICAgICAgICAgIG5ldHNbaiwgd2hpY2goaWRzICVpbiUgZWdvKSwgd2hpY2goaWRzICVpbiUgYWx0ZXJzKV0gPC0gMQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgfQogICAgfQoKICAgIGlmICh0eXBlID09ICJhbGwiKSB7CiAgICAgICAgZm9yIChqIGluIDE6bndhdmVzKSB7CiAgICAgICAgICAgIGRmX3dvcmtzX3cgPC0gZGZfd29ya3NbZGZfd29ya3Mkd29ya3NfeWVhciA+PSB3YXZlc1tbal1dWzFdICYgZGZfd29ya3Mkd29ya3NfeWVhciA8PSB3YXZlc1tbal1dWzJdLAogICAgICAgICAgICAgICAgXQogICAgICAgICAgICBmb3IgKGkgaW4gMTpucm93KGRmX3dvcmtzX3cpKSB7CiAgICAgICAgICAgICAgICBlZ29zIDwtIGRmX3dvcmtzX3ckd29ya3NfYXV0aG9yW2ldW1sxXV0kYXVfaWQKICAgICAgICAgICAgICAgIGlmIChzdW0oaWRzICVpbiUgZWdvcykgPiAwKSB7CiAgICAgICAgICAgICAgICAgIG5ldHNbaiwgd2hpY2goaWRzICVpbiUgZWdvcyksIHdoaWNoKGlkcyAlaW4lIGVnb3MpXSA8LSAxCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICB9CiAgICB9CiAgICBvdXRwdXQgPC0gbGlzdCgpCiAgICBvdXRwdXQkZGF0YSA8LSBzY2hvbGFyc19zZWwKICAgIG91dHB1dCRuZXRzIDwtIG5ldHMKICAgIHJldHVybihvdXRwdXQpCn0KYGBgCgpNYWtlIGEgZGF0YS1mcmFtZSBmb3IgYWxsIHBvbGl0aWNhbCBzY2llbmNlIGFuZCBzb2Npb2xvZ3kgd29ya3MgaW4gdHdvIHdhdmVzLiAyMDA0LTIwMDksIGFuZCAyMDE5LTIwMjQuCmBgYHtyfQpkZl9SVSA8LSBmY29sbmV0KGRhdGEgPSBzY2hvbGFycywgdW5pdmVyc2l0eSA9ICJSVSIsIGRpc2NpcGxpbmUgPSBjKCJzb2Npb2xvZ3kiLCAicG9saXRpY2FsIHNjaWVuY2UiKSwgd2F2ZXMgPSBsaXN0KGMoMjAwNCwKICAgIDIwMDkpLCBjKDIwMTksIDIwMjQpKSwgdHlwZSA9IGMoImZpcnN0IikpCmBgYAoKIApgYGB7cn0KZGYgPC0gZGZfUlUkZGF0YQpkZl9lZ28gPC0gZG8uY2FsbChyYmluZC5kYXRhLmZyYW1lLCBkZiRkZW1vZ3JhcGhpY3MpCgpkZiR3b3Jrc1tbNTddXQpkZiR3b3Jrc1tbNThdXQpgYGAKCgpgYGB7cn0KZGYkd29ya3NbWzU3XV0gPC0gZGYkd29ya3NbWzU3XV0gJT4lIG11dGF0ZShhYiA9IE5BKSAlPiUgc2VsZWN0KGlkLHRpdGxlLCBkaXNwbGF5X25hbWUsIGF1dGhvciwgYWIsIGV2ZXJ5dGhpbmcoKSkgCmRmJHdvcmtzW1s1Ml1dIDwtIGRmJHdvcmtzW1s1Ml1dICU+JSBtdXRhdGUoaXNzbl9sID0gTkEpICU+JSBzZWxlY3QoaWQsdGl0bGUsIGRpc3BsYXlfbmFtZSwgYXV0aG9yLCBwdWJsaWNhdGlvbl9kYXRlLCBzbywgc29faWQsIGhvc3Rfb3JnYW5pemF0aW9uLCBpc3NuX2wsIGV2ZXJ5dGhpbmcoKSkgCgpkZl93b3JrcyA8LSBkby5jYWxsKHJiaW5kLmRhdGEuZnJhbWUsIGRmJHdvcmtzKQpgYGAKCmBgYHtyfQpkZl91bm5lc3QgPC0gZGZfd29ya3MgJT4lIHVubmVzdCh0b3BpY3MsIG5hbWVzX3NlcCA9ICJ0b3BpYy4iKQpoZWFkKGRmX3VubmVzdCkKYGBgCgpgYGB7cn0KZGZfdW5uZXN0IDwtIGRmX3VubmVzdCAlPiUgZ3JvdXBfYnkodGl0bGUpICU+JSBmaWx0ZXIodG9waWNzdG9waWMubmFtZSA9PSAic3ViZmllbGQiKQpoZWFkKGRmX3VubmVzdCkgI3NvLCBzb21lIHBhcGVycyBoYXZlIG1vcmUgc3ViZmllbGRzIHRoYW4gb3RoZXJzCmBgYAoKYGBge3J9CnRlc3QgPC0gZmNvbG5ldChkYXRhID0gc2Nob2xhcnMsIAogICAgICAgICAgICAgICAgdW5pdmVyc2l0eSA9ICJSVSIsIAogICAgICAgICAgICAgICAgZGlzY2lwbGluZSA9IGMoInNvY2lvbG9neSIsICJwb2xpdGljYWwgc2NpZW5jZSIpLCAKICAgICAgICAgICAgICAgIHdhdmVzID0gbGlzdChjKDIwMDQsIDIwMDkpLCBjKDIwMTksIDIwMjQpKSwgCiAgICAgICAgICAgICAgICB0eXBlID0gYygiYWxsIikpCgp0ZXN0X3cxIDwtIGlncmFwaDo6Z3JhcGhfZnJvbV9hZGphY2VuY3lfbWF0cml4KAogIHRlc3QkbmV0c1sxLCxdLCAjbm93LCBJIHRha2UgdGhlIGZpcnN0IHdhdmUKICBtb2RlID0gYygiZGlyZWN0ZWQiKSwKICB3ZWlnaHRlZCA9IE5VTEwsCiAgZGlhZyA9IEZBTFNFLAogIGFkZC5jb2xuYW1lcyA9IE5VTEwKKQoKdGVzdF93MiA8LSBpZ3JhcGg6OmdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeCgKICB0ZXN0JG5ldHNbMiwsXSwgI25vdywgSSB0YWtlIHRoZSBzZWNvbmQgd2F2ZQogIG1vZGUgPSBjKCJkaXJlY3RlZCIpLAogIHdlaWdodGVkID0gTlVMTCwKICBkaWFnID0gRkFMU0UsCiAgYWRkLmNvbG5hbWVzID0gTlVMTAopCgojRE8gTk9UIE1FU1MgVVAgVEhFIE9SREVSISBUSFVTIElGIFlPVSBKT0lOIFRISVMgREFUQSBXSVRIIFlPVVIgT1dOIERBVEEgQ0hFQ0sgVEhBVCBPUkRFUiBSRU1BSU5FRCBUSEUgU0FNRSEhIAoKcGxvdCh0ZXN0X3cxLAogIHZlcnRleC5jb2xvciA9IGlmZWxzZShkZl9lZ28kZGlzY2lwbGluZS4yNCA9PSAic29jaW9sb2d5IiwgInJlZCIsICJibHVlIiksICNub3csIEkgY2FuIHVzZSBhY3RvciBhdHRyaWJ1dGVzIGZvciBwbG90dGluZy4gCiAgdmVydGV4LmxhYmVsID0gTkEsCiAgZWRnZS53aWR0aCA9IDEsCiAgZWRnZS5hcnJvdy5zaXplID0xKQoKcGxvdCh0ZXN0X3cyLAogIHZlcnRleC5jb2xvciA9IGlmZWxzZShkZl9lZ28kZGlzY2lwbGluZS4yNCA9PSAic29jaW9sb2d5IiwgInJlZCIsICJibHVlIiksICNub3csIEkgY2FuIHVzZSBhY3RvciBhdHRyaWJ1dGVzIGZvciBwbG90dGluZy4gCiAgdmVydGV4LmxhYmVsID0gTkEsCiAgZWRnZS53aWR0aCA9IDEsCiAgZWRnZS5hcnJvdy5zaXplID0xKQpgYGAKCg==</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("Data_prep.Rmd");
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

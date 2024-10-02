@@ -165,7 +165,4 @@ plot(test_w2,
   edge.width = 1,
   edge.arrow.size =1)
 ```
-```{r}
-df_unnest_auth <- $author$autho
-```
 
