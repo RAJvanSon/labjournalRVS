@@ -1,0 +1,7 @@
+
+
+ QUESTIONABLE RANGE, CONSIDER CHANGING
+
+#Okay, now we have all the works by Radboud sociologists in two waves (2014-2019, 2020-2024). Now we must find some way to add information about how interdisciplinary these works are. One way would be to look at the 'related works', provided by open alex. Another way would be to look at works cited. Then it is necessary to look where these works come from (i.e. their discipline? or their topics/concepts?)
+```
+

@@ -22,7 +22,8 @@ navbar:
         href: week_4.html
     - text: "Final Report"
       href: Final_Report.html
-    
+      - text: Data Prep
+        href: Data_prep.html
   right:
   - icon: fab fa-github
     href: https://github.com/JochemTolsma/labjournal

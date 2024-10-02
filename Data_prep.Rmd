@@ -1,0 +1,171 @@
+```{r}
+rm(list = ls())
+require(tidyverse)
+require(installr)
+require(foreign)
+require(jsonlite)
+require(openalexR)
+require(scholar)
+require(rvest)
+require(igraph)
+require(tidyr)
+load("/Users/jannevanheesch/Documents/R. SN/scholars_20240924.rda")
+scholars <- x
+rm(x)
+```
+
+```{r}
+fcolnet <- function(data = scholars, university = "RU", discipline = "sociology", waves = list(c(2015,
+    2018), c(2019, 2023)), type = c("first")) {
+
+    # step 1
+    demographics <- do.call(rbind.data.frame, data$demographics)
+    demographics <- demographics %>%
+        mutate(Universiteit1.22 = replace(Universiteit1.22, is.na(Universiteit1.22), ""), Universiteit2.22 = replace(Universiteit2.22,
+            is.na(Universiteit2.22), ""), Universiteit1.24 = replace(Universiteit1.24, is.na(Universiteit1.24),
+            ""), Universiteit2.24 = replace(Universiteit2.24, is.na(Universiteit2.24), ""), discipline.22 = replace(discipline.22,
+            is.na(discipline.22), ""), discipline.24 = replace(discipline.24, is.na(discipline.24), ""))
+
+    sample <- which((demographics$Universiteit1.22 %in% university | demographics$Universiteit2.22 %in%
+        university | demographics$Universiteit1.24 %in% university | demographics$Universiteit2.24 %in%
+        university) & (demographics$discipline.22 %in% discipline | demographics$discipline.24 %in% discipline))
+
+    demographics_soc <- demographics[sample, ]
+    scholars_sel <- lapply(scholars, "[", sample)
+
+    # step 2
+    ids <- demographics_soc$au_id
+    nwaves <- length(waves)
+    nets <- array(0, dim = c(nwaves, length(ids), length(ids)), dimnames = list(wave = 1:nwaves, ids,
+        ids))
+    dimnames(nets)
+
+    # step 3
+    df_works <- tibble(works_id = unlist(lapply(scholars_sel$work, function(l) l$id)), works_author = unlist(lapply(scholars_sel$work,
+        function(l) l$author), recursive = FALSE), works_year = unlist(lapply(scholars_sel$work, function(l) l$publication_year),
+        recursive = FALSE))
+
+    df_works <- df_works[!duplicated(df_works), ]
+
+    # step 4
+    if (type == "first") {
+        for (j in 1:nwaves) {
+            df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego <- df_works_w$works_author[i][[1]]$au_id[1]
+                alters <- df_works_w$works_author[i][[1]]$au_id[-1]
+                if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] <- 1
+                }
+            }
+        }
+    }
+
+    if (type == "last") {
+        for (j in 1:nwaves) {
+            df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego <- rev(df_works_w$works_author[i][[1]]$au_id)[1]
+                alters <- rev(df_works_w$works_author[i][[1]]$au_id)[-1]
+                if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] <- 1
+                }
+            }
+        }
+    }
+
+    if (type == "all") {
+        for (j in 1:nwaves) {
+            df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                egos <- df_works_w$works_author[i][[1]]$au_id
+                if (sum(ids %in% egos) > 0) {
+                  nets[j, which(ids %in% egos), which(ids %in% egos)] <- 1
+                }
+            }
+        }
+    }
+    output <- list()
+    output$data <- scholars_sel
+    output$nets <- nets
+    return(output)
+}
+```
+
+Make a data-frame for all political science and sociology works in two waves. 2004-2009, and 2019-2024.
+```{r}
+df_RU <- fcolnet(data = scholars, university = "RU", discipline = c("sociology", "political science"), waves = list(c(2004,
+    2009), c(2019, 2024)), type = c("first"))
+```
+
+ 
+```{r}
+df <- df_RU$data
+df_ego <- do.call(rbind.data.frame, df$demographics)
+
+df$works[[57]]
+df$works[[58]]
+```
+
+
+```{r}
+df$works[[57]] <- df$works[[57]] %>% mutate(ab = NA) %>% select(id,title, display_name, author, ab, everything()) 
+df$works[[52]] <- df$works[[52]] %>% mutate(issn_l = NA) %>% select(id,title, display_name, author, publication_date, so, so_id, host_organization, issn_l, everything()) 
+
+df_works <- do.call(rbind.data.frame, df$works)
+```
+
+```{r}
+df_unnest <- df_works %>% unnest(topics, names_sep = "topic.")
+head(df_unnest)
+```
+
+```{r}
+df_unnest <- df_unnest %>% group_by(title) %>% filter(topicstopic.name == "subfield")
+head(df_unnest) #so, some papers have more subfields than others
+```
+
+```{r}
+test <- fcolnet(data = scholars, 
+                university = "RU", 
+                discipline = c("sociology", "political science"), 
+                waves = list(c(2004, 2009), c(2019, 2024)), 
+                type = c("all"))
+
+test_w1 <- igraph::graph_from_adjacency_matrix(
+  test$nets[1,,], #now, I take the first wave
+  mode = c("directed"),
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL
+)
+
+test_w2 <- igraph::graph_from_adjacency_matrix(
+  test$nets[2,,], #now, I take the second wave
+  mode = c("directed"),
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL
+)
+
+#DO NOT MESS UP THE ORDER! THUS IF YOU JOIN THIS DATA WITH YOUR OWN DATA CHECK THAT ORDER REMAINED THE SAME!! 
+
+plot(test_w1,
+  vertex.color = ifelse(df_ego$discipline.24 == "sociology", "red", "blue"), #now, I can use actor attributes for plotting. 
+  vertex.label = NA,
+  edge.width = 1,
+  edge.arrow.size =1)
+
+plot(test_w2,
+  vertex.color = ifelse(df_ego$discipline.24 == "sociology", "red", "blue"), #now, I can use actor attributes for plotting. 
+  vertex.label = NA,
+  edge.width = 1,
+  edge.arrow.size =1)
+```
+```{r}
+df_unnest_auth <- $author$autho
+```
+
