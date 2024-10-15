@@ -23,7 +23,9 @@ navbar:
       - text: "Data Prep"
         href: Data_prep.html
     - text: "Final Report"
-      href: Final_Report.html
+      menu:
+      - text: "Final Report"
+        href: Final_Report.html
         
   right:
   - icon: fab fa-github

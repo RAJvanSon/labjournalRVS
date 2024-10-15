@@ -1,0 +1,232 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+Network effects. We have statistics for the behavioral part and
+statistics for the network. For example, reciprocity.
+S(x)=SUMj(Xij\*Xji). Summing over all alters, multiplicating the
+directed tie from x to j (yes=1, no=0). So, reciprocity score is 1 only
+if both ties are there.
+
+```{r}
+rm(list = ls())
+require(tidyverse)
+require(installr)
+require(foreign)
+require(jsonlite)
+require(openalexR)
+require(scholar)
+require(rvest)
+require(igraph)
+require(tidyr)
+load("/Users/jannevanheesch/Documents/R. SN/scholars_20240924.rda")
+scholars <- x
+rm(x)
+```
+Network effects that you most probably want to include are degree and reciprocity (they are very common/standard), but also some variable that controls for the *amount* of ties one has (i.e. indegree/outdegree popularity/activity). Let's integrate these in our models.
+
+So the scholars object is loaded. Let's load the function.
+```{r}
+fcolnet <- function(data = scholars, university = "RU", discipline = "sociology", waves = list(c(2015,
+    2018), c(2019, 2023)), type = c("first")) {
+
+    # step 1
+    demographics <- do.call(rbind.data.frame, data$demographics)
+    demographics <- demographics %>%
+        mutate(Universiteit1.22 = replace(Universiteit1.22, is.na(Universiteit1.22), ""), Universiteit2.22 = replace(Universiteit2.22,
+            is.na(Universiteit2.22), ""), Universiteit1.24 = replace(Universiteit1.24, is.na(Universiteit1.24),
+            ""), Universiteit2.24 = replace(Universiteit2.24, is.na(Universiteit2.24), ""), discipline.22 = replace(discipline.22,
+            is.na(discipline.22), ""), discipline.24 = replace(discipline.24, is.na(discipline.24), ""))
+
+    sample <- which((demographics$Universiteit1.22 %in% university | demographics$Universiteit2.22 %in%
+        university | demographics$Universiteit1.24 %in% university | demographics$Universiteit2.24 %in%
+        university) & (demographics$discipline.22 %in% discipline | demographics$discipline.24 %in% discipline))
+
+    demographics_soc <- demographics[sample, ]
+    scholars_sel <- lapply(scholars, "[", sample)
+
+    # step 2
+    ids <- demographics_soc$au_id
+    nwaves <- length(waves)
+    nets <- array(0, dim = c(nwaves, length(ids), length(ids)), dimnames = list(wave = 1:nwaves, ids,
+        ids))
+    dimnames(nets)
+
+    # step 3
+    df_works <- tibble(works_id = unlist(lapply(scholars_sel$work, function(l) l$id)), works_author = unlist(lapply(scholars_sel$work,
+        function(l) l$author), recursive = FALSE), works_year = unlist(lapply(scholars_sel$work, function(l) l$publication_year),
+        recursive = FALSE))
+
+    df_works <- df_works[!duplicated(df_works), ]
+
+    # step 4
+    if (type == "first") {
+        for (j in 1:nwaves) {
+            df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego <- df_works_w$works_author[i][[1]]$au_id[1]
+                alters <- df_works_w$works_author[i][[1]]$au_id[-1]
+                if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] <- 1
+                }
+            }
+        }
+    }
+
+    if (type == "last") {
+        for (j in 1:nwaves) {
+            df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego <- rev(df_works_w$works_author[i][[1]]$au_id)[1]
+                alters <- rev(df_works_w$works_author[i][[1]]$au_id)[-1]
+                if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] <- 1
+                }
+            }
+        }
+    }
+
+    if (type == "all") {
+        for (j in 1:nwaves) {
+            df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                egos <- df_works_w$works_author[i][[1]]$au_id
+                if (sum(ids %in% egos) > 0) {
+                  nets[j, which(ids %in% egos), which(ids %in% egos)] <- 1
+                }
+            }
+        }
+    }
+    output <- list()
+    output$data <- scholars_sel
+    output$nets <- nets
+    return(output)
+}
+```
+
+```{r}
+#first, set the waves, universities, disciplines and type
+df_RU <- fcolnet(data = scholars, university = c("RU", "UvA"), discipline = c("sociology", "political science"), waves = list(c(2015,
+    2018), c(2019, 2023)), type = c("first"))
+```
+
+ 
+```{r}
+
+df <- df_RU$data #separate data and nets
+nets <- df_RU$nets
+
+#df for demographics (author level)
+df_ego <- do.call(rbind.data.frame, df$demographics)
+```
+
+
+
+
+
+
+
+
+
+
+
+Okay, now:
+
+5  steps that are neccessary:
+
+1. define the data (scrape one variable yourself?)
+2. create the effect structure
+3. get initial description
+4. improve/specify model
+5. estimate 
+
+```{r}
+#so lets try
+
+#step 1
+test_2 <- fcolnet(data = scholars, 
+                university = c("RU", "UvA"), 
+                discipline = c("sociology", "political science"), 
+                waves = list(c(2015, 2018), c(2019, 2023)), 
+                type = c("first"))
+
+df_soc_test <- test_2$data
+df_network_test <- test_2$nets
+df_ego_test <- do.call(rbind.data.frame, df_soc_test$demographics)
+
+dim(test_2$nets)
+
+#basically a bigger version of the last network, now inlcluding political science and UvA
+wave1_test <- test_2$nets[1,,]
+wave2_test <- test_2$nets[2,,]
+diag(wave1_test) <- 0
+diag(wave2_test) <- 0
+
+# put the nets in an array (fit for Rsiena)
+net_soc_array_test <- array(data = c(wave1_test, wave2_test), dim = c(dim(wave1_test), 2))
+dim(net_soc_array_test) #check.
+
+#now set the network as the dependent variable
+net_test <- sienaDependent(net_soc_array_test)
+
+##### covariate of function at university
+unique(df_ego_test$Functie.24)
+
+prof <- ifelse(df_ego_test$Functie.24 == "Hoogleraar" | df_ego_test$Functie.24 == "Bijzonder Hoogleraar" | df_ego_test$Functie.24 == "Bijzonder hoogleraar", 1, 0)
+
+sum(prof,na.rm = T)
+
+prof <- coCovar(prof)
+```
+Step 2
+```{r}
+mydata_test <- sienaDataCreate(net_test, prof)
+myeff_test <- getEffects(mydata_test)
+myeff_test
+effectsDocumentation(myeff_test)
+```
+
+Step 3
+```{r}
+ifelse(!dir.exists("results"), dir.create("results"), FALSE)
+print01Report(mydata_test, modelname = "./results/soc_init_test")
+```
+
+```{r}
+#lets add other effects and see what happens. Add I
+
+
+myAlgorithm_test_2 <- sienaAlgorithmCreate(projname = "soc_init_test_2")
+```
+
+
+```{r}
+ansM1_test_2 <- siena07(myAlgorithm_test_2, data = mydata_test, effects = myeff_test, returnDeps = TRUE)
+ansM1_test_2
+
+#this line does not work yet
+#andM1_test_2_GOF <- sienaGOF(ansM1_test_2, IndegreeDistribution, verbose = F, join = T, )
+```
+
+
+model 2
+```{r}
+myeff_test <- getEffects(mydata_test)
+myeff_test <- includeEffects(myeff = myeff_test, Jout)
+myeff_test <- includeEffects(myeff = myeff_test, egoX, interaction1 = "prof")
+```
+
+```{r}
+ansM2_test_2 <- siena07(myAlgorithm_test_2, data = mydata_test, effects = myeff_test, returnDeps = TRUE)
+ansM2_test_2
+```
+
+Okay, so this worked. But how can we determine goodness of fit? The model spits out a convergence (<0.25). But this does not mean that the model is presenting reality (like OLS regression). Including more effects means more difficulties converging. So, which effects should we include. Depends on research question, if you are really interested in the effect, or if you want to control for structural network dynamics. So you might want to take into account interdependencies and feed-back mechanisms at the ego-level. 
+
+How do we know if the model fits the data-generating process? E.g.: if we only put in degree and reciprocity, and they work. Then the model is probably able to replicate the degrees and ties of the network. 
+

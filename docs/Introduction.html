@@ -9,10 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Your Name" />
 
 
-<title>Journal 1</title>
+<title>Introduction.knit</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -38,10 +37,6 @@
 <script src="site_libs/navigation-1.1/sourceembed.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
-<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
-<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
-<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
 <link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
@@ -408,27 +403,59 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Journal 1</h1>
-<h4 class="author">Your Name</h4>
 
 </div>
 
 
-<script>
-  addClassKlippyTo("pre.r, pre.markdown");
-  addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
-</script>
-<p>Last compiled on October, 2024</p>
-<p><br></p>
-<hr />
-<p>This is just an example page of your <span style="color: red;">lab
-journal</span>. You can journal the assignments of the first day
-here.</p>
-<hr />
-<pre class="r test"><code>print(&quot;Hello Lab Journal&quot;)</code></pre>
-<pre class="test2"><code>#&gt; [1] &quot;Hello Lab Journal&quot;</code></pre>
+<p>Collaboration in the sciences is generally regarded as beneficial,
+both for the quality of the research and for the development of
+scientific theories and methodologies (<span
+class="citation">@haines2011</span>). Interdisciplinary research, as a
+kind of collaboration, has become a focus in many universities, where
+curricula are adapted to better connect different disciplines in order
+for empirical phenomena to be approached from different perspectives and
+to create knowledge integration across disciplines. In fact, some
+scholars have argued that research-standards in some disciplines have
+already become increasingly interdisciplinary ‘below the surface’,
+pointing at the need for interdisciplinary proposals when trying to
+apply for research grants <span
+class="citation">@locatelli2021collective</span>. Others, however, have
+argued that while <em>mentions</em> of interdisciplinarity (which have
+indeed increased!) is reflected by neither a notable increase in
+interdisciplinary <em>work</em>, nor in the <em>success</em> of
+interdisciplinary studies (in terms of citations, higher ranking
+journals, impact, etc.) <span
+class="citation">@barthel2017interdisciplinary</span>.</p>
+<p>One way to better understand interdisciplinarity - its causes,
+attributes and consequences - is by taking a social network perspective.
+One of the main reasons for taking a social network perspective is
+because it treats interdependencies (of observations, persons, etc.) as
+theoretically interesting, rather than as violations of assumptions.
+Treating researcher ties (in terms of collaborations) as informative may
+yield different results than focusing solely on the properties of the
+researcher him/herself (e.g. is the researcher him/herself educated
+across multiple disciplines). In other words, not only the attributes of
+the researcher may have causal properties for the degree of
+interdisciplinarity, but the “interdisciplinary-ness” is also dependent
+on the <em>network</em> of a researcher.</p>
+<p>With regards to interdisciplinary collaborations, a social network
+analysis will shed light on, firstly, the way in which interdisciplinary
+research changed the structure of collaboration networks over time and,
+secondly, what the changing structure of these networks means for
+researchers who engaged in interdisciplinary research. Following this
+line of thinking, we can develop the following research questions:</p>
+<p>RQ1: did collaboration networks become more interdisciplinary over
+time, i.e. did the structure of the collaboration network change over
+time with regards to the frequency/proportion of interdisciplinary
+collaborations?</p>
+<p>RQ2: to what extent does increasing interdisciplinarity at the
+macro-level(=network) lead to selective/partial clustering at the micro
+level?       To answer these research questions, one needs a particular
+kind of data, i.e. data that is relational. For the purpose here,
+collaboration data from multiple research departments of Radboud
+University will be used.</p>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiSm91cm5hbCAxIgojYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYgphdXRob3I6ICJZb3VyIE5hbWUiCi0tLQoKCgpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQpsaWJyYXJ5KGtuaXRyKQoKa25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQpvcHRzX2NodW5rJHNldCh0aWR5Lm9wdHM9bGlzdCh3aWR0aC5jdXRvZmY9MTAwKSx0aWR5PVRSVUUsIHdhcm5pbmcgPSBGQUxTRSwgbWVzc2FnZSA9IEZBTFNFLGNvbW1lbnQgPSAiIz4iLCBjYWNoZT1UUlVFLCBjbGFzcy5zb3VyY2U9YygidGVzdCIpLCBjbGFzcy5vdXRwdXQ9YygidGVzdDIiKSkKb3B0aW9ucyh3aWR0aCA9IDEwMCkKcmdsOjpzZXR1cEtuaXRyKCkKCgoKY29sb3JpemUgPC0gZnVuY3Rpb24oeCwgY29sb3IpIHtzcHJpbnRmKCI8c3BhbiBzdHlsZT0nY29sb3I6ICVzOyc+JXM8L3NwYW4+IiwgY29sb3IsIHgpIH0KCmBgYAoKYGBge3Iga2xpcHB5LCBlY2hvPUZBTFNFLCBpbmNsdWRlPVRSVUV9CmtsaXBweTo6a2xpcHB5KHBvc2l0aW9uID0gYygndG9wJywgJ3JpZ2h0JykpCiNrbGlwcHk6OmtsaXBweShjb2xvciA9ICdkYXJrcmVkJykKI2tsaXBweTo6a2xpcHB5KHRvb2x0aXBfbWVzc2FnZSA9ICdDbGljayB0byBjb3B5JywgdG9vbHRpcF9zdWNjZXNzID0gJ0RvbmUnKQpgYGAKCkxhc3QgY29tcGlsZWQgb24gYHIgZm9ybWF0KFN5cy50aW1lKCksICclQiwgJVknKWAKCjxicj4KCi0tLS0KICAKVGhpcyBpcyBqdXN0IGFuIGV4YW1wbGUgcGFnZSBvZiB5b3VyIGByIGNvbG9yaXplKCJsYWIgam91cm5hbCIsICJyZWQiKWAuCllvdSBjYW4gam91cm5hbCB0aGUgYXNzaWdubWVudHMgb2YgdGhlIGZpcnN0IGRheSBoZXJlLgogIAoKLS0tLQoKCmBgYHtyfQpwcmludCgiSGVsbG8gTGFiIEpvdXJuYWwiKQpgYGAKCgoK</div>
+<div id="rmd-source-code">LS0tCmVkaXRvcl9vcHRpb25zOiAKICBtYXJrZG93bjogCiAgICB3cmFwOiA3MgotLS0KCkNvbGxhYm9yYXRpb24gaW4gdGhlIHNjaWVuY2VzIGlzIGdlbmVyYWxseSByZWdhcmRlZCBhcyBiZW5lZmljaWFsLCBib3RoCmZvciB0aGUgcXVhbGl0eSBvZiB0aGUgcmVzZWFyY2ggYW5kIGZvciB0aGUgZGV2ZWxvcG1lbnQgb2Ygc2NpZW50aWZpYwp0aGVvcmllcyBhbmQgbWV0aG9kb2xvZ2llcyAoQGhhaW5lczIwMTEpLiBJbnRlcmRpc2NpcGxpbmFyeSByZXNlYXJjaCwgYXMKYSBraW5kIG9mIGNvbGxhYm9yYXRpb24sIGhhcyBiZWNvbWUgYSBmb2N1cyBpbiBtYW55IHVuaXZlcnNpdGllcywgd2hlcmUKY3VycmljdWxhIGFyZSBhZGFwdGVkIHRvIGJldHRlciBjb25uZWN0IGRpZmZlcmVudCBkaXNjaXBsaW5lcyBpbiBvcmRlcgpmb3IgZW1waXJpY2FsIHBoZW5vbWVuYSB0byBiZSBhcHByb2FjaGVkIGZyb20gZGlmZmVyZW50IHBlcnNwZWN0aXZlcyBhbmQKdG8gY3JlYXRlIGtub3dsZWRnZSBpbnRlZ3JhdGlvbiBhY3Jvc3MgZGlzY2lwbGluZXMuIEluIGZhY3QsIHNvbWUKc2Nob2xhcnMgaGF2ZSBhcmd1ZWQgdGhhdCByZXNlYXJjaC1zdGFuZGFyZHMgaW4gc29tZSBkaXNjaXBsaW5lcyBoYXZlCmFscmVhZHkgYmVjb21lIGluY3JlYXNpbmdseSBpbnRlcmRpc2NpcGxpbmFyeSAnYmVsb3cgdGhlIHN1cmZhY2UnLApwb2ludGluZyBhdCB0aGUgbmVlZCBmb3IgaW50ZXJkaXNjaXBsaW5hcnkgcHJvcG9zYWxzIHdoZW4gdHJ5aW5nIHRvCmFwcGx5IGZvciByZXNlYXJjaCBncmFudHMgQGxvY2F0ZWxsaTIwMjFjb2xsZWN0aXZlLiBPdGhlcnMsIGhvd2V2ZXIsCmhhdmUgYXJndWVkIHRoYXQgd2hpbGUgKm1lbnRpb25zKiBvZiBpbnRlcmRpc2NpcGxpbmFyaXR5ICh3aGljaCBoYXZlCmluZGVlZCBpbmNyZWFzZWQhKSBpcyByZWZsZWN0ZWQgYnkgbmVpdGhlciBhIG5vdGFibGUgaW5jcmVhc2UgaW4KaW50ZXJkaXNjaXBsaW5hcnkgKndvcmsqLCBub3IgaW4gdGhlICpzdWNjZXNzKiBvZiBpbnRlcmRpc2NpcGxpbmFyeQpzdHVkaWVzIChpbiB0ZXJtcyBvZiBjaXRhdGlvbnMsIGhpZ2hlciByYW5raW5nIGpvdXJuYWxzLCBpbXBhY3QsIGV0Yy4pCkBiYXJ0aGVsMjAxN2ludGVyZGlzY2lwbGluYXJ5LgoKT25lIHdheSB0byBiZXR0ZXIgdW5kZXJzdGFuZCBpbnRlcmRpc2NpcGxpbmFyaXR5IC0gaXRzIGNhdXNlcywKYXR0cmlidXRlcyBhbmQgY29uc2VxdWVuY2VzIC0gaXMgYnkgdGFraW5nIGEgc29jaWFsIG5ldHdvcmsgcGVyc3BlY3RpdmUuCk9uZSBvZiB0aGUgbWFpbiByZWFzb25zIGZvciB0YWtpbmcgYSBzb2NpYWwgbmV0d29yayBwZXJzcGVjdGl2ZSBpcwpiZWNhdXNlIGl0IHRyZWF0cyBpbnRlcmRlcGVuZGVuY2llcyAob2Ygb2JzZXJ2YXRpb25zLCBwZXJzb25zLCBldGMuKSBhcwp0aGVvcmV0aWNhbGx5IGludGVyZXN0aW5nLCByYXRoZXIgdGhhbiBhcyB2aW9sYXRpb25zIG9mIGFzc3VtcHRpb25zLgpUcmVhdGluZyByZXNlYXJjaGVyIHRpZXMgKGluIHRlcm1zIG9mIGNvbGxhYm9yYXRpb25zKSBhcyBpbmZvcm1hdGl2ZSBtYXkKeWllbGQgZGlmZmVyZW50IHJlc3VsdHMgdGhhbiBmb2N1c2luZyBzb2xlbHkgb24gdGhlIHByb3BlcnRpZXMgb2YgdGhlCnJlc2VhcmNoZXIgaGltL2hlcnNlbGYgKGUuZy4gaXMgdGhlIHJlc2VhcmNoZXIgaGltL2hlcnNlbGYgZWR1Y2F0ZWQKYWNyb3NzIG11bHRpcGxlIGRpc2NpcGxpbmVzKS4gSW4gb3RoZXIgd29yZHMsIG5vdCBvbmx5IHRoZSBhdHRyaWJ1dGVzIG9mCnRoZSByZXNlYXJjaGVyIG1heSBoYXZlIGNhdXNhbCBwcm9wZXJ0aWVzIGZvciB0aGUgZGVncmVlIG9mCmludGVyZGlzY2lwbGluYXJpdHksIGJ1dCB0aGUgImludGVyZGlzY2lwbGluYXJ5LW5lc3MiIGlzIGFsc28gZGVwZW5kZW50Cm9uIHRoZSAqbmV0d29yayogb2YgYSByZXNlYXJjaGVyLgoKV2l0aCByZWdhcmRzIHRvIGludGVyZGlzY2lwbGluYXJ5IGNvbGxhYm9yYXRpb25zLCBhIHNvY2lhbCBuZXR3b3JrCmFuYWx5c2lzIHdpbGwgc2hlZCBsaWdodCBvbiwgZmlyc3RseSwgdGhlIHdheSBpbiB3aGljaCBpbnRlcmRpc2NpcGxpbmFyeQpyZXNlYXJjaCBjaGFuZ2VkIHRoZSBzdHJ1Y3R1cmUgb2YgY29sbGFib3JhdGlvbiBuZXR3b3JrcyBvdmVyIHRpbWUgYW5kLApzZWNvbmRseSwgd2hhdCB0aGUgY2hhbmdpbmcgc3RydWN0dXJlIG9mIHRoZXNlIG5ldHdvcmtzIG1lYW5zIGZvcgpyZXNlYXJjaGVycyB3aG8gZW5nYWdlZCBpbiBpbnRlcmRpc2NpcGxpbmFyeSByZXNlYXJjaC4gRm9sbG93aW5nIHRoaXMKbGluZSBvZiB0aGlua2luZywgd2UgY2FuIGRldmVsb3AgdGhlIGZvbGxvd2luZyByZXNlYXJjaCBxdWVzdGlvbnM6CgpSUTE6IGRpZCBjb2xsYWJvcmF0aW9uIG5ldHdvcmtzIGJlY29tZSBtb3JlIGludGVyZGlzY2lwbGluYXJ5IG92ZXIgdGltZSwKaS5lLiBkaWQgdGhlIHN0cnVjdHVyZSBvZiB0aGUgY29sbGFib3JhdGlvbiBuZXR3b3JrIGNoYW5nZSBvdmVyIHRpbWUKd2l0aCByZWdhcmRzIHRvIHRoZSBmcmVxdWVuY3kvcHJvcG9ydGlvbiBvZiBpbnRlcmRpc2NpcGxpbmFyeQpjb2xsYWJvcmF0aW9ucz8KClJRMjogdG8gd2hhdCBleHRlbnQgZG9lcyBpbmNyZWFzaW5nIGludGVyZGlzY2lwbGluYXJpdHkgYXQgdGhlCm1hY3JvLWxldmVsKD1uZXR3b3JrKSBsZWFkIHRvIHNlbGVjdGl2ZS9wYXJ0aWFsIGNsdXN0ZXJpbmcgYXQgdGhlIG1pY3JvCmxldmVsPyDCoMKgwqDCoMKgwqBUbyBhbnN3ZXIgdGhlc2UgcmVzZWFyY2ggcXVlc3Rpb25zLCBvbmUgbmVlZHMgYSBwYXJ0aWN1bGFyCmtpbmQgb2YgZGF0YSwgaS5lLiBkYXRhIHRoYXQgaXMgcmVsYXRpb25hbC4gRm9yIHRoZSBwdXJwb3NlIGhlcmUsCmNvbGxhYm9yYXRpb24gZGF0YSBmcm9tIG11bHRpcGxlIHJlc2VhcmNoIGRlcGFydG1lbnRzIG9mIFJhZGJvdWQKVW5pdmVyc2l0eSB3aWxsIGJlIHVzZWQuCg==</div>
 
 
 </div>
@@ -466,7 +493,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("lab1.Rmd");
+  window.initializeSourceEmbed("Introduction.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>

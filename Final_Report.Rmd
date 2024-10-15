@@ -1,1 +1,275 @@
+# Introduction
+
+Collaboration in the sciences is generally regarded as beneficial, both for the quality of the research and for the development of scientific theories and methodologies (@haines2011). Interdisciplinary research, as a kind of collaboration, has become a focus in many universities, where curricula are adapted to better connect different disciplines in order for empirical phenomena to be approached from different perspectives and to create knowledge integration across disciplines. In fact, some scholars have argued that research-standards in some disciplines have already become increasingly interdisciplinary 'below the surface', pointing at the need for interdisciplinary proposals when trying to apply for research grants @locatelli2021collective. Others, however, have argued that while mentions of interdisciplinarity (which have indeed increased!) is reflected by neither a notable increase in interdisciplinary work, nor in the success of interdisciplinary studies (in terms of citations, higher ranking journals, impact, etc.) @barthel2017interdisciplinary.
+
+One way to better understand interdisciplinarity - its causes, attributes and consequences - is by taking a social network perspective. One of the main reasons for taking a social network perspective is because it treats interdependencies (of observations, persons, etc.) as theoretically interesting, rather than as violations of assumptions. Treating researcher ties (in terms of collaborations) as informative may yield different results than focusing solely on the properties of the researcher him/herself (e.g. is the researcher him/herself educated across multiple disciplines). In other words, not only the attributes of the researcher may have causal properties for the degree of interdisciplinarity, but the "interdisciplinary-ness" is also dependent on the network of a researcher.
+
+With regards to interdisciplinary collaborations, a social network analysis will shed light on, firstly, the way in which interdisciplinary research changed the structure of collaboration networks over time and, secondly, what the changing structure of these networks means for researchers who engaged in interdisciplinary research. Following this line of thinking, we can develop the following research questions:
+
+RQ1: did collaboration networks become more interdisciplinary over time, i.e. did the structure of the collaboration network change over time with regards to the frequency/proportion of interdisciplinary collaborations?
+
+RQ2: to what extent does increasing interdisciplinarity at the macro-level(=network) lead to selective/partial clustering at the micro level?       To answer these research questions, one needs a particular kind of data, i.e. data that is relational. For the purpose here, collaboration data from multiple research departments of Radboud University will be used.
+
+# Data - Preparation and Description
+```{r}
+rm(list = ls())
+require(tidyverse)
+require(installr)
+require(foreign)
+require(jsonlite)
+require(openalexR)
+require(scholar)
+require(rvest)
+require(igraph)
+require(tidyr)
+require(RSiena)
+require(RsienaTwoStep)
+load("/Users/jannevanheesch/Documents/R. SN/scholars_20240924.rda")
+scholars <- x
+rm(x)
+```
+
+## Collaboration function
+```{r}
+fcolnet <- function(data = scholars, university = "RU", discipline = "sociology", waves = list(c(2015,
+    2018), c(2019, 2023)), type = c("first")) {
+
+    # step 1
+    demographics <- do.call(rbind.data.frame, data$demographics)
+    demographics <- demographics %>%
+        mutate(Universiteit1.22 = replace(Universiteit1.22, is.na(Universiteit1.22), ""), Universiteit2.22 = replace(Universiteit2.22,
+            is.na(Universiteit2.22), ""), Universiteit1.24 = replace(Universiteit1.24, is.na(Universiteit1.24),
+            ""), Universiteit2.24 = replace(Universiteit2.24, is.na(Universiteit2.24), ""), discipline.22 = replace(discipline.22,
+            is.na(discipline.22), ""), discipline.24 = replace(discipline.24, is.na(discipline.24), ""))
+
+    sample <- which((demographics$Universiteit1.22 %in% university | demographics$Universiteit2.22 %in%
+        university | demographics$Universiteit1.24 %in% university | demographics$Universiteit2.24 %in%
+        university) & (demographics$discipline.22 %in% discipline | demographics$discipline.24 %in% discipline))
+
+    demographics_soc <- demographics[sample, ]
+    scholars_sel <- lapply(scholars, "[", sample)
+
+    # step 2
+    ids <- demographics_soc$au_id
+    nwaves <- length(waves)
+    nets <- array(0, dim = c(nwaves, length(ids), length(ids)), dimnames = list(wave = 1:nwaves, ids,
+        ids))
+    dimnames(nets)
+
+    # step 3
+    df_works <- tibble(works_id = unlist(lapply(scholars_sel$work, function(l) l$id)), works_author = unlist(lapply(scholars_sel$work,
+        function(l) l$author), recursive = FALSE), works_year = unlist(lapply(scholars_sel$work, function(l) l$publication_year),
+        recursive = FALSE))
+
+    df_works <- df_works[!duplicated(df_works), ]
+
+    # step 4
+    if (type == "first") {
+        for (j in 1:nwaves) {
+            df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego <- df_works_w$works_author[i][[1]]$au_id[1]
+                alters <- df_works_w$works_author[i][[1]]$au_id[-1]
+                if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] <- 1
+                }
+            }
+        }
+    }
+
+    if (type == "last") {
+        for (j in 1:nwaves) {
+            df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego <- rev(df_works_w$works_author[i][[1]]$au_id)[1]
+                alters <- rev(df_works_w$works_author[i][[1]]$au_id)[-1]
+                if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] <- 1
+                }
+            }
+        }
+    }
+
+    if (type == "all") {
+        for (j in 1:nwaves) {
+            df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                egos <- df_works_w$works_author[i][[1]]$au_id
+                if (sum(ids %in% egos) > 0) {
+                  nets[j, which(ids %in% egos), which(ids %in% egos)] <- 1
+                }
+            }
+        }
+    }
+    output <- list()
+    output$data <- scholars_sel
+    output$nets <- nets
+    return(output)
+}
+```
+
+## Preparation
+Make a data-frame for all political science and sociology works in two waves. 2003-2013, and 2014-2024.
+```{r}
+#first, set the waves, universities, disciplines and type
+df_RU <- fcolnet(data = scholars, university = "RU", discipline = c("sociology", "political science"), waves = list(c(2003,
+    2013), c(2014, 2024)), type = c("all"))
+```
+
+ 
+```{r}
+df <- df_RU$data #separate data and nets
+nets <- df_RU$nets
+
+#df for demographics (ego characteristics)
+df_ego <- do.call(rbind.data.frame, df$demographics)
+
+#df for authors
+df_auth <- do.call(rbind.data.frame, df$scholars_oa)
+```
+
+
+```{r}
+#create function for all (3) fields
+f_topics_f <- function(x) {
+  topics <- do.call(rbind.data.frame, x$topics) 
+  topics <- topics[topics$i < 4 & topics$name == "field",] 
+  HI_f <- 1 - sum((prop.table(table(topics$display_name)))^2) 
+  return(HI_f)
+}
+
+HI_f <- sapply(X = df$works, FUN = f_topics_f) #Herfindahl-Hirschman index, measuring the distribution of subjects of a paper. Squaring the proportion of each discipline involved in the work.
+HI_f
+```
+
+
+```{r}
+#create a function for all (3) subfields
+f_topics_sf <- function(x) {
+  topics <- do.call(rbind.data.frame, x$topics) #ik zet voor 1 auteur alle topics onder elkaar
+  topics <- topics[topics$i < 4 & topics$name == "subfield",] 
+  HI_sf <- 1 - sum((prop.table(table(topics$display_name)))^2)  
+  return(HI_sf)
+}
+
+HI_sf <- sapply(X = df$works, FUN = f_topics_sf) #Herfindahl-Hirschman index, measuring the distribution of subjects of a paper. Squaring the proportion of each discipline involved in the work.
+HI_sf
+
+
+```
+
+```{r}
+#create a function for all (3) topics
+f_topics_t <- function(x) {
+  topics <- do.call(rbind.data.frame, x$topics) #ik zet voor 1 auteur alle topics onder elkaar
+  topics <- topics[topics$i < 4 & topics$name == "topic",] 
+  HI_t <- 1 - sum((prop.table(table(topics$display_name)))^2)  #hier bereken ik de HI
+  return(HI_t)
+}
+
+HI_t <- sapply(X = df$works, FUN = f_topics_t) #Herfindahl-Hirschman index, measuring the distribution of subjects of a paper. Squaring the proportion of each discipline involved in the work.
+HI_t
+```
+
+```{r}
+#make a df out of the two different indexes to compare
+df_HI <- data.frame(HI_f = HI_f, HI_sf = HI_sf, HI_t = HI_t)
+print(df_HI)
+var(HI_f)
+var(HI_sf)
+var(HI_t)
+#seems to make sense... highest variance in fields.
+
+#correlation fields and subfields
+cor.test(HI_f, HI_sf)
+plot(HI_f, HI_sf)
+
+#correlation fields and topics
+cor.test(HI_f, HI_t)
+plot(HI_f, HI_t)
+
+#correlation subfields and topics
+cor.test(HI_sf, HI_t)
+plot(HI_sf, HI_t)
+```
+
+
+```{r}
+# Column-wise addition of df_HI and df_ego
+df_combined <- cbind(df_ego, df_HI)
+
+# View combined dataframe
+print(df_combined)
+```
+
+# Analysis
+```{r}
+colnet <- fcolnet(data = scholars, 
+                university = "RU", 
+                discipline = c("sociology", "political science"),
+                waves = list(c(2003, 2013), c(2014, 2024)), 
+                type = c("first"))
+
+df_soc <- colnet$data
+df_network <- colnet$nets
+
+length(df_network)
+
+dim(colnet$nets)
+```
+```{r}
+wave1 <- colnet$nets[1,,]
+wave2 <- colnet$nets[2,,]
+diag(wave1) <- 0
+diag(wave2) <- 0
+
+# put the nets in an array
+net_soc_array <- array(data = c(wave1, wave2), dim = c(dim(wave1), 2))
+dim(net_soc_array)
+net <- sienaDependent(net_soc_array)
+```
+```{r}
+mydata <- sienaDataCreate(net)
+myeff <- getEffects(mydata)
+myeff
+effectsDocumentation(myeff)
+
+
+ifelse(!dir.exists("results"), dir.create("results"), FALSE)
+print01Report(mydata, modelname = "./results/soc_init")
+```
+
+## Model 1
+```{r}
+myAlgorithm <- sienaAlgorithmCreate(projname = "soc_init")
+ansM1 <- siena07(myAlgorithm, data = mydata, effects = myeff, returnDeps = TRUE)
+# if necessary estimate again!  ansM1 <- siena07(myAlgorithm, data = mydata, effects = myeff,
+# prevAns = ansM1, returnDeps=TRUE)
+ansM1
+```
+
+## Model 2
+```{r}
+HI_f_covar <- df_combined$HI_f
+HI_f_covar <- coCovar(HI_f_covar)
+
+mydata_M2 <- sienaDataCreate(net, HI_f_covar)
+myeff_M2 <- getEffects(mydata_M2)
+myeff_M2 <- includeEffects(myeff = myeff_M2, EgoX, interaction1 = "HI_f_covar")
+effectsDocumentation(myeff_M2)
+
+ifelse(!dir.exists("results"), dir.create("results"), FALSE)
+print01Report(mydata_M2, modelname = "./results/soc_init_M2")
+```
+```{r}
+myAlgorithm_M2 <- sienaAlgorithmCreate(projname = "soc_init_M2")
+ansM2 <- siena07(myAlgorithm_M2, data = mydata_M2, effects = myeff_M2, returnDeps = TRUE)
+ansM2
+```
+
+
+
 

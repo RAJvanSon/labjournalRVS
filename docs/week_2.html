@@ -380,10 +380,25 @@ div.tocify {
     <li>
       <a href="week_4.html">Week 4: Elaboration on Introduction and Network Visualization</a>
     </li>
+    <li>
+      <a href="Data_prep.html">Data Prep</a>
+    </li>
   </ul>
 </li>
-<li>
-  <a href="Final_Report.html">Final Report</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Final Report
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Introduction.html">Introduction</a>
+    </li>
+    <li>
+      <a href="Data_prep.html">Data - Preparation and Description</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -509,9 +524,8 @@ Betweenness centrality is another one. These are all descriptives at the
 ego-level</p>
 <p>Try:</p>
 <pre class="r"><code>#install.packages(&quot;RSiena&quot;)
-require(RSiena)</code></pre>
-<pre><code>## Loading required package: RSiena</code></pre>
-<pre class="r"><code>s501</code></pre>
+require(RSiena)
+s501</code></pre>
 <pre><code>##    V1 V2 V3 V4 V5 V6 V7 V8 V9 V10 V11 V12 V13 V14 V15 V16 V17 V18 V19 V20 V21 V22 V23 V24 V25 V26
 ## 1   0  0  0  0  0  0  0  0  0   0   1   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0
 ## 2   0  0  0  0  0  0  1  0  0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
@@ -614,8 +628,16 @@ require(RSiena)</code></pre>
 ## 48   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   1   0
 ## 49   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   1   0   0
 ## 50   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0</code></pre>
-<pre class="r"><code>?s501
-?RSiena
+<pre class="r"><code>?s501</code></pre>
+<pre><code>## Help on topic &#39;s501&#39; was found in the following packages:
+## 
+##   Package               Library
+##   RsienaTwoStep         /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/library
+##   RSiena                /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/library
+## 
+## 
+## Using the first match ...</code></pre>
+<pre class="r"><code>?RSiena
 dim(s501)</code></pre>
 <pre><code>## [1] 50 50</code></pre>
 <pre class="r"><code>smaller_matrix &lt;- s501[15:25,15:25]

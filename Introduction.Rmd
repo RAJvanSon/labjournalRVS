@@ -1,0 +1,54 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+Collaboration in the sciences is generally regarded as beneficial, both
+for the quality of the research and for the development of scientific
+theories and methodologies (@haines2011). Interdisciplinary research, as
+a kind of collaboration, has become a focus in many universities, where
+curricula are adapted to better connect different disciplines in order
+for empirical phenomena to be approached from different perspectives and
+to create knowledge integration across disciplines. In fact, some
+scholars have argued that research-standards in some disciplines have
+already become increasingly interdisciplinary 'below the surface',
+pointing at the need for interdisciplinary proposals when trying to
+apply for research grants @locatelli2021collective. Others, however,
+have argued that while *mentions* of interdisciplinarity (which have
+indeed increased!) is reflected by neither a notable increase in
+interdisciplinary *work*, nor in the *success* of interdisciplinary
+studies (in terms of citations, higher ranking journals, impact, etc.)
+@barthel2017interdisciplinary.
+
+One way to better understand interdisciplinarity - its causes,
+attributes and consequences - is by taking a social network perspective.
+One of the main reasons for taking a social network perspective is
+because it treats interdependencies (of observations, persons, etc.) as
+theoretically interesting, rather than as violations of assumptions.
+Treating researcher ties (in terms of collaborations) as informative may
+yield different results than focusing solely on the properties of the
+researcher him/herself (e.g. is the researcher him/herself educated
+across multiple disciplines). In other words, not only the attributes of
+the researcher may have causal properties for the degree of
+interdisciplinarity, but the "interdisciplinary-ness" is also dependent
+on the *network* of a researcher.
+
+With regards to interdisciplinary collaborations, a social network
+analysis will shed light on, firstly, the way in which interdisciplinary
+research changed the structure of collaboration networks over time and,
+secondly, what the changing structure of these networks means for
+researchers who engaged in interdisciplinary research. Following this
+line of thinking, we can develop the following research questions:
+
+RQ1: did collaboration networks become more interdisciplinary over time,
+i.e. did the structure of the collaboration network change over time
+with regards to the frequency/proportion of interdisciplinary
+collaborations?
+
+RQ2: to what extent does increasing interdisciplinarity at the
+macro-level(=network) lead to selective/partial clustering at the micro
+level?       To answer these research questions, one needs a particular
+kind of data, i.e. data that is relational. For the purpose here,
+collaboration data from multiple research departments of Radboud
+University will be used.
