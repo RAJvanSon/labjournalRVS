@@ -144,3 +144,61 @@ These were calculated from the data.
 
 Estimation of derivatives by the LR method (type 1).
 
+
+@2
+End of stochastic approximation algorithm, phase 3.
+---------------------------------------------------
+
+Total of 2247 iterations.
+Parameter estimates based on 1247 iterations,
+basic rate parameter as well as 
+convergence diagnostics, covariance and derivative matrices based on 1000 iterations.
+
+Information for convergence diagnosis.
+Averages, standard deviations, and t-ratios for deviations from targets:
+  1.  -0.2280  13.8825  -0.0164 
+  2.   0.6500  11.4861   0.0566 
+  3.   0.3417   4.4319   0.0771 
+  4.  -0.0199   4.7322  -0.0042 
+
+Good convergence is indicated by the t-ratios being close to zero.
+
+Overall maximum convergence ratio =  0.1128 .
+
+
+
+@2
+Estimation Results.
+-------------------
+
+Regular end of estimation algorithm.
+Total of 2247 iteration steps.
+
+
+@3
+Estimates and standard errors
+                             
+Rate parameters:
+ 0. Rate parameter                            3.5195  (    0.507)
+
+Other parameters:
+ 1. eval:  outdegree (density)                                    -5.5060  (   0.3130)
+ 2. eval:  reciprocity                                             3.7423  (   0.3410)
+ 3. eval:  out-Jaccard similarity                                 11.7129  (   1.5528)
+ 4. eval:  prof ego                                               -0.2859  (   0.3881)
+
+
+@3
+Covariance matrices
+                   
+Covariance matrix of estimates (correlations below diagonal):
+     0.098     -0.043     -0.426      0.040
+    -0.405      0.116      0.086     -0.021
+    -0.877      0.163      2.411     -0.208
+     0.329     -0.158     -0.345      0.151
+
+Derivative matrix of expected statistics X by parameters and
+covariance/correlation matrix of X can be found using
+summary(ans) within R, or by using the 'verbose' option in Siena07.
+ 
+Total computation time 172.98 seconds.

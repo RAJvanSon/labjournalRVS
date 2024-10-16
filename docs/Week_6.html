@@ -369,10 +369,7 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Introduction.html">Introduction</a>
-    </li>
-    <li>
-      <a href="Data_prep.html">Data - Preparation and Description</a>
+      <a href="Final_Report.html">Final Report</a>
     </li>
   </ul>
 </li>
@@ -635,16 +632,16 @@ ansM1_test_2</code></pre>
 ##                                            Error      t-ratio   
 ## 
 ## Rate parameters: 
-##   0       Rate parameter       3.6675  ( 0.5647   )             
+##   0       Rate parameter       3.6803  ( 0.5605   )             
 ## 
 ## Other parameters: 
-##   1. eval outdegree (density) -4.0866  ( 0.1629   )   -0.0205   
-##   2. eval reciprocity          3.4372  ( 0.2580   )   -0.0267   
+##   1. eval outdegree (density) -4.0826  ( 0.1473   )   0.0146    
+##   2. eval reciprocity          3.4309  ( 0.2539   )   0.0344    
 ## 
-## Overall maximum convergence ratio:    0.0274 
+## Overall maximum convergence ratio:    0.0351 
 ## 
 ## 
-## Total of 1876 iteration steps.</code></pre>
+## Total of 2173 iteration steps.</code></pre>
 <pre class="r"><code>#this line does not work yet
 #andM1_test_2_GOF &lt;- sienaGOF(ansM1_test_2, IndegreeDistribution, verbose = F, join = T, )</code></pre>
 <p>model 2</p>
@@ -663,18 +660,18 @@ ansM2_test_2</code></pre>
 ##                                               Error      t-ratio   
 ## 
 ## Rate parameters: 
-##   0       Rate parameter          3.4727  ( 0.4759   )             
+##   0       Rate parameter          3.5195  ( 0.5070   )             
 ## 
 ## Other parameters: 
-##   1. eval outdegree (density)    -5.5146  ( 0.3317   )   0.0655    
-##   2. eval reciprocity             3.7410  ( 0.3430   )   0.0849    
-##   3. eval out-Jaccard similarity 11.7615  ( 1.7081   )   0.0938    
-##   4. eval prof ego               -0.2755  ( 0.4269   )   0.1224    
+##   1. eval outdegree (density)    -5.5060  ( 0.3130   )   -0.0164   
+##   2. eval reciprocity             3.7423  ( 0.3410   )    0.0566   
+##   3. eval out-Jaccard similarity 11.7129  ( 1.5528   )    0.0771   
+##   4. eval prof ego               -0.2859  ( 0.3881   )   -0.0042   
 ## 
-## Overall maximum convergence ratio:    0.1481 
+## Overall maximum convergence ratio:    0.1128 
 ## 
 ## 
-## Total of 2346 iteration steps.</code></pre>
+## Total of 2247 iteration steps.</code></pre>
 <p>Okay, so this worked. But how can we determine goodness of fit? The
 model spits out a convergence (&lt;0.25). But this does not mean that
 the model is presenting reality (like OLS regression). Including more
