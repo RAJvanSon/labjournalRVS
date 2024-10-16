@@ -1,0 +1,146 @@
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 16/10/2024 07:46:16
+New results follow.
+-----------------------------------
+
+RSiena version 1.4.7 (20 Feb 24)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 659907.
+Effects object used: myeff_test 
+Model Type:
+ Standard actor-oriented model 
+Estimation method: conditional moment estimation.
+Conditioning variable is the total number of observed changes ("distance") 
+in the network variable.
+Distance for simulations is  256 .
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.2000000.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  0. Rate parameter                           1.8228
+  1. eval:  outdegree (density)                            -1.7755
+  2. eval:  reciprocity                                     0.0000
+
+
+Values of target statistics are
+  1. Number of ties                                                     204.0000
+  2. Number of reciprocated ties                                         48.0000
+These were calculated from the data.
+
+ 2 parameters, 2 statistics
+
+Estimation of derivatives by the LR method (type 1).
+
+
+@2
+End of stochastic approximation algorithm, phase 3.
+---------------------------------------------------
+
+Total of 2173 iterations.
+Parameter estimates based on 1173 iterations,
+basic rate parameter as well as 
+convergence diagnostics, covariance and derivative matrices based on 1000 iterations.
+
+Information for convergence diagnosis.
+Averages, standard deviations, and t-ratios for deviations from targets:
+  1.   0.1840  12.6303   0.0146 
+  2.   0.2920   8.5005   0.0344 
+
+Good convergence is indicated by the t-ratios being close to zero.
+
+Overall maximum convergence ratio =  0.0351 .
+
+
+
+@2
+Estimation Results.
+-------------------
+
+Regular end of estimation algorithm.
+Total of 2173 iteration steps.
+
+
+@3
+Estimates and standard errors
+                             
+Rate parameters:
+ 0. Rate parameter                            3.6803  (   0.5605)
+
+Other parameters:
+ 1. eval:  outdegree (density)                                    -4.0826  (   0.1473)
+ 2. eval:  reciprocity                                             3.4309  (   0.2539)
+
+
+@3
+Covariance matrices
+                   
+Covariance matrix of estimates (correlations below diagonal):
+     0.022     -0.025
+    -0.672      0.064
+
+Derivative matrix of expected statistics X by parameters and
+covariance/correlation matrix of X can be found using
+summary(ans) within R, or by using the 'verbose' option in Siena07.
+ 
+Total computation time 55.71 seconds.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 16/10/2024 07:47:12
+New results follow.
+-----------------------------------
+
+RSiena version 1.4.7 (20 Feb 24)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 558149.
+Effects object used: myeff_test 
+Model Type:
+ Standard actor-oriented model 
+Estimation method: conditional moment estimation.
+Conditioning variable is the total number of observed changes ("distance") 
+in the network variable.
+Distance for simulations is  256 .
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.2000000.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  0. Rate parameter                           1.8228
+  1. eval:  outdegree (density)                            -1.7755
+  2. eval:  reciprocity                                     0.0000
+  3. eval:  out-Jaccard similarity                          0.0000
+  4. eval:  prof ego                                        0.0000
+
+
+Values of target statistics are
+  1. Number of ties                                                     204.0000
+  2. Number of reciprocated ties                                         48.0000
+  3. Out-Jaccard similarity                                              16.8381
+  4. Sum outdegrees x prof                                                3.3813
+These were calculated from the data.
+
+ 4 parameters, 4 statistics
+
+Estimation of derivatives by the LR method (type 1).
+
