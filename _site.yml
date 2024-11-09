@@ -24,8 +24,17 @@ navbar:
         href: Data_prep.html
     - text: "Final Report"
       menu:
-      - text: "Final Report"
-        href: Final_Report.html
+      - text: "Introduction"
+        href: Introduction_F.html
+      - text: "Theory"
+        href: Theory_F.html
+      - text: "Data"
+        href: Data_F.html
+      - text: "Analysis and Results"
+        href: Analysis_F.html
+      - text: "Conclusion"
+        href: Conclusion_F.html
+      
     
   right:
   - icon: fab fa-github

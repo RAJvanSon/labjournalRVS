@@ -116,7 +116,7 @@ Make a data-frame for all political science and sociology works in two waves. 20
 ```{r}
 #first, set the waves, universities, disciplines and type
 df_RU <- fcolnet(data = scholars, university = "RU", discipline = c("sociology", "political science"), waves = list(c(2003,
-    2013), c(2014, 2024)), type = c("all"))
+    2013), c(2014, 2024)), type = c("first"))
 ```
 
  
@@ -220,6 +220,7 @@ length(df_network)
 
 dim(colnet$nets)
 ```
+
 ```{r}
 wave1 <- colnet$nets[1,,]
 wave2 <- colnet$nets[2,,]
@@ -231,6 +232,8 @@ net_soc_array <- array(data = c(wave1, wave2), dim = c(dim(wave1), 2))
 dim(net_soc_array)
 net <- sienaDependent(net_soc_array)
 ```
+
+
 ```{r}
 mydata <- sienaDataCreate(net)
 myeff <- getEffects(mydata)
@@ -258,18 +261,27 @@ HI_f_covar <- coCovar(HI_f_covar)
 
 mydata_M2 <- sienaDataCreate(net, HI_f_covar)
 myeff_M2 <- getEffects(mydata_M2)
-myeff_M2 <- includeEffects(myeff = myeff_M2, EgoX, interaction1 = "HI_f_covar")
+myeff_M2 <- includeEffects(myeff = myeff_M2, egoX, sameX, interaction1 = "HI_f_covar")
 effectsDocumentation(myeff_M2)
 
 ifelse(!dir.exists("results"), dir.create("results"), FALSE)
 print01Report(mydata_M2, modelname = "./results/soc_init_M2")
-```
-```{r}
+
 myAlgorithm_M2 <- sienaAlgorithmCreate(projname = "soc_init_M2")
 ansM2 <- siena07(myAlgorithm_M2, data = mydata_M2, effects = myeff_M2, returnDeps = TRUE)
 ansM2
+
+#check goodness of fit Indegree Dist
+gofi0 <- sienaGOF(ansM2, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
+gofi0
+plot(gofi0, main = "")
 ```
 
+```{r}
+#check for mean level of interdisciplinarity in wave 1 and 2. 
+#mean_int_1 <- 
+#mean_int_2 <- 
+```
 
 
 

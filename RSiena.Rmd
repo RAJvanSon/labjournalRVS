@@ -127,14 +127,14 @@ net <- sienaDependent(net_soc_array)
 df_egol <- do.call(rbind.data.frame, test$data$demographics)
 df_egol
 
+#effects
 mydata <- sienaDataCreate(net)
 myeff <- getEffects(mydata)
 myeff
 effectsDocumentation(myeff)
 
 
-ifelse(!dir.exists("results"), dir.create("results"), FALSE)
-print01Report(mydata, modelname = "./results/soc_init")
+
 ```
 
 ```{r}

@@ -141,8 +141,6 @@ f_topics_sf <- function(x) {
 
 HI_sf <- sapply(X = df$works, FUN = f_topics_sf) #Herfindahl-Hirschman index, measuring the distribution of subjects of a paper. Squaring the proportion of each discipline involved in the work.
 HI_sf
-
-
 ```
 
 ```{r}

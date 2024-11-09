@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="René van Son" />
+
+
+<title>Theory</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="tweaks.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    My journal
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Tutorial_week1.html">Week 1: R Tutorial</a>
+    </li>
+    <li>
+      <a href="week_2.html">Week 2: Introduction</a>
+    </li>
+    <li>
+      <a href="Week_3.html">Week 3: Webscraping</a>
+    </li>
+    <li>
+      <a href="week_4.html">Week 4: Elaboration on Introduction and Network Visualization</a>
+    </li>
+    <li>
+      <a href="Data_prep.html">Data Prep</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Final Report
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Introduction_F.html">Introduction</a>
+    </li>
+    <li>
+      <a href="Theory_F.html">Theory</a>
+    </li>
+    <li>
+      <a href="Data_F.html">Data</a>
+    </li>
+    <li>
+      <a href="Analysis_F.html">Analysis and Results</a>
+    </li>
+    <li>
+      <a href="Conclusion_F.html">Conclusion</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/JochemTolsma/labjournal">
+    <span class="fab fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Theory</h1>
+<h4 class="author">René van Son</h4>
+
+</div>
+
+
+<style>
+body {
+text-align: justify;
+font-family: Times;
+}
+</style>
+<div id="theory" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Theory</h1>
+<div id="conceptualization-of-discipline-and-interdisciplinarity"
+class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Conceptualization of
+Discipline and Interdisciplinarity</h2>
+<p>Before developing any kind of framework for interdisciplinarity, it
+is first necessary to conceptualize ‘discipline’ itself. In this study,
+I follow the definition of discipline as given by <span
+class="citation">Zheng et al. (2023)</span>. According to them, a
+discipline is defined as “the narrowness of focus or boundaries between
+different knowledge specializations”, and is synonoymous with “research
+fields” (p. 2). However, where these boundaries start and end is often
+rather unclear. In the broadest sense, disciplines could be defined as
+departments (what <span class="citation">Zheng et al. (2023)</span> call
+‘institutions’). In this case, the social sciences, humanities and
+natural sciences would be categorized as different disciplines.
+Collaboration <em>between</em> any of these disciplines would constitute
+interdisciplinarity, whereas collaboration <em>within</em> these
+disciplines would not. Obviously, this definition is overly general,
+leaving little room to further define unique principles, methods,
+epistemologies and assumptions that differ within these rather broad
+categories. Sociology and psychology, while having some aspects in
+common which makes them belong to the social sciences, can hardly be
+said to be the same <em>discipline.</em> So, to capture these
+differences, it is neccessary to adopt a more fine-grained perspective
+on what constitutes a discipline. In the research at hand, as will be
+explicated below, this will be called a ‘field’.</p>
+<p>To complicate things further, interdisciplinarity can be defined at
+multiple levels. For example a <em>work</em> can be said to be
+interdisciplinary in nature based on the ‘spread’ of citations. An
+<em>author/scholar</em> can be said to be interdisciplinary based on
+his/her works. A <em>journal</em> can be said to be interdisciplinary
+based on either the works it publishes or the authors/scholars they
+allow to be published <span class="citation">Zheng et al. (2023)</span>.
+For the research at hand, however, I will focus on interdisciplinarity
+at the author level, based on the diversity of their published
+works.</p>
+<p>Additionally, beyond the various levels that define
+interdisciplinarity, the concept itself remains somewhat elusive, both
+in terms of definitions and measurements <span class="citation">(Haines
+et al., 2011; Haythornthwaite, 2006)</span>. <em>Definitions</em> of
+interdisciplinarity are often conflated with (among others)
+transdisciplinarity and multidisciplinarity <span
+class="citation">(Haines et al., 2011)</span>, with insufficient
+distinction made between these related yet different concepts. For
+example, in arguing for the benefits of interdisciplinary research of
+the social and natural sciences, <span class="citation">Barthel &amp;
+Seidl (2017)</span> defined three upwardly scaling modes of
+collaboration: cross-disciplinarity, multi-disciplinarity and
+interdisciplinarity. <em>Measures</em> of interdisciplinarity may
+include individual interdisciplinarity (i.e. the interdisciplinary
+background of a researcher) or collective interdisciplinarity (i.e. the
+interactions of researchers from different disciplines). Moreover,
+interdisciplinarity can be measured by means of bibliometric analysis,
+which may result in interdisciplinarity-scores based on citation
+diversity (i.e. works cited encompass a wide variety of disciplines)
+<span class="citation">(Locatelli et al., 2021)</span>, journal-analysis
+(i.e. journals that identify as interdisciplinary) <span
+class="citation">(Barthel &amp; Seidl, 2017; Zheng et al., 2023)</span>,
+etc.</p>
+</div>
+<div id="hypotheses" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Hypotheses</h2>
+<p>Taking the theoretical considerations above into account, I develop
+three (????) hypotheses.</p>
+<p>First, relating to the structure of the networks <span
+class="citation">Tolsma &amp; Hofstra (2022)</span>, I expect the
+network to display a higher degree of clustering over time. This
+expectation is fueled by the idea of ‘preferential attachment’ <span
+class="citation">Khan &amp; Lee (2018)</span>; <span
+class="citation">Capocci et al. (2006)</span>, where persons with more
+existing relations are more likely to enter in <em>even more</em>
+relations. This is also known as the principle of “the rich getting
+richer”, and leads to the development of scale-free networks, with a few
+highly connected persons and many less-connected persons <span
+class="citation">Khan &amp; Lee (2018)</span>. That is to say, I expect
+that the collaboration network evolves from a network with an evenly
+distributed amount of connected scholars to a network with several
+scholars who are more central:</p>
+<p>H1: <em>the collaboration network becomes more clustered over time,
+i.e. the network at t2 will show a higher clustering than the network at
+t1.</em></p>
+<p>Next, to explain this macro-level change by means of micro-level
+mechanisms of interdisciplinarity, I further draw on the principle of
+clustering and transitivity <span class="citation">Haines et al.
+(2011)</span>; <span class="citation">Freeman et al. (2002)</span>,
+which assumes that central positions in a network are beneficial to
+persons (in this research: authors), as they allow people to adopt a
+more important ‘function’ in the network. Relating this to
+interdisciplinarity, one would expect that people with a high degree of
+interdisciplinarity would occupy a central role in the collaboration
+network, as they effectively function as a hub for information and
+knowledge distribution across multiple disciplines.</p>
+<p>H2: <em>collaboration networks become more clustered around scholars
+with high levels of interdisciplinarity, i.e. the network at t2 will
+show the presence of scholars with high indegrees and high levels of
+interdisciplinarity</em></p>
+<p>Lastly, following the logic of centralization based on
+interdisciplinarity, one could also make the argument that, even though
+interdisciplinary researchers may receive many in-degrees, this</p>
+</div>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0" line-spacing="2">
+<div id="ref-barthel2017interdisciplinary" class="csl-entry">
+Barthel, R., &amp; Seidl, R. (2017). Interdisciplinary collaboration
+between natural and social sciences–status and trends exemplified in
+groundwater research. <em>PloS One</em>, <em>12</em>(1), e0170754.
+</div>
+<div id="ref-capocci2006preferential" class="csl-entry">
+Capocci, A., Servedio, V. D., Colaiori, F., Buriol, L. S., Donato, D.,
+Leonardi, S., &amp; Caldarelli, G. (2006). Preferential attachment in
+the growth of social networks: The internet encyclopedia wikipedia.
+<em>Physical Review E—Statistical, Nonlinear, and Soft Matter
+Physics</em>, <em>74</em>(3), 036116.
+</div>
+<div id="ref-freeman2002centrality" class="csl-entry">
+Freeman, L. C. et al. (2002). Centrality in social networks: Conceptual
+clarification. <em>Social Network: Critical Concepts in Sociology.
+Londres: Routledge</em>, <em>1</em>, 238–263.
+</div>
+<div id="ref-haines2011" class="csl-entry">
+Haines, V. A., Godley, J., &amp; Hawe, P. (2011). Understanding
+interdisciplinary collaborations as social networks. <em>American
+Journal of Community Psychology</em>, <em>47</em>(1-2), 1–11.
+</div>
+<div id="ref-haythornthwaite2006learning" class="csl-entry">
+Haythornthwaite, C. (2006). Learning and knowledge networks in
+interdisciplinary collaborations. <em>Journal of the American Society
+for Information Science and Technology</em>, <em>57</em>(8), 1079–1092.
+</div>
+<div id="ref-khan2018online" class="csl-entry">
+Khan, J., &amp; Lee, S. (2018). Online social networks (OSN) evolution
+model based on homophily and preferential attachment. <em>Symmetry</em>,
+<em>10</em>(11), 654.
+</div>
+<div id="ref-locatelli2021collective" class="csl-entry">
+Locatelli, B., Vallet, A., Tassin, J., Gautier, D., Chamaret, A., &amp;
+Sist, P. (2021). Collective and individual interdisciplinarity in a
+sustainability research group: A social network analysis.
+<em>Sustainability Science</em>, <em>16</em>, 37–52.
+</div>
+<div id="ref-SNASS" class="csl-entry">
+Tolsma, J., &amp; Hofstra, B. (2022). <em>Social network analysis for
+social scientists</em>. <a
+href="https://jtolsma.nl/SNASS/">https://jtolsma.nl/SNASS/</a>
+</div>
+<div id="ref-zheng2023research" class="csl-entry">
+Zheng, J., Zhang, K., Han, B., &amp; Hou, J. (2023). Research
+interdisciplinarity and citation impact: A network analysis of social
+networking sites research. <em>SAGE Open</em>, <em>13</em>(3),
+21582440231193472.
+</div>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiVGhlb3J5IgphdXRob3I6ICJSZW7DqSB2YW4gU29uIgpiaWJsaW9ncmFwaHk6IHJlZmVyZW5jZXMuYmliCmNzbDogYXBhLmNzbAotLS0KCmBgYHs9aHRtbH0KPHN0eWxlPgpib2R5IHsKdGV4dC1hbGlnbjoganVzdGlmeTsKZm9udC1mYW1pbHk6IFRpbWVzOwp9Cjwvc3R5bGU+CmBgYAojIFRoZW9yeQoKIyMgQ29uY2VwdHVhbGl6YXRpb24gb2YgRGlzY2lwbGluZSBhbmQgSW50ZXJkaXNjaXBsaW5hcml0eQoKQmVmb3JlIGRldmVsb3BpbmcgYW55IGtpbmQgb2YgZnJhbWV3b3JrIGZvciBpbnRlcmRpc2NpcGxpbmFyaXR5LCBpdCBpcyBmaXJzdCBuZWNlc3NhcnkgdG8gY29uY2VwdHVhbGl6ZSAnZGlzY2lwbGluZScgaXRzZWxmLiBJbiB0aGlzIHN0dWR5LCBJIGZvbGxvdyB0aGUgZGVmaW5pdGlvbiBvZiBkaXNjaXBsaW5lIGFzIGdpdmVuIGJ5IEB6aGVuZzIwMjNyZXNlYXJjaC4gQWNjb3JkaW5nIHRvIHRoZW0sIGEgZGlzY2lwbGluZSBpcyBkZWZpbmVkIGFzICJ0aGUgbmFycm93bmVzcyBvZiBmb2N1cyBvciBib3VuZGFyaWVzIGJldHdlZW4gZGlmZmVyZW50IGtub3dsZWRnZSBzcGVjaWFsaXphdGlvbnMiLCBhbmQgaXMgc3lub25veW1vdXMgd2l0aCAicmVzZWFyY2ggZmllbGRzIiAocC4gMikuIEhvd2V2ZXIsIHdoZXJlIHRoZXNlIGJvdW5kYXJpZXMgc3RhcnQgYW5kIGVuZCBpcyBvZnRlbiByYXRoZXIgdW5jbGVhci4gSW4gdGhlIGJyb2FkZXN0IHNlbnNlLCBkaXNjaXBsaW5lcyBjb3VsZCBiZSBkZWZpbmVkIGFzIGRlcGFydG1lbnRzICh3aGF0IEB6aGVuZzIwMjNyZXNlYXJjaCBjYWxsICdpbnN0aXR1dGlvbnMnKS4gSW4gdGhpcyBjYXNlLCB0aGUgc29jaWFsIHNjaWVuY2VzLCBodW1hbml0aWVzIGFuZCBuYXR1cmFsIHNjaWVuY2VzIHdvdWxkIGJlIGNhdGVnb3JpemVkIGFzIGRpZmZlcmVudCBkaXNjaXBsaW5lcy4gQ29sbGFib3JhdGlvbiAqYmV0d2VlbiogYW55IG9mIHRoZXNlIGRpc2NpcGxpbmVzIHdvdWxkIGNvbnN0aXR1dGUgaW50ZXJkaXNjaXBsaW5hcml0eSwgd2hlcmVhcyBjb2xsYWJvcmF0aW9uICp3aXRoaW4qIHRoZXNlIGRpc2NpcGxpbmVzIHdvdWxkIG5vdC4gT2J2aW91c2x5LCB0aGlzIGRlZmluaXRpb24gaXMgb3Zlcmx5IGdlbmVyYWwsIGxlYXZpbmcgbGl0dGxlIHJvb20gdG8gZnVydGhlciBkZWZpbmUgdW5pcXVlIHByaW5jaXBsZXMsIG1ldGhvZHMsIGVwaXN0ZW1vbG9naWVzIGFuZCBhc3N1bXB0aW9ucyB0aGF0IGRpZmZlciB3aXRoaW4gdGhlc2UgcmF0aGVyIGJyb2FkIGNhdGVnb3JpZXMuIFNvY2lvbG9neSBhbmQgcHN5Y2hvbG9neSwgd2hpbGUgaGF2aW5nIHNvbWUgYXNwZWN0cyBpbiBjb21tb24gd2hpY2ggbWFrZXMgdGhlbSBiZWxvbmcgdG8gdGhlIHNvY2lhbCBzY2llbmNlcywgY2FuIGhhcmRseSBiZSBzYWlkIHRvIGJlIHRoZSBzYW1lICpkaXNjaXBsaW5lLiogU28sIHRvIGNhcHR1cmUgdGhlc2UgZGlmZmVyZW5jZXMsIGl0IGlzIG5lY2Nlc3NhcnkgdG8gYWRvcHQgYSBtb3JlIGZpbmUtZ3JhaW5lZCBwZXJzcGVjdGl2ZSBvbiB3aGF0IGNvbnN0aXR1dGVzIGEgZGlzY2lwbGluZS4gSW4gdGhlIHJlc2VhcmNoIGF0IGhhbmQsIGFzIHdpbGwgYmUgZXhwbGljYXRlZCBiZWxvdywgdGhpcyB3aWxsIGJlIGNhbGxlZCBhICdmaWVsZCcuCgpUbyBjb21wbGljYXRlIHRoaW5ncyBmdXJ0aGVyLCBpbnRlcmRpc2NpcGxpbmFyaXR5IGNhbiBiZSBkZWZpbmVkIGF0IG11bHRpcGxlIGxldmVscy4gRm9yIGV4YW1wbGUgYSAqd29yayogY2FuIGJlIHNhaWQgdG8gYmUgaW50ZXJkaXNjaXBsaW5hcnkgaW4gbmF0dXJlIGJhc2VkIG9uIHRoZSAnc3ByZWFkJyBvZiBjaXRhdGlvbnMuIEFuICphdXRob3Ivc2Nob2xhciogY2FuIGJlIHNhaWQgdG8gYmUgaW50ZXJkaXNjaXBsaW5hcnkgYmFzZWQgb24gaGlzL2hlciB3b3Jrcy4gQSAqam91cm5hbCogY2FuIGJlIHNhaWQgdG8gYmUgaW50ZXJkaXNjaXBsaW5hcnkgYmFzZWQgb24gZWl0aGVyIHRoZSB3b3JrcyBpdCBwdWJsaXNoZXMgb3IgdGhlIGF1dGhvcnMvc2Nob2xhcnMgdGhleSBhbGxvdyB0byBiZSBwdWJsaXNoZWQgQHpoZW5nMjAyM3Jlc2VhcmNoLiBGb3IgdGhlIHJlc2VhcmNoIGF0IGhhbmQsIGhvd2V2ZXIsIEkgd2lsbCBmb2N1cyBvbiBpbnRlcmRpc2NpcGxpbmFyaXR5IGF0IHRoZSBhdXRob3IgbGV2ZWwsIGJhc2VkIG9uIHRoZSBkaXZlcnNpdHkgb2YgdGhlaXIgcHVibGlzaGVkIHdvcmtzLgoKQWRkaXRpb25hbGx5LCBiZXlvbmQgdGhlIHZhcmlvdXMgbGV2ZWxzIHRoYXQgZGVmaW5lIGludGVyZGlzY2lwbGluYXJpdHksIHRoZSBjb25jZXB0IGl0c2VsZiByZW1haW5zIHNvbWV3aGF0IGVsdXNpdmUsIGJvdGggaW4gdGVybXMgb2YgZGVmaW5pdGlvbnMgYW5kIG1lYXN1cmVtZW50cyBbQGhhaW5lczIwMTE7IEBoYXl0aG9ybnRod2FpdGUyMDA2bGVhcm5pbmddLiAqRGVmaW5pdGlvbnMqIG9mIGludGVyZGlzY2lwbGluYXJpdHkgYXJlIG9mdGVuIGNvbmZsYXRlZCB3aXRoIChhbW9uZyBvdGhlcnMpIHRyYW5zZGlzY2lwbGluYXJpdHkgYW5kIG11bHRpZGlzY2lwbGluYXJpdHkgW0BoYWluZXMyMDExXSwgd2l0aCBpbnN1ZmZpY2llbnQgZGlzdGluY3Rpb24gbWFkZSBiZXR3ZWVuIHRoZXNlIHJlbGF0ZWQgeWV0IGRpZmZlcmVudCBjb25jZXB0cy4gRm9yIGV4YW1wbGUsIGluIGFyZ3VpbmcgZm9yIHRoZSBiZW5lZml0cyBvZiBpbnRlcmRpc2NpcGxpbmFyeSByZXNlYXJjaCBvZiB0aGUgc29jaWFsIGFuZCBuYXR1cmFsIHNjaWVuY2VzLCBAYmFydGhlbDIwMTdpbnRlcmRpc2NpcGxpbmFyeSBkZWZpbmVkIHRocmVlIHVwd2FyZGx5IHNjYWxpbmcgbW9kZXMgb2YgY29sbGFib3JhdGlvbjogY3Jvc3MtZGlzY2lwbGluYXJpdHksIG11bHRpLWRpc2NpcGxpbmFyaXR5IGFuZCBpbnRlcmRpc2NpcGxpbmFyaXR5LiAqTWVhc3VyZXMqIG9mIGludGVyZGlzY2lwbGluYXJpdHkgbWF5IGluY2x1ZGUgaW5kaXZpZHVhbCBpbnRlcmRpc2NpcGxpbmFyaXR5IChpLmUuIHRoZSBpbnRlcmRpc2NpcGxpbmFyeSBiYWNrZ3JvdW5kIG9mIGEgcmVzZWFyY2hlcikgb3IgY29sbGVjdGl2ZSBpbnRlcmRpc2NpcGxpbmFyaXR5IChpLmUuIHRoZSBpbnRlcmFjdGlvbnMgb2YgcmVzZWFyY2hlcnMgZnJvbSBkaWZmZXJlbnQgZGlzY2lwbGluZXMpLiBNb3Jlb3ZlciwgaW50ZXJkaXNjaXBsaW5hcml0eSBjYW4gYmUgbWVhc3VyZWQgYnkgbWVhbnMgb2YgYmlibGlvbWV0cmljIGFuYWx5c2lzLCB3aGljaCBtYXkgcmVzdWx0IGluIGludGVyZGlzY2lwbGluYXJpdHktc2NvcmVzIGJhc2VkIG9uIGNpdGF0aW9uIGRpdmVyc2l0eSAoaS5lLiB3b3JrcyBjaXRlZCBlbmNvbXBhc3MgYSB3aWRlIHZhcmlldHkgb2YgZGlzY2lwbGluZXMpIFtAbG9jYXRlbGxpMjAyMWNvbGxlY3RpdmVdLCBqb3VybmFsLWFuYWx5c2lzIChpLmUuIGpvdXJuYWxzIHRoYXQgaWRlbnRpZnkgYXMgaW50ZXJkaXNjaXBsaW5hcnkpIFtAYmFydGhlbDIwMTdpbnRlcmRpc2NpcGxpbmFyeTsgQHpoZW5nMjAyM3Jlc2VhcmNoXSwgZXRjLgoKIyMgSHlwb3RoZXNlcwoKVGFraW5nIHRoZSB0aGVvcmV0aWNhbCBjb25zaWRlcmF0aW9ucyBhYm92ZSBpbnRvIGFjY291bnQsIEkgZGV2ZWxvcCB0aHJlZSAoPz8/PykgaHlwb3RoZXNlcy4KCkZpcnN0LCByZWxhdGluZyB0byB0aGUgc3RydWN0dXJlIG9mIHRoZSBuZXR3b3JrcyBAU05BU1MsIEkgZXhwZWN0IHRoZSBuZXR3b3JrIHRvIGRpc3BsYXkgYSBoaWdoZXIgZGVncmVlIG9mIGNsdXN0ZXJpbmcgb3ZlciB0aW1lLiBUaGlzIGV4cGVjdGF0aW9uIGlzIGZ1ZWxlZCBieSB0aGUgaWRlYSBvZiAncHJlZmVyZW50aWFsIGF0dGFjaG1lbnQnIEBraGFuMjAxOG9ubGluZTsgQGNhcG9jY2kyMDA2cHJlZmVyZW50aWFsLCB3aGVyZSBwZXJzb25zIHdpdGggbW9yZSBleGlzdGluZyByZWxhdGlvbnMgYXJlIG1vcmUgbGlrZWx5IHRvIGVudGVyIGluICpldmVuIG1vcmUqIHJlbGF0aW9ucy4gVGhpcyBpcyBhbHNvIGtub3duIGFzIHRoZSBwcmluY2lwbGUgb2YgInRoZSByaWNoIGdldHRpbmcgcmljaGVyIiwgYW5kIGxlYWRzIHRvIHRoZSBkZXZlbG9wbWVudCBvZiBzY2FsZS1mcmVlIG5ldHdvcmtzLCB3aXRoIGEgZmV3IGhpZ2hseSBjb25uZWN0ZWQgcGVyc29ucyBhbmQgbWFueSBsZXNzLWNvbm5lY3RlZCBwZXJzb25zIEBraGFuMjAxOG9ubGluZS4gVGhhdCBpcyB0byBzYXksIEkgZXhwZWN0IHRoYXQgdGhlIGNvbGxhYm9yYXRpb24gbmV0d29yayBldm9sdmVzIGZyb20gYSBuZXR3b3JrIHdpdGggYW4gZXZlbmx5IGRpc3RyaWJ1dGVkIGFtb3VudCBvZiBjb25uZWN0ZWQgc2Nob2xhcnMgdG8gYSBuZXR3b3JrIHdpdGggc2V2ZXJhbCBzY2hvbGFycyB3aG8gYXJlIG1vcmUgY2VudHJhbDoKCkgxOiAqdGhlIGNvbGxhYm9yYXRpb24gbmV0d29yayBiZWNvbWVzIG1vcmUgY2x1c3RlcmVkIG92ZXIgdGltZSwgaS5lLiB0aGUgbmV0d29yayBhdCB0MiB3aWxsIHNob3cgYSBoaWdoZXIgY2x1c3RlcmluZyB0aGFuIHRoZSBuZXR3b3JrIGF0IHQxLioKCk5leHQsIHRvIGV4cGxhaW4gdGhpcyBtYWNyby1sZXZlbCBjaGFuZ2UgYnkgbWVhbnMgb2YgbWljcm8tbGV2ZWwgbWVjaGFuaXNtcyBvZiBpbnRlcmRpc2NpcGxpbmFyaXR5LCBJIGZ1cnRoZXIgZHJhdyBvbiB0aGUgcHJpbmNpcGxlIG9mIGNsdXN0ZXJpbmcgYW5kIHRyYW5zaXRpdml0eSBAaGFpbmVzMjAxMTsgQGZyZWVtYW4yMDAyY2VudHJhbGl0eSwgd2hpY2ggYXNzdW1lcyB0aGF0IGNlbnRyYWwgcG9zaXRpb25zIGluIGEgbmV0d29yayBhcmUgYmVuZWZpY2lhbCB0byBwZXJzb25zIChpbiB0aGlzIHJlc2VhcmNoOiBhdXRob3JzKSwgYXMgdGhleSBhbGxvdyBwZW9wbGUgdG8gYWRvcHQgYSBtb3JlIGltcG9ydGFudCAnZnVuY3Rpb24nIGluIHRoZSBuZXR3b3JrLiBSZWxhdGluZyB0aGlzIHRvIGludGVyZGlzY2lwbGluYXJpdHksIG9uZSB3b3VsZCBleHBlY3QgdGhhdCBwZW9wbGUgd2l0aCBhIGhpZ2ggZGVncmVlIG9mIGludGVyZGlzY2lwbGluYXJpdHkgd291bGQgb2NjdXB5IGEgY2VudHJhbCByb2xlIGluIHRoZSBjb2xsYWJvcmF0aW9uIG5ldHdvcmssIGFzIHRoZXkgZWZmZWN0aXZlbHkgZnVuY3Rpb24gYXMgYSBodWIgZm9yIGluZm9ybWF0aW9uIGFuZCBrbm93bGVkZ2UgZGlzdHJpYnV0aW9uIGFjcm9zcyBtdWx0aXBsZSBkaXNjaXBsaW5lcy4KCkgyOiAqY29sbGFib3JhdGlvbiBuZXR3b3JrcyBiZWNvbWUgbW9yZSBjbHVzdGVyZWQgYXJvdW5kIHNjaG9sYXJzIHdpdGggaGlnaCBsZXZlbHMgb2YgaW50ZXJkaXNjaXBsaW5hcml0eSwgaS5lLiB0aGUgbmV0d29yayBhdCB0MiB3aWxsIHNob3cgdGhlIHByZXNlbmNlIG9mIHNjaG9sYXJzIHdpdGggaGlnaCBpbmRlZ3JlZXMgYW5kIGhpZ2ggbGV2ZWxzIG9mIGludGVyZGlzY2lwbGluYXJpdHkqCgpMYXN0bHksIGZvbGxvd2luZyB0aGUgbG9naWMgb2YgY2VudHJhbGl6YXRpb24gYmFzZWQgb24gaW50ZXJkaXNjaXBsaW5hcml0eSwgb25lIGNvdWxkIGFsc28gbWFrZSB0aGUgYXJndW1lbnQgdGhhdCwgZXZlbiB0aG91Z2ggaW50ZXJkaXNjaXBsaW5hcnkgcmVzZWFyY2hlcnMgbWF5IHJlY2VpdmUgbWFueSBpbi1kZWdyZWVzLCB0aGlzCgojIFJlZmVyZW5jZXMK</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("Theory_F.Rmd");
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

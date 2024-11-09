@@ -1,0 +1,13 @@
+# Important
+RQ1: veranderen in 'mean level of interdisciplinarity'. Zoals nu geformuleerd zou ik aan iedere auteur een field hangen, en dan kijken of dat een voorspeller is (dyade kenmerk ipv ego = SameX in Rsiena).
+
+Relevantiescore voor correlaties sf, f en t.
+
+# Week 7
+Relative influence: looks at how important a statistic is in making a decision for an actor, by forcing the statistic  e.g. reciprocity to 0. This is different from the estimates you get in RSiena. Effects can be large, but can be still not be of any importance. So, it forces RSiena to simulate networks without the specific network effect. This way you can show the micro-macro relations. 
+
+RSiena models selection an influence. So, behavior can also be a dependent variable. So, instead of the effect of interdisciplinarity on network, you can measure the effect of the network on interdisciplinarity. 
+```{r}
+
+```
+
