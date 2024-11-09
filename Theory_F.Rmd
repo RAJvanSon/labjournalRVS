@@ -41,6 +41,6 @@ Next, to explain this macro-level change by means of micro-level mechanisms of i
 
 H3a: *interdisciplinary researchers are more likely to receive more indegrees then non-interdisciplinary researchers.*
 
-h3b: *interdisciplinary researchers will tent to seek out interdisciplinary researchers to collaborate with* *(i.e. interdisciplinarity based homophily).*
+H3b: *interdisciplinary researchers will tend to seek out interdisciplinary researchers to collaborate with* *(i.e. interdisciplinarity based homophily).*
 
 # References
