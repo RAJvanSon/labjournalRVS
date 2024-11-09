@@ -182,7 +182,7 @@ plot(no_isolatesw2,
 
 **Figure 3** and **Figure 4** again show the networks at wave1 and wave2. However, node size is made dependent on indegrees, while colors are made dependent on the interdisciplinarity (SDI) score of an author. Big nodes represent authors with many indegrees, whereas red nodes represent authors with a high SDI score. Going back to our hypothesis 1 and 2, one would expect to see big *and* red nodes in wave 2. Expectations were that the evolution of the network would show the emergence of central, interdisciplinary nodes. At first glance, this seems to be the case. The big nodes in wave 2 also have a relatively high interdisciplinarity score, suggesting a correlation between interdisciplinarity and SDI score.
 
-### Figure 3: Network at Wave 1, with Vertex Size and Colour Based on SDI
+### Figure 3: Network at Wave 1, with Vertex Size Based on Indegrees and Colour Based on SDI
 
 ```{r, echo=TRUE, warning=FALSE, message=FALSE}
 # Compute indegrees (in-degree for each vertex)
@@ -214,7 +214,7 @@ plot(no_isolatesw1,
 
 ```
 
-### Figure 4: Network at Wave 2, with Vertex Size and Colour Based on SDI
+### Figure 4: Network at Wave 2, with Vertex Size Based on Indegree and Colour Based on SDI
 
 ```{r, echo=TRUE, warning=FALSE, message=FALSE}
 # Compute indegrees (in-degree for each vertex)
