@@ -1,0 +1,32 @@
+---
+title: "Theory"
+author: "René van Son"
+bibliography: references.bib
+csl: apa.csl
+---
+
+```{=html}
+<style>
+body {
+text-align: justify;
+font-family: Times;
+}
+</style>
+```
+# Introduction
+
+Collaboration in the sciences is generally regarded as beneficial, both for the quality of the research and for the development of scientific theories and methodologies [@haines2011;@spence2024and]. Interdisciplinary research, as a 'type' of collaboration, has become a focus in many university departments, where curricula are adapted to better connect different disciplines, to approach empirical phenomena from different theoretical and methodological perspectives, and to create knowledge integration across disciplines. In fact, some scholars have argued that research-standards in some disciplines have already become increasingly interdisciplinary 'below the surface', pointing at the need for interdisciplinary proposals when applying for research grants [@locatelli2021collective]. Others, however, have argued that even though mentions of interdisciplinarity have increased, this is reflected by neither a notable increase in interdisciplinary work, nor in the success of interdisciplinary studies (in terms of citations, higher ranking journals, impact scores, etc. See @barthel2017interdisciplinary; @spence2024and).\
+
+In the research on interdisciplinarity the focus has largely been on either the nature of the collaborations (e.g. what kind of knowledge is shared, see @haythornthwaite2006learning), or on the differences and relations between *individual* interdisciplinarity (e.g. a researcher's background) and *collective* interdisciplinarity (e.g. the interactions of researchers across disciplines. See @locatelli2021collective). In more qualitatively oriented research, @spence2024and analyzed personal motivations and possible trajectories of becoming an interdisciplinary researcher. Moreover, many studies have focused on citation analysis to gauge the extent of interdisciplinarity (e.g. \@rafols2010diversity). However, the *consequences* of interdisciplinarity in terms of the researcher's position have been understudied. Still, this is highly important, as the decision to engage in interdisciplinary research at one point in time may provide a comparative advantage for researchers when applying for grants and research funding at a later moment [@locatelli2021collective], as solutions to complex (social) problems are increasingly *not* being sought within the boundaries of a single discipline or field. In this study, I therefore want to examine the extent to which interdisciplinary researchers differ in their career trajectories and 'roles' from researchers who largely remained within their disciplinary boundaries. That is to say, this research seeks to determine how interdisciplinary research efforts and the broader structures of collaboration within a university relate to each other.
+
+One way to better understand interdisciplinarity - its causes, characteristics and consequences - is by taking a social network perspective. One of the main reasons for taking a social network perspective is because it treats interdependencies (of observations, persons, relations, etc.) as theoretically and empirically interesting, rather than as violations of assumptions (as in OLS regression analysis). Treating researcher collaborations and coauthorships as *ties* may yield more informative results than focusing solely on the non-relational properties of the researcher him/herself, as is usually done with survey data. With regard to interdisciplinary collaborations, a social network analysis will shed light on, firstly, the way in which interdisciplinary research changed the structure of collaboration networks over time and, secondly, what the changing structure of these networks means for researchers (in terms of their role in the network) who engaged in interdisciplinary research. Following this line of thinking, the following research questions are proposed:
+
+RQ1: did collaboration networks become more interdisciplinary over time, i.e. did the mean level of interdisciplinarity increase over time?
+
+RQ2: to what extent do interdisciplinary researchers take a distinct role in the collaboration network?
+
+RQ3: if the network has indeed become more interdisciplinary on average, how (and to what extent) can we attribute this change to micro-level preferences and behaviour in scientific collaboration?
+
+To answer these research questions, I analyzed bibliometric collaboration data from the Radboud University (RU) and the University of Amsterdam (UvA), from both the departments of sociology and political science. Two time periods are analyzed: the first wave ranged from 2016-2019, the second wave from 2020-2023. In what follows, I will first present a theoretical background for the analysis, together with concrete hypothesis. Next, I will provide an overview of the data collection process and the acquired data, with a focus on the methodological and empirical implications of network data. Then, I will provide network statistics with visualizations of the network at the two time-points (the waves). In addition, to research the micro-level foundations of network change, I will use RSiena models and analyze the results. Lastly, I will conclude with some open-ended questions and suggestions for further research.
+
+# References

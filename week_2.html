@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="by: René van Son" />
+
+
+<title>week 2</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="tweaks.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    My journal
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Tutorial_week1.html">Week 1: R Tutorial</a>
+    </li>
+    <li>
+      <a href="week_2.html">Week 2: Introduction</a>
+    </li>
+    <li>
+      <a href="Week_3.html">Week 3: Webscraping</a>
+    </li>
+    <li>
+      <a href="week_4.html">Week 4: Elaboration on Introduction and Network Visualization</a>
+    </li>
+    <li>
+      <a href="Data_prep.html">Data Prep</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Final Report
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Introduction_F.html">Introduction</a>
+    </li>
+    <li>
+      <a href="Theory_F.html">Theory</a>
+    </li>
+    <li>
+      <a href="Data_F.html">Data</a>
+    </li>
+    <li>
+      <a href="Analysis_F.html">Analysis and Results</a>
+    </li>
+    <li>
+      <a href="Conclusion_F.html">Conclusion</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/JochemTolsma/labjournal">
+    <span class="fab fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">week 2</h1>
+<h4 class="author">by: René van Son</h4>
+
+</div>
+
+
+<div id="revised-research-question-introduction" class="section level1"
+number="1">
+<h1><span class="header-section-number">1</span> Revised Research
+Question &amp; Introduction</h1>
+<p>Collaboration in the sciences is generally regarded as beneficial,
+both for the quality of the research and for the development of
+scientific theories and methodologies (<span class="citation">Haines,
+Godley, and Hawe (2011)</span>). Interdisciplinary research, as a kind
+of collaboration, has become a focus in many universities, where
+curricula are adapted to better connect different disciplines in order
+for empirical phenomena to be approached from different perspectives and
+to create knowledge integration across disciplines. In fact, some
+scholars have argued that research-standards in some disciplines have
+already become increasingly interdisciplinary ‘below the surface’,
+pointing at the need for interdisciplinary proposals when trying to
+apply for research grants <span class="citation">Locatelli et al.
+(2021)</span>. Others, however, have argued that while <em>mentions</em>
+of interdisciplinarity (which have indeed increased!) is reflected by
+neither a notable increase in interdisciplinary <em>work</em>, nor in
+the <em>success</em> of interdisciplinary studies (in terms of
+citations, higher ranking journals, impact, etc.) <span
+class="citation">Barthel and Seidl (2017)</span>.</p>
+<p>One way to better understand interdisciplinarity - its causes,
+attributes and consequences - is by taking a social network perspective.
+One of the main reasons for taking a social network perspective is
+because it treats interdependencies (of observations, persons, etc.) as
+theoretically interesting, rather than as violations of assumptions.
+Treating researcher ties (in terms of collaborations) as informative may
+yield different results than focusing solely on the properties of the
+researcher him/herself (e.g. is the researcher him/herself educated
+across multiple disciplines). In other words, not only the attributes of
+the researcher may have causal properties for the degree of
+interdisciplinarity, but the “interdisciplinary-ness” is also dependent
+on the <em>network</em> of a researcher.</p>
+<p>With regards to interdisciplinary collaborations, a social network
+analysis will shed light on, firstly, the way in which interdisciplinary
+research changed the structure of collaboration networks over time and,
+secondly, what the changing structure of these networks means for
+researchers who engaged in interdisciplinary research. Following this
+line of thinking, we can develop the following research questions:</p>
+<p>RQ1: did collaboration networks become more interdisciplinary over
+time, i.e. did the structure of the collaboration network change over
+time with regards to the frequency/proportion of interdisciplinary
+collaborations? RQ2: to what extent does increasing interdisciplinarity
+at the macro-level(=network) lead to selective/partial clustering at the
+micro level?       To answer these research questions, one needs a
+particular kind of data, i.e. data that is relational. For the purpose
+here, collaboration data from multiple research departments of Radboud
+University will be used.</p>
+</div>
+<div id="practice" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Practice</h1>
+<p>We can describe a network by referring to the diads and the triads.
+If they have theoretical meaning, we could ask questions about them.
+E.g. we expect 210-configurations than 201-configuration. E.g.:
+Friendships are stable relations (usually). These configurations have
+theoretical meaning.</p>
+<p>Let’s try an adjacency matrix to practice: <br></p>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    0    0    0    0
+## [2,]    0    0    0    0
+## [3,]    0    0    0    0
+## [4,]    0    0    0    0</code></pre>
+<p>Above, there are no relations… <br> <br></p>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    0    1    0    0
+## [2,]    0    0    0    0
+## [3,]    0    0    0    0
+## [4,]    0    0    0    0</code></pre>
+<p>Now, there is one (directed) relation: from ‘1’ to ‘2’ (but not from
+‘2’ to ‘1’!) <br> <br></p>
+<pre><code>##  [1] 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</code></pre>
+<pre><code>##  [1] 2 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0</code></pre>
+<p>Above, we see the triad counts for matrix1 and matrix2, respectively.
+Note that in the first matrix there are four ‘003’ relationships,
+whereas in the second matrix there are two ‘003’ relationships and two
+‘012’ relationships. This means: Matrix1: four triads with 0 ties (3
+isolates). Matrix2: two triads with 0 ties (3 isolates), two triads with
+one directed tie and one isolate. <br> <br> How do these triads come
+about? E.g. transitive triads (friends of friends become friends).
+Different pathways have different theoretical mechanisms.</p>
+<p>Another network characteristic is density (number of ties divided by
+possibile ties). Degree centrality is another descriptive charateristic.
+How many degrees you have? But in large networks, of course you will
+have many relations (out-degrees). So, we normalize it, e.g. max-min
+normalization.</p>
+<p>Closeness centrality is another one, how central is a node ?
+Betweenness centrality is another one. These are all descriptives at the
+ego-level</p>
+<p>Try:</p>
+<pre class="r"><code>#install.packages(&quot;RSiena&quot;)
+require(RSiena)
+s501</code></pre>
+<pre><code>##    V1 V2 V3 V4 V5 V6 V7 V8 V9 V10 V11 V12 V13 V14 V15 V16 V17 V18 V19 V20 V21 V22 V23 V24 V25 V26
+## 1   0  0  0  0  0  0  0  0  0   0   1   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0
+## 2   0  0  0  0  0  0  1  0  0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 3   0  0  0  1  0  0  0  0  1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 4   0  0  1  0  0  0  0  0  1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 5   0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 6   0  0  0  0  0  0  0  1  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 7   0  1  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 8   0  0  0  0  0  1  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 9   0  0  1  1  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 10  0  0  0  0  0  0  0  0  0   0   1   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0
+## 11  0  1  0  0  0  0  0  0  0   0   0   0   0   0   1   1   0   0   0   0   0   0   0   0   0   0
+## 12  0  0  0  0  0  0  1  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 13  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 14  1  0  0  0  0  0  0  0  0   1   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 15  0  0  0  0  0  0  0  0  0   1   1   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0
+## 16  0  0  0  0  0  0  0  0  0   0   1   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0
+## 17  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   1   1   0   1   1   0   1   0   0
+## 18  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   1   0   0   0   0   0   0   0
+## 19  0  0  0  0  0  0  0  0  0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   1   0   1
+## 20  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 21  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   0
+## 22  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   1   0   0   0   1   0   0   0   0   0
+## 23  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0
+## 24  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   1   0   1   0   1   1   1   0   0   0
+## 25  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   0
+## 26  0  0  0  0  0  0  1  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 27  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 28  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 29  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1
+## 30  0  0  0  0  0  0  0  0  0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1
+## 31  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   1   0
+## 32  0  0  0  0  1  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   0   0
+## 33  0  0  0  0  0  0  0  0  0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 34  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 35  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   1   0   0   0   0   0   0   0   0
+## 36  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 37  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 38  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 39  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 40  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 41  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 42  0  0  0  0  0  0  1  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 43  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   0
+## 44  0  0  0  0  0  0  1  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 45  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 46  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 47  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 48  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 49  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 50  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+##    V27 V28 V29 V30 V31 V32 V33 V34 V35 V36 V37 V38 V39 V40 V41 V42 V43 V44 V45 V46 V47 V48 V49 V50
+## 1    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 2    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 3    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 4    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 5    0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 6    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 7    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   1   0   0   0   0   0   0
+## 8    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 9    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 10   0   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 12   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   1   0   0   0   0   0   0
+## 13   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 14   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 15   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 16   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 17   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 18   0   0   0   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 19   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 20   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 21   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 22   0   0   0   0   1   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 23   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 24   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 25   0   0   0   0   1   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 26   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   0   0   0
+## 27   0   1   1   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 28   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 29   0   0   0   1   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 30   0   0   1   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 31   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 32   0   0   0   0   1   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 33   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 34   0   0   0   0   1   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 35   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 36   0   0   0   0   0   0   0   0   0   0   0   1   0   0   1   0   0   0   0   0   0   0   0   0
+## 37   0   0   0   0   1   1   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 38   0   0   0   0   0   0   0   0   0   1   0   0   0   0   1   0   0   0   0   0   0   0   0   0
+## 39   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   0   0   0   0
+## 40   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   1   1   0   0   0
+## 41   0   0   0   0   0   0   0   0   0   1   0   1   0   0   0   0   0   0   0   0   0   0   0   0
+## 42   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   0   0   0
+## 43   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0
+## 44   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   0   0   0   0   0
+## 45   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   0   0   1   1   0   0   0
+## 46   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   0   1   0   0   0   1   0
+## 47   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 48   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   1   0
+## 49   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   1   0   0
+## 50   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0</code></pre>
+<pre class="r"><code>?s501</code></pre>
+<pre><code>## Help on topic &#39;s501&#39; was found in the following packages:
+## 
+##   Package               Library
+##   RsienaTwoStep         /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/library
+##   RSiena                /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/library
+## 
+## 
+## Using the first match ...</code></pre>
+<pre class="r"><code>?RSiena
+dim(s501)</code></pre>
+<pre><code>## [1] 50 50</code></pre>
+<pre class="r"><code>smaller_matrix &lt;- s501[15:25,15:25]
+graph_small &lt;- graph_from_adjacency_matrix(smaller_matrix)
+plot(graph_small)</code></pre>
+<p><img src="week_2_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Okay, so now we have to get centrality measures etc. First degree
+centrality</p>
+<pre class="r"><code>smaller_matrix</code></pre>
+<pre><code>##    V15 V16 V17 V18 V19 V20 V21 V22 V23 V24 V25
+## 15   0   1   0   0   0   0   0   0   0   0   0
+## 16   1   0   0   0   0   0   0   0   0   0   0
+## 17   0   0   0   1   1   0   1   1   0   1   0
+## 18   0   0   0   0   1   0   0   0   0   0   0
+## 19   0   0   0   0   0   0   0   0   0   1   0
+## 20   0   0   0   0   0   0   0   0   0   0   0
+## 21   0   0   0   0   0   0   0   1   0   0   0
+## 22   0   0   1   0   0   0   1   0   0   0   0
+## 23   0   0   0   0   0   0   0   0   0   1   0
+## 24   0   0   1   0   1   0   1   1   1   0   0
+## 25   0   0   0   0   0   0   0   1   0   0   0</code></pre>
+<pre class="r"><code>graph_out &lt;- degree(graph_small, mode = &quot;out&quot;)
+graph_in &lt;- degree(graph_small, mode = &quot;in&quot;)
+graph_in</code></pre>
+<pre><code>## V15 V16 V17 V18 V19 V20 V21 V22 V23 V24 V25 
+##   1   1   2   1   3   0   3   4   1   3   0</code></pre>
+<pre class="r"><code>graph_out</code></pre>
+<pre><code>## V15 V16 V17 V18 V19 V20 V21 V22 V23 V24 V25 
+##   1   1   5   1   1   0   1   2   1   5   1</code></pre>
+<p>Closeness</p>
+<pre class="r"><code>closeness(graph_small)</code></pre>
+<pre><code>##        V15        V16        V17        V18        V19        V20        V21        V22        V23 
+## 1.00000000 1.00000000 0.14285714 0.06666667 0.08333333        NaN 0.06250000 0.09090909 0.08333333 
+##        V24        V25 
+## 0.14285714 0.05555556</code></pre>
+<pre class="r"><code>Betweenness &lt;- betweenness(graph_small)
+Betweenness</code></pre>
+<pre><code>## V15 V16 V17 V18 V19 V20 V21 V22 V23 V24 V25 
+##   0   0  15   0   5   0   0  11   0  18   0</code></pre>
+<pre class="r"><code>?betweenness</code></pre>
+<p>Note that, for example, for V3</p>
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+<div id="ref-barthel2017interdisciplinary" class="csl-entry">
+Barthel, Roland, and Roman Seidl. 2017. <span>“Interdisciplinary
+Collaboration Between Natural and Social Sciences–Status and Trends
+Exemplified in Groundwater Research.”</span> <em>PloS One</em> 12 (1):
+e0170754.
+</div>
+<div id="ref-haines2011" class="csl-entry">
+Haines, Valerie A, Jenny Godley, and Penelope Hawe. 2011.
+<span>“Understanding Interdisciplinary Collaborations as Social
+Networks.”</span> <em>American Journal of Community Psychology</em> 47
+(1-2): 1–11.
+</div>
+<div id="ref-locatelli2021collective" class="csl-entry">
+Locatelli, Bruno, Améline Vallet, Jacques Tassin, Denis Gautier, Aurélie
+Chamaret, and Plinio Sist. 2021. <span>“Collective and Individual
+Interdisciplinarity in a Sustainability Research Group: A Social Network
+Analysis.”</span> <em>Sustainability Science</em> 16: 37–52.
+</div>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiIHdlZWsgMiIKYXV0aG9yOiAiYnk6IFJlbsOpIHZhbiBTb24iCmJpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWIKZWRpdG9yX29wdGlvbnM6IAogIG1hcmtkb3duOiAKICAgIHdyYXA6IDcyCi0tLQoKIyBSZXZpc2VkIFJlc2VhcmNoIFF1ZXN0aW9uICYgSW50cm9kdWN0aW9uCgpDb2xsYWJvcmF0aW9uIGluIHRoZSBzY2llbmNlcyBpcyBnZW5lcmFsbHkgcmVnYXJkZWQgYXMgYmVuZWZpY2lhbCwgYm90aApmb3IgdGhlIHF1YWxpdHkgb2YgdGhlIHJlc2VhcmNoIGFuZCBmb3IgdGhlIGRldmVsb3BtZW50IG9mIHNjaWVudGlmaWMKdGhlb3JpZXMgYW5kIG1ldGhvZG9sb2dpZXMgKEBoYWluZXMyMDExKS4gSW50ZXJkaXNjaXBsaW5hcnkgcmVzZWFyY2gsIGFzCmEga2luZCBvZiBjb2xsYWJvcmF0aW9uLCBoYXMgYmVjb21lIGEgZm9jdXMgaW4gbWFueSB1bml2ZXJzaXRpZXMsIHdoZXJlCmN1cnJpY3VsYSBhcmUgYWRhcHRlZCB0byBiZXR0ZXIgY29ubmVjdCBkaWZmZXJlbnQgZGlzY2lwbGluZXMgaW4gb3JkZXIKZm9yIGVtcGlyaWNhbCBwaGVub21lbmEgdG8gYmUgYXBwcm9hY2hlZCBmcm9tIGRpZmZlcmVudCBwZXJzcGVjdGl2ZXMgYW5kCnRvIGNyZWF0ZSBrbm93bGVkZ2UgaW50ZWdyYXRpb24gYWNyb3NzIGRpc2NpcGxpbmVzLiBJbiBmYWN0LCBzb21lCnNjaG9sYXJzIGhhdmUgYXJndWVkIHRoYXQgcmVzZWFyY2gtc3RhbmRhcmRzIGluIHNvbWUgZGlzY2lwbGluZXMgaGF2ZQphbHJlYWR5IGJlY29tZSBpbmNyZWFzaW5nbHkgaW50ZXJkaXNjaXBsaW5hcnkgJ2JlbG93IHRoZSBzdXJmYWNlJywKcG9pbnRpbmcgYXQgdGhlIG5lZWQgZm9yIGludGVyZGlzY2lwbGluYXJ5IHByb3Bvc2FscyB3aGVuIHRyeWluZyB0bwphcHBseSBmb3IgcmVzZWFyY2ggZ3JhbnRzIEBsb2NhdGVsbGkyMDIxY29sbGVjdGl2ZS4gT3RoZXJzLCBob3dldmVyLApoYXZlIGFyZ3VlZCB0aGF0IHdoaWxlICptZW50aW9ucyogb2YgaW50ZXJkaXNjaXBsaW5hcml0eSAod2hpY2ggaGF2ZQppbmRlZWQgaW5jcmVhc2VkISkgaXMgcmVmbGVjdGVkIGJ5IG5laXRoZXIgYSBub3RhYmxlIGluY3JlYXNlIGluCmludGVyZGlzY2lwbGluYXJ5ICp3b3JrKiwgbm9yIGluIHRoZSAqc3VjY2Vzcyogb2YgaW50ZXJkaXNjaXBsaW5hcnkKc3R1ZGllcyAoaW4gdGVybXMgb2YgY2l0YXRpb25zLCBoaWdoZXIgcmFua2luZyBqb3VybmFscywgaW1wYWN0LCBldGMuKQpAYmFydGhlbDIwMTdpbnRlcmRpc2NpcGxpbmFyeS4KCk9uZSB3YXkgdG8gYmV0dGVyIHVuZGVyc3RhbmQgaW50ZXJkaXNjaXBsaW5hcml0eSAtIGl0cyBjYXVzZXMsCmF0dHJpYnV0ZXMgYW5kIGNvbnNlcXVlbmNlcyAtIGlzIGJ5IHRha2luZyBhIHNvY2lhbCBuZXR3b3JrIHBlcnNwZWN0aXZlLgpPbmUgb2YgdGhlIG1haW4gcmVhc29ucyBmb3IgdGFraW5nIGEgc29jaWFsIG5ldHdvcmsgcGVyc3BlY3RpdmUgaXMKYmVjYXVzZSBpdCB0cmVhdHMgaW50ZXJkZXBlbmRlbmNpZXMgKG9mIG9ic2VydmF0aW9ucywgcGVyc29ucywgZXRjLikgYXMKdGhlb3JldGljYWxseSBpbnRlcmVzdGluZywgcmF0aGVyIHRoYW4gYXMgdmlvbGF0aW9ucyBvZiBhc3N1bXB0aW9ucy4KVHJlYXRpbmcgcmVzZWFyY2hlciB0aWVzIChpbiB0ZXJtcyBvZiBjb2xsYWJvcmF0aW9ucykgYXMgaW5mb3JtYXRpdmUgbWF5CnlpZWxkIGRpZmZlcmVudCByZXN1bHRzIHRoYW4gZm9jdXNpbmcgc29sZWx5IG9uIHRoZSBwcm9wZXJ0aWVzIG9mIHRoZQpyZXNlYXJjaGVyIGhpbS9oZXJzZWxmIChlLmcuIGlzIHRoZSByZXNlYXJjaGVyIGhpbS9oZXJzZWxmIGVkdWNhdGVkCmFjcm9zcyBtdWx0aXBsZSBkaXNjaXBsaW5lcykuIEluIG90aGVyIHdvcmRzLCBub3Qgb25seSB0aGUgYXR0cmlidXRlcyBvZgp0aGUgcmVzZWFyY2hlciBtYXkgaGF2ZSBjYXVzYWwgcHJvcGVydGllcyBmb3IgdGhlIGRlZ3JlZSBvZgppbnRlcmRpc2NpcGxpbmFyaXR5LCBidXQgdGhlICJpbnRlcmRpc2NpcGxpbmFyeS1uZXNzIiBpcyBhbHNvIGRlcGVuZGVudApvbiB0aGUgKm5ldHdvcmsqIG9mIGEgcmVzZWFyY2hlci4KCldpdGggcmVnYXJkcyB0byBpbnRlcmRpc2NpcGxpbmFyeSBjb2xsYWJvcmF0aW9ucywgYSBzb2NpYWwgbmV0d29yawphbmFseXNpcyB3aWxsIHNoZWQgbGlnaHQgb24sIGZpcnN0bHksIHRoZSB3YXkgaW4gd2hpY2ggaW50ZXJkaXNjaXBsaW5hcnkKcmVzZWFyY2ggY2hhbmdlZCB0aGUgc3RydWN0dXJlIG9mIGNvbGxhYm9yYXRpb24gbmV0d29ya3Mgb3ZlciB0aW1lIGFuZCwKc2Vjb25kbHksIHdoYXQgdGhlIGNoYW5naW5nIHN0cnVjdHVyZSBvZiB0aGVzZSBuZXR3b3JrcyBtZWFucyBmb3IKcmVzZWFyY2hlcnMgd2hvIGVuZ2FnZWQgaW4gaW50ZXJkaXNjaXBsaW5hcnkgcmVzZWFyY2guIEZvbGxvd2luZyB0aGlzCmxpbmUgb2YgdGhpbmtpbmcsIHdlIGNhbiBkZXZlbG9wIHRoZSBmb2xsb3dpbmcgcmVzZWFyY2ggcXVlc3Rpb25zOgoKUlExOiBkaWQgY29sbGFib3JhdGlvbiBuZXR3b3JrcyBiZWNvbWUgbW9yZSBpbnRlcmRpc2NpcGxpbmFyeSBvdmVyIHRpbWUsCmkuZS4gZGlkIHRoZSBzdHJ1Y3R1cmUgb2YgdGhlIGNvbGxhYm9yYXRpb24gbmV0d29yayBjaGFuZ2Ugb3ZlciB0aW1lCndpdGggcmVnYXJkcyB0byB0aGUgZnJlcXVlbmN5L3Byb3BvcnRpb24gb2YgaW50ZXJkaXNjaXBsaW5hcnkKY29sbGFib3JhdGlvbnM/IFJRMjogdG8gd2hhdCBleHRlbnQgZG9lcyBpbmNyZWFzaW5nIGludGVyZGlzY2lwbGluYXJpdHkKYXQgdGhlIG1hY3JvLWxldmVsKD1uZXR3b3JrKSBsZWFkIHRvIHNlbGVjdGl2ZS9wYXJ0aWFsIGNsdXN0ZXJpbmcgYXQgdGhlCm1pY3JvIGxldmVsPyDCoMKgwqDCoMKgwqBUbyBhbnN3ZXIgdGhlc2UgcmVzZWFyY2ggcXVlc3Rpb25zLCBvbmUgbmVlZHMgYQpwYXJ0aWN1bGFyIGtpbmQgb2YgZGF0YSwgaS5lLiBkYXRhIHRoYXQgaXMgcmVsYXRpb25hbC4gRm9yIHRoZSBwdXJwb3NlCmhlcmUsIGNvbGxhYm9yYXRpb24gZGF0YSBmcm9tIG11bHRpcGxlIHJlc2VhcmNoIGRlcGFydG1lbnRzIG9mIFJhZGJvdWQKVW5pdmVyc2l0eSB3aWxsIGJlIHVzZWQuCgojIFByYWN0aWNlCgpXZSBjYW4gZGVzY3JpYmUgYSBuZXR3b3JrIGJ5IHJlZmVycmluZyB0byB0aGUgZGlhZHMgYW5kIHRoZSB0cmlhZHMuIElmCnRoZXkgaGF2ZSB0aGVvcmV0aWNhbCBtZWFuaW5nLCB3ZSBjb3VsZCBhc2sgcXVlc3Rpb25zIGFib3V0IHRoZW0uIEUuZy4Kd2UgZXhwZWN0IDIxMC1jb25maWd1cmF0aW9ucyB0aGFuIDIwMS1jb25maWd1cmF0aW9uLiBFLmcuOiBGcmllbmRzaGlwcwphcmUgc3RhYmxlIHJlbGF0aW9ucyAodXN1YWxseSkuIFRoZXNlIGNvbmZpZ3VyYXRpb25zIGhhdmUgdGhlb3JldGljYWwKbWVhbmluZy4KCmBgYHtyLCBlY2hvPUZBTFNFLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQojaW5zdGFsbC5wYWNrYWdlcygiaWdyYXBoIikgaWYgbmVjLgpyZXF1aXJlKGlncmFwaCkKYGBgCgpMZXQncyB0cnkgYW4gYWRqYWNlbmN5IG1hdHJpeCB0byBwcmFjdGljZTogPGJyPgoKYGBge3IsIGVjaG89RkFMU0V9Cm1hdHJpeDEgPC0gbWF0cml4KGMoMCwwLDAsMCwgI2hlcmUgdGhlcmUgYXJlIG9ubHkgMCdzLCB0aGVyZSBhcmUgbm8gKGRpcmVjdGVkKSByZWxhdGlvbnMgCiAgICAgICAgICAgICAgICAgICAwLDAsMCwwLAogICAgICAgICAgICAgICAgICAgMCwwLDAsMCwKICAgICAgICAgICAgICAgICAgIDAsMCwwLDApLG5yb3cgPSA0LCBuY29sID0gNCxieXJvdyA9IFRSVUUpCm1hdHJpeDEKYGBgCgpBYm92ZSwgdGhlcmUgYXJlIG5vIHJlbGF0aW9ucy4uLiA8YnI+IDxicj4KCmBgYHtyLCBlY2hvPUZBTFNFfQptYXRyaXgyIDwtIG1hdHJpeChjKDAsMSwwLDAsICNoZXJlIHRoZXJlIGlzIDEgZGlyZWN0ZWQgcmVsYXRpb25zLCBmcm9tIDEgdG8gMiAoYnV0IG5vdCBmcm9tIDIgdG8gMSkKICAgICAgICAgICAgICAgICAgIDAsMCwwLDAsCiAgICAgICAgICAgICAgICAgICAwLDAsMCwwLAogICAgICAgICAgICAgICAgICAgMCwwLDAsMCksbnJvdyA9IDQsIG5jb2wgPSA0LGJ5cm93ID0gVFJVRSkKCm1hdHJpeDIKYGBgCgpOb3csIHRoZXJlIGlzIG9uZSAoZGlyZWN0ZWQpIHJlbGF0aW9uOiBmcm9tICcxJyB0byAnMicgKGJ1dCBub3QgZnJvbSAnMicKdG8gJzEnISkgPGJyPiA8YnI+CgpgYGB7ciwgZWNobz1GQUxTRX0KZ3JhcGgxIDwtIGdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeCgKICBtYXRyaXgxKQoKZ3JhcGgyIDwtIGdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeCgKICBtYXRyaXgyKQoKZ3JhcGhfbWF0cml4MSA8LSB0cmlhZF9jZW5zdXMoZ3JhcGgxKQpncmFwaF9tYXRyaXgyIDwtIHRyaWFkX2NlbnN1cyhncmFwaDIpCmdyYXBoX21hdHJpeDEKZ3JhcGhfbWF0cml4MgpgYGAKCkFib3ZlLCB3ZSBzZWUgdGhlIHRyaWFkIGNvdW50cyBmb3IgbWF0cml4MSBhbmQgbWF0cml4MiwgcmVzcGVjdGl2ZWx5LgpOb3RlIHRoYXQgaW4gdGhlIGZpcnN0IG1hdHJpeCB0aGVyZSBhcmUgZm91ciAnMDAzJyByZWxhdGlvbnNoaXBzLAp3aGVyZWFzIGluIHRoZSBzZWNvbmQgbWF0cml4IHRoZXJlIGFyZSB0d28gJzAwMycgcmVsYXRpb25zaGlwcyBhbmQgdHdvCicwMTInIHJlbGF0aW9uc2hpcHMuIFRoaXMgbWVhbnM6IE1hdHJpeDE6IGZvdXIgdHJpYWRzIHdpdGggMCB0aWVzICgzCmlzb2xhdGVzKS4gTWF0cml4MjogdHdvIHRyaWFkcyB3aXRoIDAgdGllcyAoMyBpc29sYXRlcyksIHR3byB0cmlhZHMgd2l0aApvbmUgZGlyZWN0ZWQgdGllIGFuZCBvbmUgaXNvbGF0ZS4gPGJyPiA8YnI+IEhvdyBkbyB0aGVzZSB0cmlhZHMgY29tZQphYm91dD8gRS5nLiB0cmFuc2l0aXZlIHRyaWFkcyAoZnJpZW5kcyBvZiBmcmllbmRzIGJlY29tZSBmcmllbmRzKS4KRGlmZmVyZW50IHBhdGh3YXlzIGhhdmUgZGlmZmVyZW50IHRoZW9yZXRpY2FsIG1lY2hhbmlzbXMuCgpBbm90aGVyIG5ldHdvcmsgY2hhcmFjdGVyaXN0aWMgaXMgZGVuc2l0eSAobnVtYmVyIG9mIHRpZXMgZGl2aWRlZCBieQpwb3NzaWJpbGUgdGllcykuIERlZ3JlZSBjZW50cmFsaXR5IGlzIGFub3RoZXIgZGVzY3JpcHRpdmUgY2hhcmF0ZXJpc3RpYy4KSG93IG1hbnkgZGVncmVlcyB5b3UgaGF2ZT8gQnV0IGluIGxhcmdlIG5ldHdvcmtzLCBvZiBjb3Vyc2UgeW91IHdpbGwKaGF2ZSBtYW55IHJlbGF0aW9ucyAob3V0LWRlZ3JlZXMpLiBTbywgd2Ugbm9ybWFsaXplIGl0LCBlLmcuIG1heC1taW4Kbm9ybWFsaXphdGlvbi4KCkNsb3NlbmVzcyBjZW50cmFsaXR5IGlzIGFub3RoZXIgb25lLCBob3cgY2VudHJhbCBpcyBhIG5vZGUgPyBCZXR3ZWVubmVzcwpjZW50cmFsaXR5IGlzIGFub3RoZXIgb25lLiBUaGVzZSBhcmUgYWxsIGRlc2NyaXB0aXZlcyBhdCB0aGUgZWdvLWxldmVsCgpUcnk6CgpgYGB7cn0KI2luc3RhbGwucGFja2FnZXMoIlJTaWVuYSIpCnJlcXVpcmUoUlNpZW5hKQpzNTAxCj9zNTAxCj9SU2llbmEKZGltKHM1MDEpCgpzbWFsbGVyX21hdHJpeCA8LSBzNTAxWzE1OjI1LDE1OjI1XQpncmFwaF9zbWFsbCA8LSBncmFwaF9mcm9tX2FkamFjZW5jeV9tYXRyaXgoc21hbGxlcl9tYXRyaXgpCnBsb3QoZ3JhcGhfc21hbGwpCgpgYGAKCk9rYXksIHNvIG5vdyB3ZSBoYXZlIHRvIGdldCBjZW50cmFsaXR5IG1lYXN1cmVzIGV0Yy4gRmlyc3QgZGVncmVlCmNlbnRyYWxpdHkKCmBgYHtyfQpzbWFsbGVyX21hdHJpeApncmFwaF9vdXQgPC0gZGVncmVlKGdyYXBoX3NtYWxsLCBtb2RlID0gIm91dCIpCmdyYXBoX2luIDwtIGRlZ3JlZShncmFwaF9zbWFsbCwgbW9kZSA9ICJpbiIpCmdyYXBoX2luCmdyYXBoX291dApgYGAKCkNsb3NlbmVzcwoKYGBge3J9CmNsb3NlbmVzcyhncmFwaF9zbWFsbCkKYGBgCgpgYGB7cn0KQmV0d2Vlbm5lc3MgPC0gYmV0d2Vlbm5lc3MoZ3JhcGhfc21hbGwpCkJldHdlZW5uZXNzCj9iZXR3ZWVubmVzcwpgYGAKCk5vdGUgdGhhdCwgZm9yIGV4YW1wbGUsIGZvciBWMwo=</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("week_2.Rmd");
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
