@@ -1,6 +1,8 @@
 ---
 title: "Theory"
 author: "René van Son"
+html_document:
+    code_folding: hide
 bibliography: references.bib
 csl: apa.csl
 ---

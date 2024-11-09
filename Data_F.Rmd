@@ -399,7 +399,7 @@ ggplot(df_means, aes(x = reorder(function_2024, mean_SDI), y = mean_SDI)) +
 
 #### Save file
 
-```{r}
+```{r, results='hide'}
 write_csv(df_ego, "data_final.csv")
 saveRDS(nets, "nets.rds")
 ```
@@ -407,4 +407,4 @@ saveRDS(nets, "nets.rds")
 ```         
 ```
 
-# References 
+# References
