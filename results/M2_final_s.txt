@@ -6,7 +6,7 @@ Filename is ./results/M2_final_s.txt.
 
 This file contains primary output for SIENA project <<./results/M2_final_s>>.
 
-Date and time: 09/11/2024 18:57:45 
+Date and time: 09/11/2024 19:01:33 
 
 RSiena version 1.4.7 (20 02 2024)
 
