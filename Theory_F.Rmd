@@ -25,16 +25,20 @@ Additionally, beyond the various levels that define interdisciplinarity, the con
 
 ## Hypotheses
 
-Taking the theoretical considerations above into account, I develop three (????) hypotheses.
+Taking the theoretical considerations above into account, I develop three hypotheses.
 
-First, relating to the structure of the networks @SNASS, I expect the network to display a higher degree of clustering over time. This expectation is fueled by the idea of 'preferential attachment' @khan2018online; @capocci2006preferential, where persons with more existing relations are more likely to enter in *even more* relations. This is also known as the principle of "the rich getting richer", and leads to the development of scale-free networks, with a few highly connected persons and many less-connected persons @khan2018online. That is to say, I expect that the collaboration network evolves from a network with an evenly distributed amount of connected scholars to a network with several scholars who are more central:
+First, relating to the structure of the networks [@SNASS], I expect the network to display a higher degree of clustering over time. This expectation is fueled by the idea of 'preferential attachment' @khan2018online; @capocci2006preferential, where persons with more existing relations are more likely to enter in *even more* relations. This is also known as the principle of "the rich getting richer", and leads to the development of scale-free networks, with a few highly connected persons and many less-connected persons @khan2018online. That is to say, I expect that the collaboration network evolves from a network with a - more or less - evenly distributed amount of connected scholars to a network with several scholars who are more central:
 
 H1: *the collaboration network becomes more clustered over time, i.e. the network at t2 will show a higher clustering than the network at t1.*
 
-Next, to explain this macro-level change by means of micro-level mechanisms of interdisciplinarity, I further draw on the principle of clustering and transitivity @haines2011; @freeman2002centrality, which assumes that central positions in a network are beneficial to persons (in this research: authors), as they allow people to adopt a more important 'function' in the network. Relating this to interdisciplinarity, one would expect that people with a high degree of interdisciplinarity would occupy a central role in the collaboration network, as they effectively function as a hub for information and knowledge distribution across multiple disciplines.
+Moreover, relating clustering to interdisciplinarity, I expect that the network becomes clustered *not* just 'randomly' but, rather, that the networks become clustered on the basis of interdisciplinarity. So:
 
-H2: *collaboration networks become more clustered around scholars with high levels of interdisciplinarity, i.e. the network at t2 will show the presence of scholars with high indegrees and high levels of interdisciplinarity*
+H2: *collaboration networks become more clustered around scholars with high levels of interdisciplinarity, i.e. the network at t2 will show the presence of scholars with high indegrees and high levels of interdisciplinarity.*
 
-Lastly, following the logic of centralization based on interdisciplinarity, one could also make the argument that, even though interdisciplinary researchers may receive many in-degrees, this
+Next, to explain this macro-level change by means of micro-level mechanisms of interdisciplinarity, I further draw on the principle of clustering and transitivity [@haines2011; @freeman2002centrality], which assumes that central positions in a network are beneficial to persons (in this research: authors), as they allow people to adopt a more important 'function' in the network. Relating this to interdisciplinarity, one would expect that people with a high degree of interdisciplinarity would occupy a central role in the collaboration network, as they effectively function as a hub for information and knowledge distribution across multiple disciplines. Therefore, in terms of selection and influence [@SNASS]:
+
+H3a: *interdisciplinary researchers are more likely to receive more indegrees then non-interdisciplinary researchers.*
+
+h3b: *interdisciplinary researchers will tent to seek out interdisciplinary researchers to collaborate with* *(i.e. interdisciplinarity based homophily).*
 
 # References

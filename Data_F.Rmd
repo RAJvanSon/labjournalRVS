@@ -2,6 +2,7 @@
 title: "Theory"
 author: "René van Son"
 bibliography: references.bib
+csl: apa.csl
 ---
 
 ```{=html}
@@ -22,13 +23,13 @@ Furthermore, I compared the collaboration networks in two periods of time. The f
 
 ## Dependent Variable
 
-The dependent variable in this research is the network of collaborations between researchers, where the collaborations are the ties and the researchers are the nodes @van1999multilevel. The subsequent analysis will be an attempt to *describe* and *explain* the the changes in the network and the 'behaviour' of the people that make up the network. In more formal terms, as used in the RSiena manual (SNIJDERS CITE), the dependent variable(s) in social network analysis are the *creation* of a tie or the *maintenance* (endowment) of a tie (technically, the breaking of a tie is also an option, but will not be considered here).
+The dependent variable in this research is the network of collaborations between researchers, where the collaborations are the ties and the researchers are the nodes @van1999multilevel. The subsequent analysis will be an attempt to *describe* and *explain* the the changes in the network and the 'behaviour' of the people that make up the network. In more formal terms, as used in the RSiena manual [@Ripley2011ManualFR], the dependent variable(s) in social network analysis are the *creation* of a tie or the *maintenance* (endowment) of a tie (technically, the breaking of a tie is also an option, but will not be considered here). In other words, the dependent variable is the network. However, the network can also 'function' as independent variable (so 'explaining' itself, for example in reciprocity, where the network effects have influence on the network structure).
 
 ## Independent Variables
 
 ### Interdisciplinarity
 
-The main independent variable in this research is interdisciplinarity. The OpenAlex data structure assigns to each work a Topic entity. This entity is divided into 'domains', 'fields', 'subfields' and 'topics', where 'domain' is the broadest category and 'topics' is the most fine grained category (see **Figure 1**). For the subsequent analysis, I used 'fields' as the main analytic category, [as this proved to be]{.underline} .....REASON WHY
+The main independent variable in this research is interdisciplinarity. The OpenAlex data structure assigns to each work a Topic entity. This entity is divided into 'domains', 'fields', 'subfields' and 'topics', where 'domain' is the broadest category and 'topics' is the most fine grained category (see **Figure 1**). For the subsequent analysis, I used 'fields' as the main analytic category, as this proved to be the right balance in terms of subtleness and operationalizability. Both 'subfields' and 'topics' were also tested, but proved to be either too fine-grained or too broad.
 
 ![](images/Schermafbeelding%202024-11-01%20om%2014.26.34.png){width="433"}
 
@@ -47,21 +48,21 @@ Some notes of caution should be made when using this measure of interdisciplinar
 
 Moreover, the SDI (as well as other measures for interdisciplinarity) does not take into account the *actual* interdisciplinary contribution an author has made to a work. For example, I could be a philosopher who marginally contributes to a paragraph of a physics paper. As soon as I am listed as an author of the paper, I will have worked in the field of natural sciences (and, vice versa, the physicist will have worked in the field of philosophy). However, this is partly resolved by the squaring of $p$ (which, of course, has implications by itself, but this seems the best way to go here).
 
-### Author position - Control Variable?
+### Author position
 
 Author position revolves around the function an author has within the university. In the raw dataset there were many descriptions for the author's functions in 2024 (many of which were overlapping. See RScript below for a full overview of the re-coding process). I reduced these categories to six distinct ones: Researcher, PhD, Post-Doc, Assistant Professor, Associate Professor and Professor.
 
 ## Analytical Strategy
 
-The analysis will be divided in three steps. First, I will provide some descriptive statistics. These descriptives apply to the whole sample, and are presented to provide a broad overview of the data. Second, I will present some network descriptives, together with some visualizations of the networks in the two waves. This is done in order to capture some of the macro-level change in the network. Third, I will use RSiena to provide an analysis for the network evolution. RSiena works within the context of Stochastic Actor-Oriented Models, where networks are assumed to evolve based on actor attributes and preferences. Specifically, RSiena models allow researchers to attribute macro-level network evolution to micro-level changes. [ELEBORATE.]{.underline}
+The analysis will be divided in three steps. First, I will provide some descriptive statistics. These descriptives apply to the whole sample, and are presented to provide a broad overview of the data. Second, I will present some network descriptives, together with some visualizations of the networks in the two waves. This is done in order to capture some of the macro-level change in the network. Third, I will use RSiena to provide an analysis for the network evolution. RSiena works within the context of Stochastic Actor-Oriented Models, where networks are assumed to evolve based on actor attributes and preferences. Specifically, RSiena models allow researchers to attribute macro-level network evolution to micro-level changes. As such, Siena models are able to estimate parameters and distinguish selection (where the dependent variable is the network) and influence (where the dependent variable is behaviour) processes, which is beneficial when trying to research social networks.
 
 ## Descriptive Statistics
 
-Looking at the descriptive statistics below, we can see several things. Firstly, the distribution of the SDI measure aligns with expectations, showing a relatively high number of cases with an SDI of around 0.5, while scores closer to 0 or 1 are more rare. In short, most people are "averagely" interdisciplinary. However, quite some authors seem to have an SDI of 0, indicating that there is no variation at all in the fields they work in. Section **1.6.5.1** illuminates that these authors are all PhDs (with one exception, who is a post-doc), suggesting that doctoral students indeed often tend to work solely in their own field.
+Looking at the descriptive statistics below, we can see several things. Firstly, the distribution of the SDI measure aligns with expectations, showing a relatively high number of cases with an SDI of around 0.5, while scores closer to 0 or 1 are more rare. In short, most people are "averagely" interdisciplinary. However, quite some authors seem to have an SDI of 0, indicating that there is no variation at all in the fields they work in. Section **1.6.5.1** illuminates that these authors are all PhDs (with one exception, who is a post-doc), suggesting that doctoral students indeed often tend to work 'solely' in their own field.
 
 Second, there are no anomalies in either distributions of discipline or department (i.e. sociology/political science). 166 authors in the sample were connected to the political science department of either the RU or the UvA, and 116 authors were connected to the sociology department of either the RU or the UvA. Some authors have a university that is neither the RU nor the UvA listed under the 'Universiteit24' variable, which means that they are affiliated to the RU or the UvA in some way, but probably not as 'main' university. When looking at the SDI score grouped by University affiliation (Section **1.6.5.5**[)]{.underline}, no notable differences catch the eye. The UvA scholars have a slightly higher mean SDI of 0.45, with RU scholars having a mean SDI of 0.40.
 
-Third, when looking at the differences in SDI between authors with different positions, it becomes clear (at least: at 'first glance') that PhD students indeed have a lower mean-SDI than all other positions. Interestingly, researchers without any teaching position at the university seem to score relatively high at the SDI measure, indicating that being more 'loosely' bound to a university might foster interdisciplinary possibilities. [SAY SOMETHING ABOUT 'OTHER' OR DELETE!!]{.underline}
+Third, when looking at the differences in SDI between authors with different positions, it becomes clear (at least: at 'first glance') that PhD students indeed have a lower mean-SDI than all other positions. Interestingly, researchers without any teaching position at the university seem to score relatively high at the SDI measure, indicating that being more 'loosely' bound to a university might foster interdisciplinary possibilities. The 'other' category represents unknown or unclear positions, and should be ignored as such.
 
 ## Data Preparation
 
