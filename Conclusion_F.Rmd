@@ -1,3 +1,19 @@
+---
+title: "Conclusion"
+author: "René van Son"
+bibliography: references.bib
+csl: apa.csl
+---
+
+```{=html}
+<style>
+body {
+text-align: justify;
+font-family: Times;
+}
+</style>
+```
+
 # Conclusion
 
 In this research, I have attempted to show that taking a social network perspective is beneficial when trying to understand collaboration networks. I have done so by focusing on interdisciplinarity, and by trying to disentangle the various selection processes at work in a social network. The analysis has shown that the network becomes more clustered over time (RQ1). As mentioned above, this is also due to the nature of the data (which is essentially sparser in wave 1 than in wave 2). However, not only did the network become more clustered, the network visualizations and descriptives showed (with caution) that there is a relation between interdisciplinarity and network clustering (RQ2). The Siena models showed the selection processes underlying the network change, where it became clear (among other things) that people with many in-degrees will get even more in-degree and that interdisciplinary authors preferably *send* ties to other interdisciplinary authors (if they send ties). As such, these micro-level selection processes (partly) determined network outcome.

@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="René van Son" />
+
+
+<title>Theory</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="tweaks.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    My journal
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Tutorial_week1.html">Week 1: R Tutorial</a>
+    </li>
+    <li>
+      <a href="week_2.html">Week 2: Introduction</a>
+    </li>
+    <li>
+      <a href="Week_3.html">Week 3: Webscraping</a>
+    </li>
+    <li>
+      <a href="week_4.html">Week 4: Elaboration on Introduction and Network Visualization</a>
+    </li>
+    <li>
+      <a href="Data_prep.html">Data Prep</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Final Report
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Introduction_F.html">Introduction</a>
+    </li>
+    <li>
+      <a href="Theory_F.html">Theory</a>
+    </li>
+    <li>
+      <a href="Data_F.html">Data</a>
+    </li>
+    <li>
+      <a href="Analysis_F.html">Analysis and Results</a>
+    </li>
+    <li>
+      <a href="Conclusion_F.html">Conclusion</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/JochemTolsma/labjournal">
+    <span class="fab fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Theory</h1>
+<h4 class="author">René van Son</h4>
+
+</div>
+
+
+<style>
+body {
+text-align: justify;
+font-family: Times;
+}
+</style>
+<div id="data" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Data</h1>
+<div id="data-collection" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Data Collection</h2>
+<p>The data used in this research was compiled by web scraping
+information of all Sociology and Political Science scholars from all
+universities in the Netherlands. In the first part of the data
+collection process, all relevant information was compiled about the
+author’s position, university affiliation, names, id’s, departments,
+etc. Next, all published works together with relevant work-related
+information of these authors (work id, concepts, citations, abstracts,
+topics, etc.), up until 2024, were scraped by using OpenAlex <span
+class="citation">Priem et al. (2022)</span>. From this data I subsetted
+a final dataset, consisting of all authors from the Sociology and
+Political Science departments at the Radboud University and the
+University of Amsterdam (n=282).</p>
+<p>Furthermore, I compared the collaboration networks in two periods of
+time. The first wave ranges from 2016 to 2019. The second wave ranges
+from 2020 to 2023. Collaboration networks were made on the basis of
+these waves. The networks are directed networks, which means that it is
+assumed that the first author sends ties to all collaborators on a
+specific work.</p>
+</div>
+<div id="dependent-variable" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Dependent
+Variable</h2>
+<p>The dependent variable in this research is the network of
+collaborations between researchers, where the collaborations are the
+ties and the researchers are the nodes <span class="citation">Van Duijn
+et al. (1999)</span>. The subsequent analysis will be an attempt to
+<em>describe</em> and <em>explain</em> the the changes in the network
+and the ‘behaviour’ of the people that make up the network. In more
+formal terms, as used in the RSiena manual <span
+class="citation">(Ripley &amp; Preciado, 2011)</span>, the dependent
+variable(s) in social network analysis are the <em>creation</em> of a
+tie or the <em>maintenance</em> (endowment) of a tie (technically, the
+breaking of a tie is also an option, but will not be considered here).
+In other words, the dependent variable is the network. However, the
+network can also ‘function’ as independent variable (so ‘explaining’
+itself, for example in reciprocity, where the network effects have
+influence on the network structure).</p>
+</div>
+<div id="independent-variables" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Independent
+Variables</h2>
+<div id="interdisciplinarity" class="section level3" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span>
+Interdisciplinarity</h3>
+<p>The main independent variable in this research is
+interdisciplinarity. The OpenAlex data structure assigns to each work a
+Topic entity. This entity is divided into ‘domains’, ‘fields’,
+‘subfields’ and ‘topics’, where ‘domain’ is the broadest category and
+‘topics’ is the most fine grained category (see <strong>Figure
+1</strong>). For the subsequent analysis, I used ‘fields’ as the main
+analytic category, as this proved to be the right balance in terms of
+subtleness and operationalizability. Both ‘subfields’ and ‘topics’ were
+also tested, but proved to be either too fine-grained or too broad.</p>
+<p><img src="images/Schermafbeelding%202024-11-01%20om%2014.26.34.png"
+width="433" /></p>
+<p><strong>Figure 1:</strong> OpenAlex classification of the Topic
+entity<br />
+<em>Source</em>: <a href="https://docs.openalex.org/api-entities/topics"
+class="uri">https://docs.openalex.org/api-entities/topics</a></p>
+<p>To get a measure of interdisciplinarity at the author level, I use
+the following formula, resulting in the Simpson’s Diversity Index:</p>
+<p><span class="math display">\[
+SDI = 1 - \Big[\sum_{i=1}^n p_{i}^2\Big]
+\]</span></p>
+<p>Here, <span class="math inline">\(p\)</span> represents the
+proportion of works by an author working in a certain field. Squaring
+ensures giving more weight to the fields that are more common. So, in
+essence, this formula means taking the sum of all the squared
+proportions <span class="math inline">\(p^2\)</span> for all fields
+<span class="math inline">\(i\)</span> and subtracting it from 1. The
+Simpson’s Diversity Index (SDI) can be used to measure the diversity of
+the authors’ research practices by highlighting how ‘concentrated’ their
+works are. A score closer to 1 will reflect an engagement in a more
+diffused set of research fields, while a score close to 0 will reflect a
+more homogeneous set of research fields.</p>
+<p>Some notes of caution should be made when using this measure of
+interdisciplinarity. First, the SDI <em>does not</em> measure the
+distance between research fields: it only measures <em>whether or
+not</em> a field is different from another one, but there is no
+qualitative comparison of fields ‘among each other’. To incorporate
+this, one would need a measure that takes into account these distances
+between fields (such as the Rao-Sterling index). However, <u>this lies
+outside the scope of this research.</u></p>
+<p>Moreover, the SDI (as well as other measures for interdisciplinarity)
+does not take into account the <em>actual</em> interdisciplinary
+contribution an author has made to a work. For example, I could be a
+philosopher who marginally contributes to a paragraph of a physics
+paper. As soon as I am listed as an author of the paper, I will have
+worked in the field of natural sciences (and, vice versa, the physicist
+will have worked in the field of philosophy). However, this is partly
+resolved by the squaring of <span class="math inline">\(p\)</span>
+(which, of course, has implications by itself, but this seems the best
+way to go here).</p>
+</div>
+<div id="author-position" class="section level3" number="1.3.2">
+<h3><span class="header-section-number">1.3.2</span> Author
+position</h3>
+<p>Author position revolves around the function an author has within the
+university. In the raw dataset there were many descriptions for the
+author’s functions in 2024 (many of which were overlapping. See RScript
+below for a full overview of the re-coding process). I reduced these
+categories to six distinct ones: Researcher, PhD, Post-Doc, Assistant
+Professor, Associate Professor and Professor.</p>
+</div>
+</div>
+<div id="analytical-strategy" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> Analytical
+Strategy</h2>
+<p>The analysis will be divided in three steps. First, I will provide
+some descriptive statistics. These descriptives apply to the whole
+sample, and are presented to provide a broad overview of the data.
+Second, I will present some network descriptives, together with some
+visualizations of the networks in the two waves. This is done in order
+to capture some of the macro-level change in the network. Third, I will
+use RSiena to provide an analysis for the network evolution. RSiena
+works within the context of Stochastic Actor-Oriented Models, where
+networks are assumed to evolve based on actor attributes and
+preferences. Specifically, RSiena models allow researchers to attribute
+macro-level network evolution to micro-level changes. As such, Siena
+models are able to estimate parameters and distinguish selection (where
+the dependent variable is the network) and influence (where the
+dependent variable is behaviour) processes, which is beneficial when
+trying to research social networks.</p>
+</div>
+<div id="descriptive-statistics" class="section level2" number="1.5">
+<h2><span class="header-section-number">1.5</span> Descriptive
+Statistics</h2>
+<p>Looking at the descriptive statistics below, we can see several
+things. Firstly, the distribution of the SDI measure aligns with
+expectations, showing a relatively high number of cases with an SDI of
+around 0.5, while scores closer to 0 or 1 are more rare. In short, most
+people are “averagely” interdisciplinary. However, quite some authors
+seem to have an SDI of 0, indicating that there is no variation at all
+in the fields they work in. Section <strong>1.6.5.1</strong> illuminates
+that these authors are all PhDs (with one exception, who is a post-doc),
+suggesting that doctoral students indeed often tend to work ‘solely’ in
+their own field.</p>
+<p>Second, there are no anomalies in either distributions of discipline
+or department (i.e. sociology/political science). 166 authors in the
+sample were connected to the political science department of either the
+RU or the UvA, and 116 authors were connected to the sociology
+department of either the RU or the UvA. Some authors have a university
+that is neither the RU nor the UvA listed under the ‘Universiteit24’
+variable, which means that they are affiliated to the RU or the UvA in
+some way, but probably not as ‘main’ university. When looking at the SDI
+score grouped by University affiliation (Section
+<strong>1.6.5.5</strong><u>)</u>, no notable differences catch the eye.
+The UvA scholars have a slightly higher mean SDI of 0.45, with RU
+scholars having a mean SDI of 0.40.</p>
+<p>Third, when looking at the differences in SDI between authors with
+different positions, it becomes clear (at least: at ‘first glance’) that
+PhD students indeed have a lower mean-SDI than all other positions.
+Interestingly, researchers without any teaching position at the
+university seem to score relatively high at the SDI measure, indicating
+that being more ‘loosely’ bound to a university might foster
+interdisciplinary possibilities. The ‘other’ category represents unknown
+or unclear positions, and should be ignored as such.</p>
+</div>
+<div id="data-preparation" class="section level2" number="1.6">
+<h2><span class="header-section-number">1.6</span> Data Preparation</h2>
+<div id="start" class="section level3" number="1.6.1">
+<h3><span class="header-section-number">1.6.1</span> Start</h3>
+<pre class="r"><code>#1. Load functions
+#clean
+rm(list = ls())
+
+#check package function
+fpackage.check &lt;- function(packages) {
+    lapply(packages, FUN = function(x) {
+        if (!require(x, character.only = TRUE)) {
+            install.packages(x, dependencies = TRUE)
+            library(x, character.only = TRUE)
+        }
+    })
+}
+
+#save function
+fsave &lt;- function(x, file = NULL, location = &quot;./data/processed/&quot;) {
+    ifelse(!dir.exists(&quot;data&quot;), dir.create(&quot;data&quot;), FALSE)
+    ifelse(!dir.exists(&quot;data/processed&quot;), dir.create(&quot;data/processed&quot;), FALSE)
+    if (is.null(file))
+        file = deparse(substitute(x))
+    datename &lt;- substr(gsub(&quot;[:-]&quot;, &quot;&quot;, Sys.time()), 1, 8)
+    totalname &lt;- paste(location, datename, file, &quot;.rda&quot;, sep = &quot;&quot;)
+    save(x, file = totalname)  #need to fix if file is reloaded as input name, not as x. 
+}
+
+#load function
+fload &lt;- function(filename) {
+    load(filename)
+    get(ls()[ls() != &quot;filename&quot;])
+}
+
+#nice view function
+fshowdf &lt;- function(x, ...) {
+    knitr::kable(x, digits = 2, &quot;html&quot;, ...) %&gt;%
+        kableExtra::kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;)) %&gt;%
+        kableExtra::scroll_box(width = &quot;100%&quot;, height = &quot;300px&quot;)
+}
+
+#collaboration network function
+fcolnet &lt;- function(data = scholars, university = &quot;RU&quot;, discipline = &quot;sociology&quot;, waves = list(c(2015,
+    2018), c(2019, 2023)), type = c(&quot;first&quot;)) {
+
+    # step 1
+    demographics &lt;- do.call(rbind.data.frame, data$demographics)
+    demographics &lt;- demographics %&gt;%
+        mutate(Universiteit1.22 = replace(Universiteit1.22, is.na(Universiteit1.22), &quot;&quot;), Universiteit2.22 = replace(Universiteit2.22,
+            is.na(Universiteit2.22), &quot;&quot;), Universiteit1.24 = replace(Universiteit1.24, is.na(Universiteit1.24),
+            &quot;&quot;), Universiteit2.24 = replace(Universiteit2.24, is.na(Universiteit2.24), &quot;&quot;), discipline.22 = replace(discipline.22,
+            is.na(discipline.22), &quot;&quot;), discipline.24 = replace(discipline.24, is.na(discipline.24), &quot;&quot;))
+
+    sample &lt;- which((demographics$Universiteit1.22 %in% university | demographics$Universiteit2.22 %in%
+        university | demographics$Universiteit1.24 %in% university | demographics$Universiteit2.24 %in%
+        university) &amp; (demographics$discipline.22 %in% discipline | demographics$discipline.24 %in% discipline))
+
+    demographics_soc &lt;- demographics[sample, ]
+    scholars_sel &lt;- lapply(scholars, &quot;[&quot;, sample)
+
+    # step 2
+    ids &lt;- demographics_soc$au_id
+    nwaves &lt;- length(waves)
+    nets &lt;- array(0, dim = c(nwaves, length(ids), length(ids)), dimnames = list(wave = 1:nwaves, ids,
+        ids))
+    dimnames(nets)
+
+    # step 3
+    df_works &lt;- tibble(works_id = unlist(lapply(scholars_sel$work, function(l) l$id)), works_author = unlist(lapply(scholars_sel$work,
+        function(l) l$author), recursive = FALSE), works_year = unlist(lapply(scholars_sel$work, function(l) l$publication_year),
+        recursive = FALSE))
+
+    df_works &lt;- df_works[!duplicated(df_works), ]
+
+    # step 4
+    if (type == &quot;first&quot;) {
+        for (j in 1:nwaves) {
+            df_works_w &lt;- df_works[df_works$works_year &gt;= waves[[j]][1] &amp; df_works$works_year &lt;= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego &lt;- df_works_w$works_author[i][[1]]$au_id[1]
+                alters &lt;- df_works_w$works_author[i][[1]]$au_id[-1]
+                if (sum(ids %in% ego) &gt; 0 &amp; sum(ids %in% alters) &gt; 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] &lt;- 1
+                }
+            }
+        }
+    }
+
+    if (type == &quot;last&quot;) {
+        for (j in 1:nwaves) {
+            df_works_w &lt;- df_works[df_works$works_year &gt;= waves[[j]][1] &amp; df_works$works_year &lt;= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego &lt;- rev(df_works_w$works_author[i][[1]]$au_id)[1]
+                alters &lt;- rev(df_works_w$works_author[i][[1]]$au_id)[-1]
+                if (sum(ids %in% ego) &gt; 0 &amp; sum(ids %in% alters) &gt; 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] &lt;- 1
+                }
+            }
+        }
+    }
+
+    if (type == &quot;all&quot;) {
+        for (j in 1:nwaves) {
+            df_works_w &lt;- df_works[df_works$works_year &gt;= waves[[j]][1] &amp; df_works$works_year &lt;= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                egos &lt;- df_works_w$works_author[i][[1]]$au_id
+                if (sum(ids %in% egos) &gt; 0) {
+                  nets[j, which(ids %in% egos), which(ids %in% egos)] &lt;- 1
+                }
+            }
+        }
+    }
+    output &lt;- list()
+    output$data &lt;- scholars_sel
+    output$nets &lt;- nets
+    return(output)
+}
+
+#2. check packages
+#check packages
+packages = c(&quot;RSiena&quot;, &quot;tidyverse&quot;, &quot;stringdist&quot;, &quot;stringi&quot;, &quot;installr&quot;, &quot;foreign&quot;, &quot;jsonlite&quot;, &quot;openalexR&quot;, &quot;scholar&quot;, &quot;rvest&quot;, &quot;igraph&quot;, &quot;tidyr&quot;)
+fpackage.check(packages)
+
+#3. load data
+scholars &lt;- fload(&quot;/Users/jannevanheesch/Documents/R. SN/scholars_20240924.rda&quot;)</code></pre>
+</div>
+<div id="subset" class="section level3" number="1.6.2">
+<h3><span class="header-section-number">1.6.2</span> Subset</h3>
+<pre class="r"><code>#1. Political science &amp; Sociolgy. Waves 2016-2019, 2020-2023.
+df_RU &lt;- fcolnet(data = scholars, university = c(&quot;RU&quot;, &quot;UvA&quot;), discipline = c(&quot;sociology&quot;, &quot;political science&quot;), waves = list(c(2016,
+    2019), c(2020, 2023)), type = c(&quot;first&quot;))
+
+#2. Separate data
+df &lt;- df_RU$data #separate scholars, works, demographics 
+nets &lt;- df_RU$nets #networks
+
+#df for demographics (author level)
+df_ego &lt;- do.call(rbind.data.frame, df$demographics)
+
+#df for authors
+df_auth &lt;- do.call(rbind.data.frame, df$scholars_oa)</code></pre>
+</div>
+<div id="interdisciplinarity-1" class="section level3" number="1.6.3">
+<h3><span class="header-section-number">1.6.3</span>
+Interdisciplinarity</h3>
+<pre class="r"><code>#3. Interdisciplinarity
+#create function for all fields
+f_topics_f &lt;- function(x) {
+  topics &lt;- do.call(rbind.data.frame, x$topics) 
+  topics &lt;- topics[topics$i &lt; 4 &amp; topics$name == &quot;field&quot;,] 
+  SDI_f &lt;- 1 - sum((prop.table(table(topics$display_name)))^2) 
+  return(SDI_f)
+}
+
+SDI_f &lt;- sapply(X = df$works, FUN = f_topics_f)
+SDI_f
+
+# attach to df_ego
+df_ego &lt;- cbind(df_ego, SDI_f)</code></pre>
+<pre class="r"><code>#4. Measures for interdisciplinarity I did not use (for Appendix?)
+#subfields
+f_topics_sf &lt;- function(x) {
+  topics &lt;- do.call(rbind.data.frame, x$topics) #ik zet voor 1 auteur alle topics onder elkaar
+  topics &lt;- topics[topics$i &lt; 4 &amp; topics$name == &quot;subfield&quot;,] 
+  SDI_sf &lt;- 1 - sum((prop.table(table(topics$display_name)))^2)  
+  return(SDI_sf)
+}
+
+SDI_sf &lt;- sapply(X = df$works, FUN = f_topics_sf) 
+SDI_sf
+
+#topics
+f_topics_t &lt;- function(x) {
+  topics &lt;- do.call(rbind.data.frame, x$topics)  
+  topics &lt;- topics[topics$i &lt; 4 &amp; topics$name == &quot;topic&quot;,] 
+  SDI_t &lt;- 1 - sum((prop.table(table(topics$display_name)))^2)  
+  return(SDI_t)
+}
+
+SDI_t &lt;- sapply(X = df$works, FUN = f_topics_t) 
+SDI_t
+
+df_ego &lt;- cbind(df_ego, SDI_sf, SDI_t)</code></pre>
+</div>
+<div id="author-position-1" class="section level3" number="1.6.4">
+<h3><span class="header-section-number">1.6.4</span> Author
+position</h3>
+<pre class="r"><code>#recode function variable
+df_ego &lt;- df_ego %&gt;%
+  mutate(function_2024 = case_when(
+    Functie.24 %in% c(&quot;Universitair hoofddocent&quot;, &quot;Senior lecturer&quot;, &quot;Gepensioneerd UHD&quot;) ~ &quot;Associate Professor&quot;,
+    Functie.24 %in% c(&quot;Onderzoeker&quot;, &quot;Associate researcher&quot;, &quot;Senior Researcher&quot;, &quot;Guest Researcher&quot;, &quot;Other researcher&quot;, &quot;Senior researcher&quot;, &quot;Hoofdonderzoeker&quot;, &quot;Medewerker&quot;, &quot;Junior onderzoeker&quot;, &quot;Gastonderzoeker&quot;, &quot;Fellow&quot;, &quot;Does project at UvA, has worked as professor, lecturer, and research fellow at different unis&quot;, &quot;Senior Research Fellow&quot;, &quot;Senior researcher part-time&quot;, &quot;Onderzoeksfellow&quot;, &quot;Research fellow&quot;) ~ &quot;Researcher&quot;,
+    Functie.24 %in% c(&quot;Universitair docent&quot;, &quot;Lecturer&quot;, &quot;Docent?&quot;, &quot;Gepensioneerd docent sociologie&quot;, &quot;Lecturer and Researcher&quot;, &quot;Lecturer/researcher&quot;, &quot;Unversitair docent GPM&quot;, &quot;Docent&quot;, &quot;Docent (gepensioneerd)&quot;) ~ &quot;Assistant Professor&quot;,
+    Functie.24 %in% c(&quot;PhD Student&quot;, &quot;External Phd&quot;, &quot;PhD Student anthropologie&quot;, &quot;PhD student&quot;, &quot;Doctoral student&quot;, &quot;part-time doctoral researcher&quot;, &quot;PhD studentt&quot;, &quot;Doctoral Researcher&quot;) ~ &quot;PhD&quot;,
+    Functie.24 %in% c(&quot;Hoogleraar&quot;, &quot;Bijzonder hoogleraar&quot;, &quot;Hoogleraar/Afdelingsvoorzitter&quot;, &quot;Emeritus hoogleraar&quot;, &quot;Hoogleraar (visiting)&quot;) ~ &quot;Professor&quot;,
+    Functie.24 %in% c(&quot;Postdoc&quot;, &quot;Phd &amp; postdoc&quot;) ~ &quot;Post-Doc&quot;,
+    TRUE ~ &quot;Other&quot;  # For any other categories not explicitly mentioned
+  ))</code></pre>
+</div>
+<div id="descriptives" class="section level3" number="1.6.5">
+<h3><span class="header-section-number">1.6.5</span> Descriptives</h3>
+<div id="distribution-of-sdi" class="section level4" number="1.6.5.1">
+<h4><span class="header-section-number">1.6.5.1</span> Distribution of
+SDI</h4>
+<pre class="r"><code>#1. Simpson&#39;s Diversity Index
+summary(SDI_f)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.0000  0.2421  0.4444  0.4311  0.6127  1.0000</code></pre>
+<pre class="r"><code>ggplot(df_ego, aes(x = SDI_f)) + geom_histogram(binwidth = 0.05, fill = &quot;red&quot;, color = &quot;white&quot;) + labs(x = &quot;Simpson&#39;s Diversity Index&quot;,
+    y = &quot;Frequency&quot;) + scale_x_continuous() + scale_y_continuous() + theme_minimal()</code></pre>
+<p><img src="Data_F_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>#2. Show the cases for which SDI score was 0 or 1
+df_zero_or_one &lt;- df_ego %&gt;%
+    filter(SDI_f %in% c(0, 1))
+print(df_zero_or_one)</code></pre>
+<pre class="r"><code>ggplot(df_zero_or_one, aes(x = function_2024, fill = as.factor(SDI_f))) +
+    geom_bar(position = &quot;dodge&quot;) +
+    labs(title = &quot;SDI by Author Position&quot;,
+         x = &quot;Author Position&quot;,
+         y = &quot;Count&quot;,
+         fill = &quot;SDI_f&quot;) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
+<p><img src="Data_F_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="distribution-of-disciplines" class="section level4"
+number="1.6.5.2">
+<h4><span class="header-section-number">1.6.5.2</span> Distribution of
+disciplines</h4>
+<pre class="r"><code>#2. Distribution of scholars by university and by department
+
+table(df_ego$discipline.24)</code></pre>
+<pre><code>## 
+## political science         sociology 
+##               166               116</code></pre>
+</div>
+<div id="distribution-of-universities" class="section level4"
+number="1.6.5.3">
+<h4><span class="header-section-number">1.6.5.3</span> Distribution of
+Universities</h4>
+<pre class="r"><code>table(df_ego$Universiteit.24)</code></pre>
+<pre><code>## 
+##                           Bocconi University 
+##                                            1 
+##                                          EUR 
+##                                            1 
+##                               Leiden uni/UvA 
+##                                            1 
+##                                           RU 
+##                                           86 
+##                                       RU/RUG 
+##                                            1 
+##                                          RUG 
+##                                            1 
+##                               Uni Gothenburg 
+##                                            1 
+##                                           UU 
+##                                            3 
+##                                       UU/UvA 
+##                                            1 
+##                                          Uva 
+##                                            1 
+##                                          UvA 
+##                                          157 
+##                                         UvA? 
+##                                            1 
+## UvA/Frankfurt School of Finance &amp; Management 
+##                                            1 
+##                             UvA/Shandong uni 
+##                                            1 
+##                          UvA/Uni of Lausanne 
+##                                            1 
+##                   UvA/University of Lausanne 
+##                                            1</code></pre>
+<pre class="r"><code>table(df_ego$Universiteit.22)</code></pre>
+<pre><code>## 
+##                       Bocconi University/UvA 
+##                                            1 
+##                                       Leiden 
+##                                            1 
+##                               Leiden uni/UvA 
+##                                            1 
+##                                           RU 
+##                                           89 
+##                                       RU/RUG 
+##                                            1 
+##                                       RUG/RU 
+##                                            1 
+##                            Universiteit Gent 
+##                                            1 
+##                                           UU 
+##                                            1 
+##                                       UU/UvA 
+##                                            1 
+##                                          UvA 
+##                                          142 
+##                                      UvA/EUR 
+##                                            1 
+## UvA/Frankfurt School of Finance &amp; Management 
+##                                            1 
+##                             UvA/Shandong uni 
+##                                            1 
+##                           UvA/Uni Gothenburg 
+##                                            2 
+##                          UvA/Uni of Lausanne 
+##                                            1 
+##                   UvA/University of Lausanne 
+##                                            1</code></pre>
+</div>
+<div id="distribution-of-author-position" class="section level4"
+number="1.6.5.4">
+<h4><span class="header-section-number">1.6.5.4</span> Distribution of
+Author Position</h4>
+<pre class="r"><code># Create a frequency table
+frequency_table &lt;- df_ego %&gt;%
+  count(function_2024) %&gt;%
+  arrange(desc(n))
+
+ggplot(frequency_table, aes(x = reorder(function_2024, n), y = n)) +
+  geom_bar(stat = &quot;identity&quot;, fill = &quot;steelblue&quot;) +
+  labs(x = &quot;Position&quot;, y = &quot;Frequency&quot;, title = &quot;Frequency Distribution of Author Position(2024)&quot;) +
+  coord_flip() +
+  theme_minimal()</code></pre>
+<p><img src="Data_F_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+<div id="mean-sdi-by-university" class="section level4"
+number="1.6.5.5">
+<h4><span class="header-section-number">1.6.5.5</span> Mean SDI by
+University</h4>
+<pre class="r"><code>#3. mean SDI by University
+
+df_ego %&gt;%
+    mutate(University = case_when(str_detect(Universiteit.24, &quot;RU&quot;) ~ &quot;RU&quot;, str_detect(Universiteit.24,
+        &quot;UvA&quot;) ~ &quot;UvA&quot;, .default = &quot;No Official Affiliation&quot;)) %&gt;%
+    group_by(University) %&gt;%
+    summarise(mean_SDI = mean(SDI_f, na.rm = TRUE)) %&gt;%
+    fshowdf()</code></pre>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+University
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+mean_SDI
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+No Official Affiliation
+</td>
+<td style="text-align:right;">
+0.43
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RU
+</td>
+<td style="text-align:right;">
+0.40
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UvA
+</td>
+<td style="text-align:right;">
+0.45
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="mean-sdi-per-department" class="section level4"
+number="1.6.5.6">
+<h4><span class="header-section-number">1.6.5.6</span> Mean SDI per
+Department</h4>
+<pre class="r"><code>#4. mean SDI by department in 2024
+
+df_ego %&gt;%
+    mutate(Department = case_when(str_detect(discipline.24, &quot;sociology&quot;) ~ &quot;sociology&quot;, str_detect(discipline.24,
+        &quot;political science&quot;) ~ &quot;political science&quot;, .default = &quot;no discipline&quot;)) %&gt;%
+    group_by(Department) %&gt;%
+    summarise(mean_SDI = mean(SDI_f, na.rm = TRUE)) %&gt;%
+    fshowdf()</code></pre>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Department
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+mean_SDI
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+political science
+</td>
+<td style="text-align:right;">
+0.40
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sociology
+</td>
+<td style="text-align:right;">
+0.47
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="mean-sdi-per-university-function" class="section level4"
+number="1.6.5.7">
+<h4><span class="header-section-number">1.6.5.7</span> Mean SDI per
+University Function</h4>
+<pre class="r"><code># Calculate mean SDI_f per function_2024
+df_means &lt;- df_ego %&gt;%
+    group_by(function_2024) %&gt;%
+    summarise(mean_SDI = mean(SDI_f, na.rm = TRUE))
+
+# Print the summary table if you want to see it
+print(df_means)</code></pre>
+<pre><code>## # A tibble: 7 × 2
+##   function_2024       mean_SDI
+##   &lt;chr&gt;                  &lt;dbl&gt;
+## 1 Assistant Professor    0.448
+## 2 Associate Professor    0.452
+## 3 Other                  0.487
+## 4 PhD                    0.375
+## 5 Post-Doc               0.424
+## 6 Professor              0.440
+## 7 Researcher             0.470</code></pre>
+<pre class="r"><code># Plot the results
+ggplot(df_means, aes(x = reorder(function_2024, mean_SDI), y = mean_SDI)) +
+    geom_bar(stat = &quot;identity&quot;, fill = &quot;steelblue&quot;) +
+    labs(title = &quot;Mean SDI per University Function&quot;,
+         x = &quot;University Function&quot;,
+         y = &quot;Mean SDI&quot;) +
+    coord_flip() +  
+    theme_minimal()</code></pre>
+<p><img src="Data_F_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
+<div id="save-file" class="section level4" number="1.6.5.8">
+<h4><span class="header-section-number">1.6.5.8</span> Save file</h4>
+<pre class="r"><code>write_csv(df_ego, &quot;data_final.csv&quot;)
+saveRDS(nets, &quot;nets.rds&quot;)</code></pre>
+<pre><code></code></pre>
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0" line-spacing="2">
+<div id="ref-priem2022openalexfullyopenindexscholarly"
+class="csl-entry">
+Priem, J., Piwowar, H., &amp; Orr, R. (2022). <em>OpenAlex: A fully-open
+index of scholarly works, authors, venues, institutions, and
+concepts</em>. <a
+href="https://arxiv.org/abs/2205.01833">https://arxiv.org/abs/2205.01833</a>
+</div>
+<div id="ref-Ripley2011ManualFR" class="csl-entry">
+Ripley, R. M., &amp; Preciado, P. B. (2011). <em>Manual for RSiena</em>.
+<a
+href="https://api.semanticscholar.org/CorpusID:63236002">https://api.semanticscholar.org/CorpusID:63236002</a>
+</div>
+<div id="ref-van1999multilevel" class="csl-entry">
+Van Duijn, M. A., Van Busschbach, J. T., &amp; Snijders, T. A. (1999).
+Multilevel analysis of personal networks as dependent variables.
+<em>Social Networks</em>, <em>21</em>(2), 187–210.
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiVGhlb3J5IgphdXRob3I6ICJSZW7DqSB2YW4gU29uIgpiaWJsaW9ncmFwaHk6IHJlZmVyZW5jZXMuYmliCmNzbDogYXBhLmNzbAotLS0KCmBgYHs9aHRtbH0KPHN0eWxlPgpib2R5IHsKdGV4dC1hbGlnbjoganVzdGlmeTsKZm9udC1mYW1pbHk6IFRpbWVzOwp9Cjwvc3R5bGU+CmBgYAojIERhdGEKCiMjIERhdGEgQ29sbGVjdGlvbgoKVGhlIGRhdGEgdXNlZCBpbiB0aGlzIHJlc2VhcmNoIHdhcyBjb21waWxlZCBieSB3ZWIgc2NyYXBpbmcgaW5mb3JtYXRpb24gb2YgYWxsIFNvY2lvbG9neSBhbmQgUG9saXRpY2FsIFNjaWVuY2Ugc2Nob2xhcnMgZnJvbSBhbGwgdW5pdmVyc2l0aWVzIGluIHRoZSBOZXRoZXJsYW5kcy4gSW4gdGhlIGZpcnN0IHBhcnQgb2YgdGhlIGRhdGEgY29sbGVjdGlvbiBwcm9jZXNzLCBhbGwgcmVsZXZhbnQgaW5mb3JtYXRpb24gd2FzIGNvbXBpbGVkIGFib3V0IHRoZSBhdXRob3IncyBwb3NpdGlvbiwgdW5pdmVyc2l0eSBhZmZpbGlhdGlvbiwgbmFtZXMsIGlkJ3MsIGRlcGFydG1lbnRzLCBldGMuIE5leHQsIGFsbCBwdWJsaXNoZWQgd29ya3MgdG9nZXRoZXIgd2l0aCByZWxldmFudCB3b3JrLXJlbGF0ZWQgaW5mb3JtYXRpb24gb2YgdGhlc2UgYXV0aG9ycyAod29yayBpZCwgY29uY2VwdHMsIGNpdGF0aW9ucywgYWJzdHJhY3RzLCB0b3BpY3MsIGV0Yy4pLCB1cCB1bnRpbCAyMDI0LCB3ZXJlIHNjcmFwZWQgYnkgdXNpbmcgT3BlbkFsZXggQHByaWVtMjAyMm9wZW5hbGV4ZnVsbHlvcGVuaW5kZXhzY2hvbGFybHkuIEZyb20gdGhpcyBkYXRhIEkgc3Vic2V0dGVkIGEgZmluYWwgZGF0YXNldCwgY29uc2lzdGluZyBvZiBhbGwgYXV0aG9ycyBmcm9tIHRoZSBTb2Npb2xvZ3kgYW5kIFBvbGl0aWNhbCBTY2llbmNlIGRlcGFydG1lbnRzIGF0IHRoZSBSYWRib3VkIFVuaXZlcnNpdHkgYW5kIHRoZSBVbml2ZXJzaXR5IG9mIEFtc3RlcmRhbSAobj0yODIpLgoKRnVydGhlcm1vcmUsIEkgY29tcGFyZWQgdGhlIGNvbGxhYm9yYXRpb24gbmV0d29ya3MgaW4gdHdvIHBlcmlvZHMgb2YgdGltZS4gVGhlIGZpcnN0IHdhdmUgcmFuZ2VzIGZyb20gMjAxNiB0byAyMDE5LiBUaGUgc2Vjb25kIHdhdmUgcmFuZ2VzIGZyb20gMjAyMCB0byAyMDIzLiBDb2xsYWJvcmF0aW9uIG5ldHdvcmtzIHdlcmUgbWFkZSBvbiB0aGUgYmFzaXMgb2YgdGhlc2Ugd2F2ZXMuIFRoZSBuZXR3b3JrcyBhcmUgZGlyZWN0ZWQgbmV0d29ya3MsIHdoaWNoIG1lYW5zIHRoYXQgaXQgaXMgYXNzdW1lZCB0aGF0IHRoZSBmaXJzdCBhdXRob3Igc2VuZHMgdGllcyB0byBhbGwgY29sbGFib3JhdG9ycyBvbiBhIHNwZWNpZmljIHdvcmsuCgojIyBEZXBlbmRlbnQgVmFyaWFibGUKClRoZSBkZXBlbmRlbnQgdmFyaWFibGUgaW4gdGhpcyByZXNlYXJjaCBpcyB0aGUgbmV0d29yayBvZiBjb2xsYWJvcmF0aW9ucyBiZXR3ZWVuIHJlc2VhcmNoZXJzLCB3aGVyZSB0aGUgY29sbGFib3JhdGlvbnMgYXJlIHRoZSB0aWVzIGFuZCB0aGUgcmVzZWFyY2hlcnMgYXJlIHRoZSBub2RlcyBAdmFuMTk5OW11bHRpbGV2ZWwuIFRoZSBzdWJzZXF1ZW50IGFuYWx5c2lzIHdpbGwgYmUgYW4gYXR0ZW1wdCB0byAqZGVzY3JpYmUqIGFuZCAqZXhwbGFpbiogdGhlIHRoZSBjaGFuZ2VzIGluIHRoZSBuZXR3b3JrIGFuZCB0aGUgJ2JlaGF2aW91cicgb2YgdGhlIHBlb3BsZSB0aGF0IG1ha2UgdXAgdGhlIG5ldHdvcmsuIEluIG1vcmUgZm9ybWFsIHRlcm1zLCBhcyB1c2VkIGluIHRoZSBSU2llbmEgbWFudWFsIFtAUmlwbGV5MjAxMU1hbnVhbEZSXSwgdGhlIGRlcGVuZGVudCB2YXJpYWJsZShzKSBpbiBzb2NpYWwgbmV0d29yayBhbmFseXNpcyBhcmUgdGhlICpjcmVhdGlvbiogb2YgYSB0aWUgb3IgdGhlICptYWludGVuYW5jZSogKGVuZG93bWVudCkgb2YgYSB0aWUgKHRlY2huaWNhbGx5LCB0aGUgYnJlYWtpbmcgb2YgYSB0aWUgaXMgYWxzbyBhbiBvcHRpb24sIGJ1dCB3aWxsIG5vdCBiZSBjb25zaWRlcmVkIGhlcmUpLiBJbiBvdGhlciB3b3JkcywgdGhlIGRlcGVuZGVudCB2YXJpYWJsZSBpcyB0aGUgbmV0d29yay4gSG93ZXZlciwgdGhlIG5ldHdvcmsgY2FuIGFsc28gJ2Z1bmN0aW9uJyBhcyBpbmRlcGVuZGVudCB2YXJpYWJsZSAoc28gJ2V4cGxhaW5pbmcnIGl0c2VsZiwgZm9yIGV4YW1wbGUgaW4gcmVjaXByb2NpdHksIHdoZXJlIHRoZSBuZXR3b3JrIGVmZmVjdHMgaGF2ZSBpbmZsdWVuY2Ugb24gdGhlIG5ldHdvcmsgc3RydWN0dXJlKS4KCiMjIEluZGVwZW5kZW50IFZhcmlhYmxlcwoKIyMjIEludGVyZGlzY2lwbGluYXJpdHkKClRoZSBtYWluIGluZGVwZW5kZW50IHZhcmlhYmxlIGluIHRoaXMgcmVzZWFyY2ggaXMgaW50ZXJkaXNjaXBsaW5hcml0eS4gVGhlIE9wZW5BbGV4IGRhdGEgc3RydWN0dXJlIGFzc2lnbnMgdG8gZWFjaCB3b3JrIGEgVG9waWMgZW50aXR5LiBUaGlzIGVudGl0eSBpcyBkaXZpZGVkIGludG8gJ2RvbWFpbnMnLCAnZmllbGRzJywgJ3N1YmZpZWxkcycgYW5kICd0b3BpY3MnLCB3aGVyZSAnZG9tYWluJyBpcyB0aGUgYnJvYWRlc3QgY2F0ZWdvcnkgYW5kICd0b3BpY3MnIGlzIHRoZSBtb3N0IGZpbmUgZ3JhaW5lZCBjYXRlZ29yeSAoc2VlICoqRmlndXJlIDEqKikuIEZvciB0aGUgc3Vic2VxdWVudCBhbmFseXNpcywgSSB1c2VkICdmaWVsZHMnIGFzIHRoZSBtYWluIGFuYWx5dGljIGNhdGVnb3J5LCBhcyB0aGlzIHByb3ZlZCB0byBiZSB0aGUgcmlnaHQgYmFsYW5jZSBpbiB0ZXJtcyBvZiBzdWJ0bGVuZXNzIGFuZCBvcGVyYXRpb25hbGl6YWJpbGl0eS4gQm90aCAnc3ViZmllbGRzJyBhbmQgJ3RvcGljcycgd2VyZSBhbHNvIHRlc3RlZCwgYnV0IHByb3ZlZCB0byBiZSBlaXRoZXIgdG9vIGZpbmUtZ3JhaW5lZCBvciB0b28gYnJvYWQuCgohW10oaW1hZ2VzL1NjaGVybWFmYmVlbGRpbmclMjAyMDI0LTExLTAxJTIwb20lMjAxNC4yNi4zNC5wbmcpe3dpZHRoPSI0MzMifQoKKipGaWd1cmUgMToqKiBPcGVuQWxleCBjbGFzc2lmaWNhdGlvbiBvZiB0aGUgVG9waWMgZW50aXR5XAoqU291cmNlKjogPGh0dHBzOi8vZG9jcy5vcGVuYWxleC5vcmcvYXBpLWVudGl0aWVzL3RvcGljcz4KClRvIGdldCBhIG1lYXN1cmUgb2YgaW50ZXJkaXNjaXBsaW5hcml0eSBhdCB0aGUgYXV0aG9yIGxldmVsLCBJIHVzZSB0aGUgZm9sbG93aW5nIGZvcm11bGEsIHJlc3VsdGluZyBpbiB0aGUgU2ltcHNvbidzIERpdmVyc2l0eSBJbmRleDoKCiQkClNESSA9IDEgLSBcQmlnW1xzdW1fe2k9MX1ebiBwX3tpfV4yXEJpZ10KJCQKCkhlcmUsICRwJCByZXByZXNlbnRzIHRoZSBwcm9wb3J0aW9uIG9mIHdvcmtzIGJ5IGFuIGF1dGhvciB3b3JraW5nIGluIGEgY2VydGFpbiBmaWVsZC4gU3F1YXJpbmcgZW5zdXJlcyBnaXZpbmcgbW9yZSB3ZWlnaHQgdG8gdGhlIGZpZWxkcyB0aGF0IGFyZSBtb3JlIGNvbW1vbi4gU28sIGluIGVzc2VuY2UsIHRoaXMgZm9ybXVsYSBtZWFucyB0YWtpbmcgdGhlIHN1bSBvZiBhbGwgdGhlIHNxdWFyZWQgcHJvcG9ydGlvbnMgJHBeMiQgZm9yIGFsbCBmaWVsZHMgJGkkIGFuZCBzdWJ0cmFjdGluZyBpdCBmcm9tIDEuIFRoZSBTaW1wc29uJ3MgRGl2ZXJzaXR5IEluZGV4IChTREkpIGNhbiBiZSB1c2VkIHRvIG1lYXN1cmUgdGhlIGRpdmVyc2l0eSBvZiB0aGUgYXV0aG9ycycgcmVzZWFyY2ggcHJhY3RpY2VzIGJ5IGhpZ2hsaWdodGluZyBob3cgJ2NvbmNlbnRyYXRlZCcgdGhlaXIgd29ya3MgYXJlLiBBIHNjb3JlIGNsb3NlciB0byAxIHdpbGwgcmVmbGVjdCBhbiBlbmdhZ2VtZW50IGluIGEgbW9yZSBkaWZmdXNlZCBzZXQgb2YgcmVzZWFyY2ggZmllbGRzLCB3aGlsZSBhIHNjb3JlIGNsb3NlIHRvIDAgd2lsbCByZWZsZWN0IGEgbW9yZSBob21vZ2VuZW91cyBzZXQgb2YgcmVzZWFyY2ggZmllbGRzLgoKU29tZSBub3RlcyBvZiBjYXV0aW9uIHNob3VsZCBiZSBtYWRlIHdoZW4gdXNpbmcgdGhpcyBtZWFzdXJlIG9mIGludGVyZGlzY2lwbGluYXJpdHkuIEZpcnN0LCB0aGUgU0RJICpkb2VzIG5vdCogbWVhc3VyZSB0aGUgZGlzdGFuY2UgYmV0d2VlbiByZXNlYXJjaCBmaWVsZHM6IGl0IG9ubHkgbWVhc3VyZXMgKndoZXRoZXIgb3Igbm90KiBhIGZpZWxkIGlzIGRpZmZlcmVudCBmcm9tIGFub3RoZXIgb25lLCBidXQgdGhlcmUgaXMgbm8gcXVhbGl0YXRpdmUgY29tcGFyaXNvbiBvZiBmaWVsZHMgJ2Ftb25nIGVhY2ggb3RoZXInLiBUbyBpbmNvcnBvcmF0ZSB0aGlzLCBvbmUgd291bGQgbmVlZCBhIG1lYXN1cmUgdGhhdCB0YWtlcyBpbnRvIGFjY291bnQgdGhlc2UgZGlzdGFuY2VzIGJldHdlZW4gZmllbGRzIChzdWNoIGFzIHRoZSBSYW8tU3RlcmxpbmcgaW5kZXgpLiBIb3dldmVyLCBbdGhpcyBsaWVzIG91dHNpZGUgdGhlIHNjb3BlIG9mIHRoaXMgcmVzZWFyY2guXXsudW5kZXJsaW5lfQoKTW9yZW92ZXIsIHRoZSBTREkgKGFzIHdlbGwgYXMgb3RoZXIgbWVhc3VyZXMgZm9yIGludGVyZGlzY2lwbGluYXJpdHkpIGRvZXMgbm90IHRha2UgaW50byBhY2NvdW50IHRoZSAqYWN0dWFsKiBpbnRlcmRpc2NpcGxpbmFyeSBjb250cmlidXRpb24gYW4gYXV0aG9yIGhhcyBtYWRlIHRvIGEgd29yay4gRm9yIGV4YW1wbGUsIEkgY291bGQgYmUgYSBwaGlsb3NvcGhlciB3aG8gbWFyZ2luYWxseSBjb250cmlidXRlcyB0byBhIHBhcmFncmFwaCBvZiBhIHBoeXNpY3MgcGFwZXIuIEFzIHNvb24gYXMgSSBhbSBsaXN0ZWQgYXMgYW4gYXV0aG9yIG9mIHRoZSBwYXBlciwgSSB3aWxsIGhhdmUgd29ya2VkIGluIHRoZSBmaWVsZCBvZiBuYXR1cmFsIHNjaWVuY2VzIChhbmQsIHZpY2UgdmVyc2EsIHRoZSBwaHlzaWNpc3Qgd2lsbCBoYXZlIHdvcmtlZCBpbiB0aGUgZmllbGQgb2YgcGhpbG9zb3BoeSkuIEhvd2V2ZXIsIHRoaXMgaXMgcGFydGx5IHJlc29sdmVkIGJ5IHRoZSBzcXVhcmluZyBvZiAkcCQgKHdoaWNoLCBvZiBjb3Vyc2UsIGhhcyBpbXBsaWNhdGlvbnMgYnkgaXRzZWxmLCBidXQgdGhpcyBzZWVtcyB0aGUgYmVzdCB3YXkgdG8gZ28gaGVyZSkuCgojIyMgQXV0aG9yIHBvc2l0aW9uCgpBdXRob3IgcG9zaXRpb24gcmV2b2x2ZXMgYXJvdW5kIHRoZSBmdW5jdGlvbiBhbiBhdXRob3IgaGFzIHdpdGhpbiB0aGUgdW5pdmVyc2l0eS4gSW4gdGhlIHJhdyBkYXRhc2V0IHRoZXJlIHdlcmUgbWFueSBkZXNjcmlwdGlvbnMgZm9yIHRoZSBhdXRob3IncyBmdW5jdGlvbnMgaW4gMjAyNCAobWFueSBvZiB3aGljaCB3ZXJlIG92ZXJsYXBwaW5nLiBTZWUgUlNjcmlwdCBiZWxvdyBmb3IgYSBmdWxsIG92ZXJ2aWV3IG9mIHRoZSByZS1jb2RpbmcgcHJvY2VzcykuIEkgcmVkdWNlZCB0aGVzZSBjYXRlZ29yaWVzIHRvIHNpeCBkaXN0aW5jdCBvbmVzOiBSZXNlYXJjaGVyLCBQaEQsIFBvc3QtRG9jLCBBc3Npc3RhbnQgUHJvZmVzc29yLCBBc3NvY2lhdGUgUHJvZmVzc29yIGFuZCBQcm9mZXNzb3IuCgojIyBBbmFseXRpY2FsIFN0cmF0ZWd5CgpUaGUgYW5hbHlzaXMgd2lsbCBiZSBkaXZpZGVkIGluIHRocmVlIHN0ZXBzLiBGaXJzdCwgSSB3aWxsIHByb3ZpZGUgc29tZSBkZXNjcmlwdGl2ZSBzdGF0aXN0aWNzLiBUaGVzZSBkZXNjcmlwdGl2ZXMgYXBwbHkgdG8gdGhlIHdob2xlIHNhbXBsZSwgYW5kIGFyZSBwcmVzZW50ZWQgdG8gcHJvdmlkZSBhIGJyb2FkIG92ZXJ2aWV3IG9mIHRoZSBkYXRhLiBTZWNvbmQsIEkgd2lsbCBwcmVzZW50IHNvbWUgbmV0d29yayBkZXNjcmlwdGl2ZXMsIHRvZ2V0aGVyIHdpdGggc29tZSB2aXN1YWxpemF0aW9ucyBvZiB0aGUgbmV0d29ya3MgaW4gdGhlIHR3byB3YXZlcy4gVGhpcyBpcyBkb25lIGluIG9yZGVyIHRvIGNhcHR1cmUgc29tZSBvZiB0aGUgbWFjcm8tbGV2ZWwgY2hhbmdlIGluIHRoZSBuZXR3b3JrLiBUaGlyZCwgSSB3aWxsIHVzZSBSU2llbmEgdG8gcHJvdmlkZSBhbiBhbmFseXNpcyBmb3IgdGhlIG5ldHdvcmsgZXZvbHV0aW9uLiBSU2llbmEgd29ya3Mgd2l0aGluIHRoZSBjb250ZXh0IG9mIFN0b2NoYXN0aWMgQWN0b3ItT3JpZW50ZWQgTW9kZWxzLCB3aGVyZSBuZXR3b3JrcyBhcmUgYXNzdW1lZCB0byBldm9sdmUgYmFzZWQgb24gYWN0b3IgYXR0cmlidXRlcyBhbmQgcHJlZmVyZW5jZXMuIFNwZWNpZmljYWxseSwgUlNpZW5hIG1vZGVscyBhbGxvdyByZXNlYXJjaGVycyB0byBhdHRyaWJ1dGUgbWFjcm8tbGV2ZWwgbmV0d29yayBldm9sdXRpb24gdG8gbWljcm8tbGV2ZWwgY2hhbmdlcy4gQXMgc3VjaCwgU2llbmEgbW9kZWxzIGFyZSBhYmxlIHRvIGVzdGltYXRlIHBhcmFtZXRlcnMgYW5kIGRpc3Rpbmd1aXNoIHNlbGVjdGlvbiAod2hlcmUgdGhlIGRlcGVuZGVudCB2YXJpYWJsZSBpcyB0aGUgbmV0d29yaykgYW5kIGluZmx1ZW5jZSAod2hlcmUgdGhlIGRlcGVuZGVudCB2YXJpYWJsZSBpcyBiZWhhdmlvdXIpIHByb2Nlc3Nlcywgd2hpY2ggaXMgYmVuZWZpY2lhbCB3aGVuIHRyeWluZyB0byByZXNlYXJjaCBzb2NpYWwgbmV0d29ya3MuCgojIyBEZXNjcmlwdGl2ZSBTdGF0aXN0aWNzCgpMb29raW5nIGF0IHRoZSBkZXNjcmlwdGl2ZSBzdGF0aXN0aWNzIGJlbG93LCB3ZSBjYW4gc2VlIHNldmVyYWwgdGhpbmdzLiBGaXJzdGx5LCB0aGUgZGlzdHJpYnV0aW9uIG9mIHRoZSBTREkgbWVhc3VyZSBhbGlnbnMgd2l0aCBleHBlY3RhdGlvbnMsIHNob3dpbmcgYSByZWxhdGl2ZWx5IGhpZ2ggbnVtYmVyIG9mIGNhc2VzIHdpdGggYW4gU0RJIG9mIGFyb3VuZCAwLjUsIHdoaWxlIHNjb3JlcyBjbG9zZXIgdG8gMCBvciAxIGFyZSBtb3JlIHJhcmUuIEluIHNob3J0LCBtb3N0IHBlb3BsZSBhcmUgImF2ZXJhZ2VseSIgaW50ZXJkaXNjaXBsaW5hcnkuIEhvd2V2ZXIsIHF1aXRlIHNvbWUgYXV0aG9ycyBzZWVtIHRvIGhhdmUgYW4gU0RJIG9mIDAsIGluZGljYXRpbmcgdGhhdCB0aGVyZSBpcyBubyB2YXJpYXRpb24gYXQgYWxsIGluIHRoZSBmaWVsZHMgdGhleSB3b3JrIGluLiBTZWN0aW9uICoqMS42LjUuMSoqIGlsbHVtaW5hdGVzIHRoYXQgdGhlc2UgYXV0aG9ycyBhcmUgYWxsIFBoRHMgKHdpdGggb25lIGV4Y2VwdGlvbiwgd2hvIGlzIGEgcG9zdC1kb2MpLCBzdWdnZXN0aW5nIHRoYXQgZG9jdG9yYWwgc3R1ZGVudHMgaW5kZWVkIG9mdGVuIHRlbmQgdG8gd29yayAnc29sZWx5JyBpbiB0aGVpciBvd24gZmllbGQuCgpTZWNvbmQsIHRoZXJlIGFyZSBubyBhbm9tYWxpZXMgaW4gZWl0aGVyIGRpc3RyaWJ1dGlvbnMgb2YgZGlzY2lwbGluZSBvciBkZXBhcnRtZW50IChpLmUuIHNvY2lvbG9neS9wb2xpdGljYWwgc2NpZW5jZSkuIDE2NiBhdXRob3JzIGluIHRoZSBzYW1wbGUgd2VyZSBjb25uZWN0ZWQgdG8gdGhlIHBvbGl0aWNhbCBzY2llbmNlIGRlcGFydG1lbnQgb2YgZWl0aGVyIHRoZSBSVSBvciB0aGUgVXZBLCBhbmQgMTE2IGF1dGhvcnMgd2VyZSBjb25uZWN0ZWQgdG8gdGhlIHNvY2lvbG9neSBkZXBhcnRtZW50IG9mIGVpdGhlciB0aGUgUlUgb3IgdGhlIFV2QS4gU29tZSBhdXRob3JzIGhhdmUgYSB1bml2ZXJzaXR5IHRoYXQgaXMgbmVpdGhlciB0aGUgUlUgbm9yIHRoZSBVdkEgbGlzdGVkIHVuZGVyIHRoZSAnVW5pdmVyc2l0ZWl0MjQnIHZhcmlhYmxlLCB3aGljaCBtZWFucyB0aGF0IHRoZXkgYXJlIGFmZmlsaWF0ZWQgdG8gdGhlIFJVIG9yIHRoZSBVdkEgaW4gc29tZSB3YXksIGJ1dCBwcm9iYWJseSBub3QgYXMgJ21haW4nIHVuaXZlcnNpdHkuIFdoZW4gbG9va2luZyBhdCB0aGUgU0RJIHNjb3JlIGdyb3VwZWQgYnkgVW5pdmVyc2l0eSBhZmZpbGlhdGlvbiAoU2VjdGlvbiAqKjEuNi41LjUqKlspXXsudW5kZXJsaW5lfSwgbm8gbm90YWJsZSBkaWZmZXJlbmNlcyBjYXRjaCB0aGUgZXllLiBUaGUgVXZBIHNjaG9sYXJzIGhhdmUgYSBzbGlnaHRseSBoaWdoZXIgbWVhbiBTREkgb2YgMC40NSwgd2l0aCBSVSBzY2hvbGFycyBoYXZpbmcgYSBtZWFuIFNESSBvZiAwLjQwLgoKVGhpcmQsIHdoZW4gbG9va2luZyBhdCB0aGUgZGlmZmVyZW5jZXMgaW4gU0RJIGJldHdlZW4gYXV0aG9ycyB3aXRoIGRpZmZlcmVudCBwb3NpdGlvbnMsIGl0IGJlY29tZXMgY2xlYXIgKGF0IGxlYXN0OiBhdCAnZmlyc3QgZ2xhbmNlJykgdGhhdCBQaEQgc3R1ZGVudHMgaW5kZWVkIGhhdmUgYSBsb3dlciBtZWFuLVNESSB0aGFuIGFsbCBvdGhlciBwb3NpdGlvbnMuIEludGVyZXN0aW5nbHksIHJlc2VhcmNoZXJzIHdpdGhvdXQgYW55IHRlYWNoaW5nIHBvc2l0aW9uIGF0IHRoZSB1bml2ZXJzaXR5IHNlZW0gdG8gc2NvcmUgcmVsYXRpdmVseSBoaWdoIGF0IHRoZSBTREkgbWVhc3VyZSwgaW5kaWNhdGluZyB0aGF0IGJlaW5nIG1vcmUgJ2xvb3NlbHknIGJvdW5kIHRvIGEgdW5pdmVyc2l0eSBtaWdodCBmb3N0ZXIgaW50ZXJkaXNjaXBsaW5hcnkgcG9zc2liaWxpdGllcy4gVGhlICdvdGhlcicgY2F0ZWdvcnkgcmVwcmVzZW50cyB1bmtub3duIG9yIHVuY2xlYXIgcG9zaXRpb25zLCBhbmQgc2hvdWxkIGJlIGlnbm9yZWQgYXMgc3VjaC4KCiMjIERhdGEgUHJlcGFyYXRpb24KCiMjIyBTdGFydAoKYGBge3IsICBlY2hvPVRSVUUsIHJlc3VsdHM9J2hpZGUnLCB3YXJuaW5nPUZBTFNFLCBtZXNzYWdlPUZBTFNFfQojMS4gTG9hZCBmdW5jdGlvbnMKI2NsZWFuCnJtKGxpc3QgPSBscygpKQoKI2NoZWNrIHBhY2thZ2UgZnVuY3Rpb24KZnBhY2thZ2UuY2hlY2sgPC0gZnVuY3Rpb24ocGFja2FnZXMpIHsKICAgIGxhcHBseShwYWNrYWdlcywgRlVOID0gZnVuY3Rpb24oeCkgewogICAgICAgIGlmICghcmVxdWlyZSh4LCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKSB7CiAgICAgICAgICAgIGluc3RhbGwucGFja2FnZXMoeCwgZGVwZW5kZW5jaWVzID0gVFJVRSkKICAgICAgICAgICAgbGlicmFyeSh4LCBjaGFyYWN0ZXIub25seSA9IFRSVUUpCiAgICAgICAgfQogICAgfSkKfQoKI3NhdmUgZnVuY3Rpb24KZnNhdmUgPC0gZnVuY3Rpb24oeCwgZmlsZSA9IE5VTEwsIGxvY2F0aW9uID0gIi4vZGF0YS9wcm9jZXNzZWQvIikgewogICAgaWZlbHNlKCFkaXIuZXhpc3RzKCJkYXRhIiksIGRpci5jcmVhdGUoImRhdGEiKSwgRkFMU0UpCiAgICBpZmVsc2UoIWRpci5leGlzdHMoImRhdGEvcHJvY2Vzc2VkIiksIGRpci5jcmVhdGUoImRhdGEvcHJvY2Vzc2VkIiksIEZBTFNFKQogICAgaWYgKGlzLm51bGwoZmlsZSkpCiAgICAgICAgZmlsZSA9IGRlcGFyc2Uoc3Vic3RpdHV0ZSh4KSkKICAgIGRhdGVuYW1lIDwtIHN1YnN0cihnc3ViKCJbOi1dIiwgIiIsIFN5cy50aW1lKCkpLCAxLCA4KQogICAgdG90YWxuYW1lIDwtIHBhc3RlKGxvY2F0aW9uLCBkYXRlbmFtZSwgZmlsZSwgIi5yZGEiLCBzZXAgPSAiIikKICAgIHNhdmUoeCwgZmlsZSA9IHRvdGFsbmFtZSkgICNuZWVkIHRvIGZpeCBpZiBmaWxlIGlzIHJlbG9hZGVkIGFzIGlucHV0IG5hbWUsIG5vdCBhcyB4LiAKfQoKI2xvYWQgZnVuY3Rpb24KZmxvYWQgPC0gZnVuY3Rpb24oZmlsZW5hbWUpIHsKICAgIGxvYWQoZmlsZW5hbWUpCiAgICBnZXQobHMoKVtscygpICE9ICJmaWxlbmFtZSJdKQp9CgojbmljZSB2aWV3IGZ1bmN0aW9uCmZzaG93ZGYgPC0gZnVuY3Rpb24oeCwgLi4uKSB7CiAgICBrbml0cjo6a2FibGUoeCwgZGlnaXRzID0gMiwgImh0bWwiLCAuLi4pICU+JQogICAgICAgIGthYmxlRXh0cmE6OmthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIikpICU+JQogICAgICAgIGthYmxlRXh0cmE6OnNjcm9sbF9ib3god2lkdGggPSAiMTAwJSIsIGhlaWdodCA9ICIzMDBweCIpCn0KCiNjb2xsYWJvcmF0aW9uIG5ldHdvcmsgZnVuY3Rpb24KZmNvbG5ldCA8LSBmdW5jdGlvbihkYXRhID0gc2Nob2xhcnMsIHVuaXZlcnNpdHkgPSAiUlUiLCBkaXNjaXBsaW5lID0gInNvY2lvbG9neSIsIHdhdmVzID0gbGlzdChjKDIwMTUsCiAgICAyMDE4KSwgYygyMDE5LCAyMDIzKSksIHR5cGUgPSBjKCJmaXJzdCIpKSB7CgogICAgIyBzdGVwIDEKICAgIGRlbW9ncmFwaGljcyA8LSBkby5jYWxsKHJiaW5kLmRhdGEuZnJhbWUsIGRhdGEkZGVtb2dyYXBoaWNzKQogICAgZGVtb2dyYXBoaWNzIDwtIGRlbW9ncmFwaGljcyAlPiUKICAgICAgICBtdXRhdGUoVW5pdmVyc2l0ZWl0MS4yMiA9IHJlcGxhY2UoVW5pdmVyc2l0ZWl0MS4yMiwgaXMubmEoVW5pdmVyc2l0ZWl0MS4yMiksICIiKSwgVW5pdmVyc2l0ZWl0Mi4yMiA9IHJlcGxhY2UoVW5pdmVyc2l0ZWl0Mi4yMiwKICAgICAgICAgICAgaXMubmEoVW5pdmVyc2l0ZWl0Mi4yMiksICIiKSwgVW5pdmVyc2l0ZWl0MS4yNCA9IHJlcGxhY2UoVW5pdmVyc2l0ZWl0MS4yNCwgaXMubmEoVW5pdmVyc2l0ZWl0MS4yNCksCiAgICAgICAgICAgICIiKSwgVW5pdmVyc2l0ZWl0Mi4yNCA9IHJlcGxhY2UoVW5pdmVyc2l0ZWl0Mi4yNCwgaXMubmEoVW5pdmVyc2l0ZWl0Mi4yNCksICIiKSwgZGlzY2lwbGluZS4yMiA9IHJlcGxhY2UoZGlzY2lwbGluZS4yMiwKICAgICAgICAgICAgaXMubmEoZGlzY2lwbGluZS4yMiksICIiKSwgZGlzY2lwbGluZS4yNCA9IHJlcGxhY2UoZGlzY2lwbGluZS4yNCwgaXMubmEoZGlzY2lwbGluZS4yNCksICIiKSkKCiAgICBzYW1wbGUgPC0gd2hpY2goKGRlbW9ncmFwaGljcyRVbml2ZXJzaXRlaXQxLjIyICVpbiUgdW5pdmVyc2l0eSB8IGRlbW9ncmFwaGljcyRVbml2ZXJzaXRlaXQyLjIyICVpbiUKICAgICAgICB1bml2ZXJzaXR5IHwgZGVtb2dyYXBoaWNzJFVuaXZlcnNpdGVpdDEuMjQgJWluJSB1bml2ZXJzaXR5IHwgZGVtb2dyYXBoaWNzJFVuaXZlcnNpdGVpdDIuMjQgJWluJQogICAgICAgIHVuaXZlcnNpdHkpICYgKGRlbW9ncmFwaGljcyRkaXNjaXBsaW5lLjIyICVpbiUgZGlzY2lwbGluZSB8IGRlbW9ncmFwaGljcyRkaXNjaXBsaW5lLjI0ICVpbiUgZGlzY2lwbGluZSkpCgogICAgZGVtb2dyYXBoaWNzX3NvYyA8LSBkZW1vZ3JhcGhpY3Nbc2FtcGxlLCBdCiAgICBzY2hvbGFyc19zZWwgPC0gbGFwcGx5KHNjaG9sYXJzLCAiWyIsIHNhbXBsZSkKCiAgICAjIHN0ZXAgMgogICAgaWRzIDwtIGRlbW9ncmFwaGljc19zb2MkYXVfaWQKICAgIG53YXZlcyA8LSBsZW5ndGgod2F2ZXMpCiAgICBuZXRzIDwtIGFycmF5KDAsIGRpbSA9IGMobndhdmVzLCBsZW5ndGgoaWRzKSwgbGVuZ3RoKGlkcykpLCBkaW1uYW1lcyA9IGxpc3Qod2F2ZSA9IDE6bndhdmVzLCBpZHMsCiAgICAgICAgaWRzKSkKICAgIGRpbW5hbWVzKG5ldHMpCgogICAgIyBzdGVwIDMKICAgIGRmX3dvcmtzIDwtIHRpYmJsZSh3b3Jrc19pZCA9IHVubGlzdChsYXBwbHkoc2Nob2xhcnNfc2VsJHdvcmssIGZ1bmN0aW9uKGwpIGwkaWQpKSwgd29ya3NfYXV0aG9yID0gdW5saXN0KGxhcHBseShzY2hvbGFyc19zZWwkd29yaywKICAgICAgICBmdW5jdGlvbihsKSBsJGF1dGhvciksIHJlY3Vyc2l2ZSA9IEZBTFNFKSwgd29ya3NfeWVhciA9IHVubGlzdChsYXBwbHkoc2Nob2xhcnNfc2VsJHdvcmssIGZ1bmN0aW9uKGwpIGwkcHVibGljYXRpb25feWVhciksCiAgICAgICAgcmVjdXJzaXZlID0gRkFMU0UpKQoKICAgIGRmX3dvcmtzIDwtIGRmX3dvcmtzWyFkdXBsaWNhdGVkKGRmX3dvcmtzKSwgXQoKICAgICMgc3RlcCA0CiAgICBpZiAodHlwZSA9PSAiZmlyc3QiKSB7CiAgICAgICAgZm9yIChqIGluIDE6bndhdmVzKSB7CiAgICAgICAgICAgIGRmX3dvcmtzX3cgPC0gZGZfd29ya3NbZGZfd29ya3Mkd29ya3NfeWVhciA+PSB3YXZlc1tbal1dWzFdICYgZGZfd29ya3Mkd29ya3NfeWVhciA8PSB3YXZlc1tbal1dWzJdLAogICAgICAgICAgICAgICAgXQogICAgICAgICAgICBmb3IgKGkgaW4gMTpucm93KGRmX3dvcmtzX3cpKSB7CiAgICAgICAgICAgICAgICBlZ28gPC0gZGZfd29ya3NfdyR3b3Jrc19hdXRob3JbaV1bWzFdXSRhdV9pZFsxXQogICAgICAgICAgICAgICAgYWx0ZXJzIDwtIGRmX3dvcmtzX3ckd29ya3NfYXV0aG9yW2ldW1sxXV0kYXVfaWRbLTFdCiAgICAgICAgICAgICAgICBpZiAoc3VtKGlkcyAlaW4lIGVnbykgPiAwICYgc3VtKGlkcyAlaW4lIGFsdGVycykgPiAwKSB7CiAgICAgICAgICAgICAgICAgIG5ldHNbaiwgd2hpY2goaWRzICVpbiUgZWdvKSwgd2hpY2goaWRzICVpbiUgYWx0ZXJzKV0gPC0gMQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgfQogICAgfQoKICAgIGlmICh0eXBlID09ICJsYXN0IikgewogICAgICAgIGZvciAoaiBpbiAxOm53YXZlcykgewogICAgICAgICAgICBkZl93b3Jrc193IDwtIGRmX3dvcmtzW2RmX3dvcmtzJHdvcmtzX3llYXIgPj0gd2F2ZXNbW2pdXVsxXSAmIGRmX3dvcmtzJHdvcmtzX3llYXIgPD0gd2F2ZXNbW2pdXVsyXSwKICAgICAgICAgICAgICAgIF0KICAgICAgICAgICAgZm9yIChpIGluIDE6bnJvdyhkZl93b3Jrc193KSkgewogICAgICAgICAgICAgICAgZWdvIDwtIHJldihkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGF1X2lkKVsxXQogICAgICAgICAgICAgICAgYWx0ZXJzIDwtIHJldihkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGF1X2lkKVstMV0KICAgICAgICAgICAgICAgIGlmIChzdW0oaWRzICVpbiUgZWdvKSA+IDAgJiBzdW0oaWRzICVpbiUgYWx0ZXJzKSA+IDApIHsKICAgICAgICAgICAgICAgICAgbmV0c1tqLCB3aGljaChpZHMgJWluJSBlZ28pLCB3aGljaChpZHMgJWluJSBhbHRlcnMpXSA8LSAxCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICB9CiAgICB9CgogICAgaWYgKHR5cGUgPT0gImFsbCIpIHsKICAgICAgICBmb3IgKGogaW4gMTpud2F2ZXMpIHsKICAgICAgICAgICAgZGZfd29ya3NfdyA8LSBkZl93b3Jrc1tkZl93b3JrcyR3b3Jrc195ZWFyID49IHdhdmVzW1tqXV1bMV0gJiBkZl93b3JrcyR3b3Jrc195ZWFyIDw9IHdhdmVzW1tqXV1bMl0sCiAgICAgICAgICAgICAgICBdCiAgICAgICAgICAgIGZvciAoaSBpbiAxOm5yb3coZGZfd29ya3NfdykpIHsKICAgICAgICAgICAgICAgIGVnb3MgPC0gZGZfd29ya3NfdyR3b3Jrc19hdXRob3JbaV1bWzFdXSRhdV9pZAogICAgICAgICAgICAgICAgaWYgKHN1bShpZHMgJWluJSBlZ29zKSA+IDApIHsKICAgICAgICAgICAgICAgICAgbmV0c1tqLCB3aGljaChpZHMgJWluJSBlZ29zKSwgd2hpY2goaWRzICVpbiUgZWdvcyldIDwtIDEKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgfQogICAgICAgIH0KICAgIH0KICAgIG91dHB1dCA8LSBsaXN0KCkKICAgIG91dHB1dCRkYXRhIDwtIHNjaG9sYXJzX3NlbAogICAgb3V0cHV0JG5ldHMgPC0gbmV0cwogICAgcmV0dXJuKG91dHB1dCkKfQoKIzIuIGNoZWNrIHBhY2thZ2VzCiNjaGVjayBwYWNrYWdlcwpwYWNrYWdlcyA9IGMoIlJTaWVuYSIsICJ0aWR5dmVyc2UiLCAic3RyaW5nZGlzdCIsICJzdHJpbmdpIiwgImluc3RhbGxyIiwgImZvcmVpZ24iLCAianNvbmxpdGUiLCAib3BlbmFsZXhSIiwgInNjaG9sYXIiLCAicnZlc3QiLCAiaWdyYXBoIiwgInRpZHlyIikKZnBhY2thZ2UuY2hlY2socGFja2FnZXMpCgojMy4gbG9hZCBkYXRhCnNjaG9sYXJzIDwtIGZsb2FkKCIvVXNlcnMvamFubmV2YW5oZWVzY2gvRG9jdW1lbnRzL1IuIFNOL3NjaG9sYXJzXzIwMjQwOTI0LnJkYSIpCgoKYGBgCgojIyMgU3Vic2V0CgpgYGB7cn0KIzEuIFBvbGl0aWNhbCBzY2llbmNlICYgU29jaW9sZ3kuIFdhdmVzIDIwMTYtMjAxOSwgMjAyMC0yMDIzLgpkZl9SVSA8LSBmY29sbmV0KGRhdGEgPSBzY2hvbGFycywgdW5pdmVyc2l0eSA9IGMoIlJVIiwgIlV2QSIpLCBkaXNjaXBsaW5lID0gYygic29jaW9sb2d5IiwgInBvbGl0aWNhbCBzY2llbmNlIiksIHdhdmVzID0gbGlzdChjKDIwMTYsCiAgICAyMDE5KSwgYygyMDIwLCAyMDIzKSksIHR5cGUgPSBjKCJmaXJzdCIpKQoKIzIuIFNlcGFyYXRlIGRhdGEKZGYgPC0gZGZfUlUkZGF0YSAjc2VwYXJhdGUgc2Nob2xhcnMsIHdvcmtzLCBkZW1vZ3JhcGhpY3MgCm5ldHMgPC0gZGZfUlUkbmV0cyAjbmV0d29ya3MKCiNkZiBmb3IgZGVtb2dyYXBoaWNzIChhdXRob3IgbGV2ZWwpCmRmX2VnbyA8LSBkby5jYWxsKHJiaW5kLmRhdGEuZnJhbWUsIGRmJGRlbW9ncmFwaGljcykKCiNkZiBmb3IgYXV0aG9ycwpkZl9hdXRoIDwtIGRvLmNhbGwocmJpbmQuZGF0YS5mcmFtZSwgZGYkc2Nob2xhcnNfb2EpCmBgYAoKIyMjIEludGVyZGlzY2lwbGluYXJpdHkKCmBgYHtyLCBlY2hvPVRSVUUsIHJlc3VsdHM9J2hpZGUnLCB3YXJuaW5nPUZBTFNFLCBtZXNzYWdlPUZBTFNFfQojMy4gSW50ZXJkaXNjaXBsaW5hcml0eQojY3JlYXRlIGZ1bmN0aW9uIGZvciBhbGwgZmllbGRzCmZfdG9waWNzX2YgPC0gZnVuY3Rpb24oeCkgewogIHRvcGljcyA8LSBkby5jYWxsKHJiaW5kLmRhdGEuZnJhbWUsIHgkdG9waWNzKSAKICB0b3BpY3MgPC0gdG9waWNzW3RvcGljcyRpIDwgNCAmIHRvcGljcyRuYW1lID09ICJmaWVsZCIsXSAKICBTRElfZiA8LSAxIC0gc3VtKChwcm9wLnRhYmxlKHRhYmxlKHRvcGljcyRkaXNwbGF5X25hbWUpKSleMikgCiAgcmV0dXJuKFNESV9mKQp9CgpTRElfZiA8LSBzYXBwbHkoWCA9IGRmJHdvcmtzLCBGVU4gPSBmX3RvcGljc19mKQpTRElfZgoKIyBhdHRhY2ggdG8gZGZfZWdvCmRmX2VnbyA8LSBjYmluZChkZl9lZ28sIFNESV9mKQpgYGAKCmBgYHtyLCBlY2hvPVRSVUUsIHJlc3VsdHM9J2hpZGUnLCB3YXJuaW5nPUZBTFNFLCBtZXNzYWdlPUZBTFNFfQojNC4gTWVhc3VyZXMgZm9yIGludGVyZGlzY2lwbGluYXJpdHkgSSBkaWQgbm90IHVzZSAoZm9yIEFwcGVuZGl4PykKI3N1YmZpZWxkcwpmX3RvcGljc19zZiA8LSBmdW5jdGlvbih4KSB7CiAgdG9waWNzIDwtIGRvLmNhbGwocmJpbmQuZGF0YS5mcmFtZSwgeCR0b3BpY3MpICNpayB6ZXQgdm9vciAxIGF1dGV1ciBhbGxlIHRvcGljcyBvbmRlciBlbGthYXIKICB0b3BpY3MgPC0gdG9waWNzW3RvcGljcyRpIDwgNCAmIHRvcGljcyRuYW1lID09ICJzdWJmaWVsZCIsXSAKICBTRElfc2YgPC0gMSAtIHN1bSgocHJvcC50YWJsZSh0YWJsZSh0b3BpY3MkZGlzcGxheV9uYW1lKSkpXjIpICAKICByZXR1cm4oU0RJX3NmKQp9CgpTRElfc2YgPC0gc2FwcGx5KFggPSBkZiR3b3JrcywgRlVOID0gZl90b3BpY3Nfc2YpIApTRElfc2YKCiN0b3BpY3MKZl90b3BpY3NfdCA8LSBmdW5jdGlvbih4KSB7CiAgdG9waWNzIDwtIGRvLmNhbGwocmJpbmQuZGF0YS5mcmFtZSwgeCR0b3BpY3MpICAKICB0b3BpY3MgPC0gdG9waWNzW3RvcGljcyRpIDwgNCAmIHRvcGljcyRuYW1lID09ICJ0b3BpYyIsXSAKICBTRElfdCA8LSAxIC0gc3VtKChwcm9wLnRhYmxlKHRhYmxlKHRvcGljcyRkaXNwbGF5X25hbWUpKSleMikgIAogIHJldHVybihTRElfdCkKfQoKU0RJX3QgPC0gc2FwcGx5KFggPSBkZiR3b3JrcywgRlVOID0gZl90b3BpY3NfdCkgClNESV90CgpkZl9lZ28gPC0gY2JpbmQoZGZfZWdvLCBTRElfc2YsIFNESV90KQpgYGAKCiMjIyBBdXRob3IgcG9zaXRpb24KCmBgYHtyfQojcmVjb2RlIGZ1bmN0aW9uIHZhcmlhYmxlCmRmX2VnbyA8LSBkZl9lZ28gJT4lCiAgbXV0YXRlKGZ1bmN0aW9uXzIwMjQgPSBjYXNlX3doZW4oCiAgICBGdW5jdGllLjI0ICVpbiUgYygiVW5pdmVyc2l0YWlyIGhvb2ZkZG9jZW50IiwgIlNlbmlvciBsZWN0dXJlciIsICJHZXBlbnNpb25lZXJkIFVIRCIpIH4gIkFzc29jaWF0ZSBQcm9mZXNzb3IiLAogICAgRnVuY3RpZS4yNCAlaW4lIGMoIk9uZGVyem9la2VyIiwgIkFzc29jaWF0ZSByZXNlYXJjaGVyIiwgIlNlbmlvciBSZXNlYXJjaGVyIiwgIkd1ZXN0IFJlc2VhcmNoZXIiLCAiT3RoZXIgcmVzZWFyY2hlciIsICJTZW5pb3IgcmVzZWFyY2hlciIsICJIb29mZG9uZGVyem9la2VyIiwgIk1lZGV3ZXJrZXIiLCAiSnVuaW9yIG9uZGVyem9la2VyIiwgIkdhc3RvbmRlcnpvZWtlciIsICJGZWxsb3ciLCAiRG9lcyBwcm9qZWN0IGF0IFV2QSwgaGFzIHdvcmtlZCBhcyBwcm9mZXNzb3IsIGxlY3R1cmVyLCBhbmQgcmVzZWFyY2ggZmVsbG93IGF0IGRpZmZlcmVudCB1bmlzIiwgIlNlbmlvciBSZXNlYXJjaCBGZWxsb3ciLCAiU2VuaW9yIHJlc2VhcmNoZXIgcGFydC10aW1lIiwgIk9uZGVyem9la3NmZWxsb3ciLCAiUmVzZWFyY2ggZmVsbG93IikgfiAiUmVzZWFyY2hlciIsCiAgICBGdW5jdGllLjI0ICVpbiUgYygiVW5pdmVyc2l0YWlyIGRvY2VudCIsICJMZWN0dXJlciIsICJEb2NlbnQ/IiwgIkdlcGVuc2lvbmVlcmQgZG9jZW50IHNvY2lvbG9naWUiLCAiTGVjdHVyZXIgYW5kIFJlc2VhcmNoZXIiLCAiTGVjdHVyZXIvcmVzZWFyY2hlciIsICJVbnZlcnNpdGFpciBkb2NlbnQgR1BNIiwgIkRvY2VudCIsICJEb2NlbnQgKGdlcGVuc2lvbmVlcmQpIikgfiAiQXNzaXN0YW50IFByb2Zlc3NvciIsCiAgICBGdW5jdGllLjI0ICVpbiUgYygiUGhEIFN0dWRlbnQiLCAiRXh0ZXJuYWwgUGhkIiwgIlBoRCBTdHVkZW50IGFudGhyb3BvbG9naWUiLCAiUGhEIHN0dWRlbnQiLCAiRG9jdG9yYWwgc3R1ZGVudCIsICJwYXJ0LXRpbWUgZG9jdG9yYWwgcmVzZWFyY2hlciIsICJQaEQgc3R1ZGVudHQiLCAiRG9jdG9yYWwgUmVzZWFyY2hlciIpIH4gIlBoRCIsCiAgICBGdW5jdGllLjI0ICVpbiUgYygiSG9vZ2xlcmFhciIsICJCaWp6b25kZXIgaG9vZ2xlcmFhciIsICJIb29nbGVyYWFyL0FmZGVsaW5nc3Zvb3J6aXR0ZXIiLCAiRW1lcml0dXMgaG9vZ2xlcmFhciIsICJIb29nbGVyYWFyICh2aXNpdGluZykiKSB+ICJQcm9mZXNzb3IiLAogICAgRnVuY3RpZS4yNCAlaW4lIGMoIlBvc3Rkb2MiLCAiUGhkICYgcG9zdGRvYyIpIH4gIlBvc3QtRG9jIiwKICAgIFRSVUUgfiAiT3RoZXIiICAjIEZvciBhbnkgb3RoZXIgY2F0ZWdvcmllcyBub3QgZXhwbGljaXRseSBtZW50aW9uZWQKICApKQoKYGBgCgojIyMgRGVzY3JpcHRpdmVzCgojIyMjIERpc3RyaWJ1dGlvbiBvZiBTREkKCmBgYHtyfQojMS4gU2ltcHNvbidzIERpdmVyc2l0eSBJbmRleApzdW1tYXJ5KFNESV9mKQoKZ2dwbG90KGRmX2VnbywgYWVzKHggPSBTRElfZikpICsgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSAwLjA1LCBmaWxsID0gInJlZCIsIGNvbG9yID0gIndoaXRlIikgKyBsYWJzKHggPSAiU2ltcHNvbidzIERpdmVyc2l0eSBJbmRleCIsCiAgICB5ID0gIkZyZXF1ZW5jeSIpICsgc2NhbGVfeF9jb250aW51b3VzKCkgKyBzY2FsZV95X2NvbnRpbnVvdXMoKSArIHRoZW1lX21pbmltYWwoKQoKYGBgCgpgYGB7ciwgZWNobz1UUlVFLCByZXN1bHRzPSdoaWRlJywgd2FybmluZz1GQUxTRSwgbWVzc2FnZT1GQUxTRX0KIzIuIFNob3cgdGhlIGNhc2VzIGZvciB3aGljaCBTREkgc2NvcmUgd2FzIDAgb3IgMQpkZl96ZXJvX29yX29uZSA8LSBkZl9lZ28gJT4lCiAgICBmaWx0ZXIoU0RJX2YgJWluJSBjKDAsIDEpKQpwcmludChkZl96ZXJvX29yX29uZSkKCmBgYAoKYGBge1J9CmdncGxvdChkZl96ZXJvX29yX29uZSwgYWVzKHggPSBmdW5jdGlvbl8yMDI0LCBmaWxsID0gYXMuZmFjdG9yKFNESV9mKSkpICsKICAgIGdlb21fYmFyKHBvc2l0aW9uID0gImRvZGdlIikgKwogICAgbGFicyh0aXRsZSA9ICJTREkgYnkgQXV0aG9yIFBvc2l0aW9uIiwKICAgICAgICAgeCA9ICJBdXRob3IgUG9zaXRpb24iLAogICAgICAgICB5ID0gIkNvdW50IiwKICAgICAgICAgZmlsbCA9ICJTRElfZiIpICsKICAgIHRoZW1lX21pbmltYWwoKSArCiAgICB0aGVtZShheGlzLnRleHQueCA9IGVsZW1lbnRfdGV4dChhbmdsZSA9IDQ1LCBoanVzdCA9IDEpKQpgYGAKCiMjIyMgRGlzdHJpYnV0aW9uIG9mIGRpc2NpcGxpbmVzCgpgYGB7cn0KIzIuIERpc3RyaWJ1dGlvbiBvZiBzY2hvbGFycyBieSB1bml2ZXJzaXR5IGFuZCBieSBkZXBhcnRtZW50Cgp0YWJsZShkZl9lZ28kZGlzY2lwbGluZS4yNCkKCmBgYAoKIyMjIyBEaXN0cmlidXRpb24gb2YgVW5pdmVyc2l0aWVzCgpgYGB7cn0KdGFibGUoZGZfZWdvJFVuaXZlcnNpdGVpdC4yNCkKdGFibGUoZGZfZWdvJFVuaXZlcnNpdGVpdC4yMikKCgpgYGAKCiMjIyMgRGlzdHJpYnV0aW9uIG9mIEF1dGhvciBQb3NpdGlvbgoKYGBge3J9CiMgQ3JlYXRlIGEgZnJlcXVlbmN5IHRhYmxlCmZyZXF1ZW5jeV90YWJsZSA8LSBkZl9lZ28gJT4lCiAgY291bnQoZnVuY3Rpb25fMjAyNCkgJT4lCiAgYXJyYW5nZShkZXNjKG4pKQoKZ2dwbG90KGZyZXF1ZW5jeV90YWJsZSwgYWVzKHggPSByZW9yZGVyKGZ1bmN0aW9uXzIwMjQsIG4pLCB5ID0gbikpICsKICBnZW9tX2JhcihzdGF0ID0gImlkZW50aXR5IiwgZmlsbCA9ICJzdGVlbGJsdWUiKSArCiAgbGFicyh4ID0gIlBvc2l0aW9uIiwgeSA9ICJGcmVxdWVuY3kiLCB0aXRsZSA9ICJGcmVxdWVuY3kgRGlzdHJpYnV0aW9uIG9mIEF1dGhvciBQb3NpdGlvbigyMDI0KSIpICsKICBjb29yZF9mbGlwKCkgKwogIHRoZW1lX21pbmltYWwoKQoKYGBgCgojIyMjIE1lYW4gU0RJIGJ5IFVuaXZlcnNpdHkKCmBgYHtyfQojMy4gbWVhbiBTREkgYnkgVW5pdmVyc2l0eQoKZGZfZWdvICU+JQogICAgbXV0YXRlKFVuaXZlcnNpdHkgPSBjYXNlX3doZW4oc3RyX2RldGVjdChVbml2ZXJzaXRlaXQuMjQsICJSVSIpIH4gIlJVIiwgc3RyX2RldGVjdChVbml2ZXJzaXRlaXQuMjQsCiAgICAgICAgIlV2QSIpIH4gIlV2QSIsIC5kZWZhdWx0ID0gIk5vIE9mZmljaWFsIEFmZmlsaWF0aW9uIikpICU+JQogICAgZ3JvdXBfYnkoVW5pdmVyc2l0eSkgJT4lCiAgICBzdW1tYXJpc2UobWVhbl9TREkgPSBtZWFuKFNESV9mLCBuYS5ybSA9IFRSVUUpKSAlPiUKICAgIGZzaG93ZGYoKQoKCmBgYAoKIyMjIyBNZWFuIFNESSBwZXIgRGVwYXJ0bWVudAoKYGBge3J9CiM0LiBtZWFuIFNESSBieSBkZXBhcnRtZW50IGluIDIwMjQKCmRmX2VnbyAlPiUKICAgIG11dGF0ZShEZXBhcnRtZW50ID0gY2FzZV93aGVuKHN0cl9kZXRlY3QoZGlzY2lwbGluZS4yNCwgInNvY2lvbG9neSIpIH4gInNvY2lvbG9neSIsIHN0cl9kZXRlY3QoZGlzY2lwbGluZS4yNCwKICAgICAgICAicG9saXRpY2FsIHNjaWVuY2UiKSB+ICJwb2xpdGljYWwgc2NpZW5jZSIsIC5kZWZhdWx0ID0gIm5vIGRpc2NpcGxpbmUiKSkgJT4lCiAgICBncm91cF9ieShEZXBhcnRtZW50KSAlPiUKICAgIHN1bW1hcmlzZShtZWFuX1NESSA9IG1lYW4oU0RJX2YsIG5hLnJtID0gVFJVRSkpICU+JQogICAgZnNob3dkZigpCmBgYAoKIyMjIyBNZWFuIFNESSBwZXIgVW5pdmVyc2l0eSBGdW5jdGlvbgoKYGBge3J9CiMgQ2FsY3VsYXRlIG1lYW4gU0RJX2YgcGVyIGZ1bmN0aW9uXzIwMjQKZGZfbWVhbnMgPC0gZGZfZWdvICU+JQogICAgZ3JvdXBfYnkoZnVuY3Rpb25fMjAyNCkgJT4lCiAgICBzdW1tYXJpc2UobWVhbl9TREkgPSBtZWFuKFNESV9mLCBuYS5ybSA9IFRSVUUpKQoKIyBQcmludCB0aGUgc3VtbWFyeSB0YWJsZSBpZiB5b3Ugd2FudCB0byBzZWUgaXQKcHJpbnQoZGZfbWVhbnMpCgojIFBsb3QgdGhlIHJlc3VsdHMKZ2dwbG90KGRmX21lYW5zLCBhZXMoeCA9IHJlb3JkZXIoZnVuY3Rpb25fMjAyNCwgbWVhbl9TREkpLCB5ID0gbWVhbl9TREkpKSArCiAgICBnZW9tX2JhcihzdGF0ID0gImlkZW50aXR5IiwgZmlsbCA9ICJzdGVlbGJsdWUiKSArCiAgICBsYWJzKHRpdGxlID0gIk1lYW4gU0RJIHBlciBVbml2ZXJzaXR5IEZ1bmN0aW9uIiwKICAgICAgICAgeCA9ICJVbml2ZXJzaXR5IEZ1bmN0aW9uIiwKICAgICAgICAgeSA9ICJNZWFuIFNESSIpICsKICAgIGNvb3JkX2ZsaXAoKSArICAKICAgIHRoZW1lX21pbmltYWwoKQpgYGAKCiMjIyMgU2F2ZSBmaWxlCgpgYGB7cn0Kd3JpdGVfY3N2KGRmX2VnbywgImRhdGFfZmluYWwuY3N2IikKc2F2ZVJEUyhuZXRzLCAibmV0cy5yZHMiKQpgYGAKCmBgYCAgICAgICAgIApgYGAK</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("Data_F.Rmd");
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,5 +1,5 @@
 ---
-title: "Theory"
+title: "Analysis"
 author: "René van Son"
 output:
   html_document:

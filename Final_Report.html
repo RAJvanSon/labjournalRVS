@@ -1690,16 +1690,16 @@ ansM1</code></pre>
 ##                                            Error      t-ratio   
 ## 
 ## Rate parameters: 
-##   0       Rate parameter       4.1045  ( 0.7407   )             
+##   0       Rate parameter       4.0647  ( 0.6882   )             
 ## 
 ## Other parameters: 
-##   1. eval outdegree (density) -2.5429  ( 0.1055   )   -0.0670   
-##   2. eval reciprocity          2.4965  ( 0.2487   )   -0.0111   
+##   1. eval outdegree (density) -2.5333  ( 0.1041   )   0.0559    
+##   2. eval reciprocity          2.4922  ( 0.2387   )   0.0081    
 ## 
-## Overall maximum convergence ratio:    0.0718 
+## Overall maximum convergence ratio:    0.0591 
 ## 
 ## 
-## Total of 1761 iteration steps.</code></pre>
+## Total of 2212 iteration steps.</code></pre>
 </div>
 <div id="model-2" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Model 2</h2>
@@ -1728,18 +1728,18 @@ ansM2</code></pre>
 ##                                            Error      t-ratio   
 ## 
 ## Rate parameters: 
-##   0       Rate parameter       3.9666  ( 0.6389   )             
+##   0       Rate parameter       4.0253  ( 0.6619   )             
 ## 
 ## Other parameters: 
-##   1. eval outdegree (density) -2.5492  ( 0.1100   )    0.1011   
-##   2. eval reciprocity          2.4932  ( 0.2390   )    0.0740   
-##   3. eval HI_f_covar ego      -0.6703  ( 0.4834   )    0.0276   
-##   4. eval same HI_f_covar      1.3362  ( 0.6563   )   -0.0073   
+##   1. eval outdegree (density) -2.5489  ( 0.1077   )   -0.0230   
+##   2. eval reciprocity          2.4783  ( 0.2665   )   -0.0692   
+##   3. eval HI_f_covar ego      -0.6368  ( 0.4834   )   -0.0031   
+##   4. eval same HI_f_covar      1.3454  ( 0.6619   )    0.0093   
 ## 
-## Overall maximum convergence ratio:    0.1130 
+## Overall maximum convergence ratio:    0.0721 
 ## 
 ## 
-## Total of 2432 iteration steps.</code></pre>
+## Total of 2196 iteration steps.</code></pre>
 <pre class="r"><code>#check goodness of fit Indegree Dist
 gofi0 &lt;- sienaGOF(ansM2, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = &quot;net&quot;)
 gofi0</code></pre>
@@ -1749,7 +1749,7 @@ gofi0</code></pre>
 ## -----
 ## One tailed test used  (i.e. estimated probability of greater distance than observation).
 ## -----
-## Calculated joint MHD = ( 1439.42 ) for current model.</code></pre>
+## Calculated joint MHD = ( 1470.81 ) for current model.</code></pre>
 <pre class="r"><code>plot(gofi0, main = &quot;&quot;)</code></pre>
 <p><img src="Final_Report_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <pre class="r"><code>#check for mean level of interdisciplinarity in wave 1 and 2. 

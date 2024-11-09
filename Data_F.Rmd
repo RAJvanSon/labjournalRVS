@@ -1,6 +1,9 @@
 ---
-title: "Theory"
+title: "Data"
 author: "René van Son"
+output:
+  html_document:
+    code_folding: hide
 bibliography: references.bib
 csl: apa.csl
 ---

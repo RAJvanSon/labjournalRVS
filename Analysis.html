@@ -417,101 +417,18 @@ div.tocify {
 
 
 <pre class="r"><code>rm(list = ls())
-require(tidyverse)</code></pre>
-<pre><code>## Loading required package: tidyverse</code></pre>
-<pre><code>## ── Attaching core tidyverse packages ─────────────────
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.2     
-## ── Conflicts ──────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
-## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<pre class="r"><code>require(installr)</code></pre>
-<pre><code>## Loading required package: installr
-## 
-## Welcome to installr version 0.23.4
-## 
-## More information is available on the installr project website:
-## https://github.com/talgalili/installr/
-## 
-## Contact: &lt;tal.galili@gmail.com&gt;
-## Suggestions and bug-reports can be submitted at: https://github.com/talgalili/installr/issues
-## 
-##          To suppress this message use:
-##          suppressPackageStartupMessages(library(installr))</code></pre>
-<pre class="r"><code>require(foreign)</code></pre>
-<pre><code>## Loading required package: foreign</code></pre>
-<pre class="r"><code>require(jsonlite)</code></pre>
-<pre><code>## Loading required package: jsonlite
-## 
-## Attaching package: &#39;jsonlite&#39;
-## 
-## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     flatten</code></pre>
-<pre class="r"><code>require(openalexR)</code></pre>
-<pre><code>## Loading required package: openalexR
-## Thank you for using openalexR!
-## To acknowledge our work, please cite the package by calling `citation(&quot;openalexR&quot;)`.
-## To suppress this message, add `openalexR.message = suppressed` to your .Renviron file.</code></pre>
-<pre class="r"><code>require(scholar)</code></pre>
-<pre><code>## Loading required package: scholar</code></pre>
-<pre class="r"><code>require(rvest)</code></pre>
-<pre><code>## Loading required package: rvest
-## 
-## Attaching package: &#39;rvest&#39;
-## 
-## The following object is masked from &#39;package:readr&#39;:
-## 
-##     guess_encoding</code></pre>
-<pre class="r"><code>require(igraph)</code></pre>
-<pre><code>## Loading required package: igraph
-## 
-## Attaching package: &#39;igraph&#39;
-## 
-## The following objects are masked from &#39;package:lubridate&#39;:
-## 
-##     %--%, union
-## 
-## The following objects are masked from &#39;package:dplyr&#39;:
-## 
-##     as_data_frame, groups, union
-## 
-## The following objects are masked from &#39;package:purrr&#39;:
-## 
-##     compose, simplify
-## 
-## The following object is masked from &#39;package:tidyr&#39;:
-## 
-##     crossing
-## 
-## The following object is masked from &#39;package:tibble&#39;:
-## 
-##     as_data_frame
-## 
-## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     decompose, spectrum
-## 
-## The following object is masked from &#39;package:base&#39;:
-## 
-##     union</code></pre>
-<pre class="r"><code>require(tidyr)
-require(RSiena)</code></pre>
-<pre><code>## Loading required package: RSiena</code></pre>
-<pre class="r"><code>require(RsienaTwoStep)</code></pre>
-<pre><code>## Loading required package: RsienaTwoStep
-## Loading required package: foreach
-## 
-## Attaching package: &#39;foreach&#39;
-## 
-## The following objects are masked from &#39;package:purrr&#39;:
-## 
-##     accumulate, when</code></pre>
-<pre class="r"><code>load(&quot;/Users/jannevanheesch/Documents/R. SN/scholars_20240924.rda&quot;)
+require(tidyverse)
+require(installr)
+require(foreign)
+require(jsonlite)
+require(openalexR)
+require(scholar)
+require(rvest)
+require(igraph)
+require(tidyr)
+require(RSiena)
+require(RsienaTwoStep)
+load(&quot;/Users/jannevanheesch/Documents/R. SN/scholars_20240924.rda&quot;)
 scholars &lt;- x
 rm(x)</code></pre>
 <p>Now get information at ego level and network.</p>
