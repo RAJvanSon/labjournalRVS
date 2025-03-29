@@ -22,8 +22,7 @@ navbar:
         href: Analysis_F.html
       - text: "Conclusion"
         href: Conclusion_F.html
-      
-    
+  
   right:
   - icon: fab fa-github
     href: https://github.com/JochemTolsma/labjournal
