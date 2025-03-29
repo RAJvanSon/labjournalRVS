@@ -12,18 +12,6 @@ navbar:
       href: index.html
     - text: "My journal"
       menu:
-      - text: "Week 1: R Tutorial"
-        href: Tutorial_week1.html
-      - text: "Week 2: Introduction"
-        href: week_2.html
-      - text: "Week 3: Webscraping"
-        href: Week_3.html
-      - text: "Week 4: Elaboration on Introduction and Network Visualization"
-        href: week_4.html
-      - text: "Data Prep"
-        href: Data_prep.html
-    - text: "Final Report"
-      menu:
       - text: "Introduction"
         href: Introduction_F.html
       - text: "Theory"
