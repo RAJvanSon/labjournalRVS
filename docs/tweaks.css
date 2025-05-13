@@ -22,3 +22,9 @@ h1, .h1, h2, .h2, h3, .h3 {
   display: none;
 }
 
+/* ───────────────────────────────────────────────────────
+   Hide the entire “My journal” dropdown (the first menu)
+   ─────────────────────────────────────────────────────── */
+dt-site-nav .nav .nav-item:first-child {
+  display: none !important;
+}
